@@ -26,6 +26,7 @@ import java.util.*;
 public class ItunesListActivity extends ListActivity {
     private final String FAV = "Favorites";
     private final String TOP25 = "Top 25";
+    private String mode = TOP25;
     private List<ItunesItem> itemsList;
     private HashMap<String, ItunesItem> itemsMap = new HashMap<String, ItunesItem>();
     private SharedPreferences sharedpreferences;
@@ -67,6 +68,7 @@ public class ItunesListActivity extends ListActivity {
                 populateFavList(prefValues);
                 mItem.setIcon(R.drawable.top25);
                 mItem.setTitle(TOP25);
+                mode.equals(FAV);
             }
             else{
                 String[] appNames = new String[itemsList.size()];
@@ -80,6 +82,7 @@ public class ItunesListActivity extends ListActivity {
                 setListAdapter(adapter);
                 mItem.setIcon(R.drawable.mario_star);
                 mItem.setTitle(FAV);
+                mode.equals(TOP25);
             }
 
         }
@@ -106,7 +109,7 @@ public class ItunesListActivity extends ListActivity {
                     prefValues.remove(selected.name);
                     editor.putStringSet(FAV,prefValues);
                     editor.commit();
-                    populateFavList(new ArrayList<String>(prefValues));
+                    if(mode.equals(FAV)) populateFavList(new ArrayList<String>(prefValues));
                     Toast.makeText(getApplicationContext(), selected.name + " removed from Favorites", Toast.LENGTH_LONG).show();
                 }
                 else {
