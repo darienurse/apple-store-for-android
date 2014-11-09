@@ -30,8 +30,9 @@ public class ItemService {
                 String name = obj.getJSONObject("im:name").getString("label");
                 name = name.replaceAll("\\p{Pd}", "-");
                 int dashIndex = name.indexOf("-");
-                if (dashIndex != -1)
-                    name = name.substring(0, dashIndex);
+                if (dashIndex != -1) {
+                    name = name.substring(0, dashIndex).trim();
+                }
                 Log.d("Itunes "+i, name);
                 JSONArray images = obj.getJSONArray("im:image");
                 ItunesItemImage image = new ItunesItemImage(new URL(images.getJSONObject(0).getString("label")),

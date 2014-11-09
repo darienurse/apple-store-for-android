@@ -101,16 +101,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ItunesListActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ItunesListActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/rssreader/ItunesListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8417431" vertical-offset="2557" max-vertical-offset="3043">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1537" max-vertical-offset="3043">
               <caret line="176" column="5" selection-start-line="176" selection-start-column="5" selection-end-line="176" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#906#926#0" expanded="true" />
                 <element signature="e#2078#2086#0" expanded="true" />
                 <element signature="e#3949#3957#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ItemService.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/example/rssreader/ItemService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6834862" vertical-offset="263" max-vertical-offset="1751">
+              <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#661#673#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -151,10 +164,10 @@
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/res/layout/list_item.xml" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/example/rssreader/ItemService.java" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/ItunesAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/JSONManager.java" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/ItunesListActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/example/rssreader/ItemService.java" />
       </list>
     </option>
   </component>
@@ -580,16 +593,16 @@
       <workItem from="1415206392254" duration="754000" />
       <workItem from="1415207190049" duration="4409000" />
       <workItem from="1415232774478" duration="19350000" />
-      <workItem from="1415293916310" duration="68445000" />
+      <workItem from="1415293916310" duration="68653000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93772000" />
+    <option name="totallyTimeSpent" value="93980000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -919,17 +932,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/rssreader/ItemService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.065891474" vertical-offset="0" max-vertical-offset="1734">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#661#673#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/rssreader/ItunesAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70348835" vertical-offset="181" max-vertical-offset="697">
@@ -1010,13 +1012,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/rssreader/ItunesListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8417431" vertical-offset="2557" max-vertical-offset="3043">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1537" max-vertical-offset="3043">
           <caret line="176" column="5" selection-start-line="176" selection-start-column="5" selection-end-line="176" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#906#926#0" expanded="true" />
             <element signature="e#2078#2086#0" expanded="true" />
             <element signature="e#3949#3957#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/rssreader/ItemService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6834862" vertical-offset="263" max-vertical-offset="1751">
+          <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#661#673#0" expanded="true" />
           </folding>
         </state>
       </provider>
