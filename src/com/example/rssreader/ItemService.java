@@ -28,6 +28,10 @@ public class ItemService {
             for (int i = 0; i < items.length(); i++) {
                 JSONObject obj = items.getJSONObject(i);
                 String name = obj.getJSONObject("im:name").getString("label");
+                name = name.replaceAll("\\p{Pd}", "-");
+                int dashIndex = name.indexOf("-");
+                if (dashIndex != -1)
+                    name = name.substring(0, dashIndex);
                 Log.d("Itunes "+i, name);
                 JSONArray images = obj.getJSONArray("im:image");
                 ItunesItemImage image = new ItunesItemImage(new URL(images.getJSONObject(0).getString("label")),
@@ -80,10 +84,6 @@ public class ItemService {
                         artist,
                         scheme,
                         releaseDate));
-               /* foundItems.add(
-                        new Item(obj.getInt("id"),
-                                obj.getString("name"),
-                                obj.getBoolean("active")));*/
             }
 
         } catch (JSONException e) {

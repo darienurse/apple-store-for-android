@@ -6,7 +6,7 @@
     <uses-sdk android:minSdkVersion="19"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+    <application android:label="@string/app_name" android:icon="@drawable/hackerati">
         <activity android:name="com.example.rssreader.MainActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -15,5 +15,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.rssreader.ItunesDetailsActivity"/>
+        <activity android:name="com.example.rssreader.ItunesListActivity"/>
     </application>
 </manifest>

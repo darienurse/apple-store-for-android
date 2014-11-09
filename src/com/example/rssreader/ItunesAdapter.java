@@ -5,17 +5,12 @@ package com.example.rssreader;
  */
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 public class ItunesAdapter extends ArrayAdapter<String>{
     private final Activity context;
@@ -35,7 +30,6 @@ public class ItunesAdapter extends ArrayAdapter<String>{
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setText(web[position]);
-        //imageView.setImageResource(imageId[position]);
         imageView.setImageBitmap(imageId[position]);
         return rowView;
     }
