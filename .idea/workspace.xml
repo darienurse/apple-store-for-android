@@ -116,15 +116,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ItemService.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ItemService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/rssreader/ItemService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6834862" vertical-offset="263" max-vertical-offset="1751">
+            <state vertical-scroll-proportion="0.0" vertical-offset="263" max-vertical-offset="1751">
               <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#661#673#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.3119266" vertical-offset="0" max-vertical-offset="442">
+              <caret line="8" column="84" selection-start-line="8" selection-start-column="84" selection-end-line="8" selection-end-column="84" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -135,6 +145,11 @@
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="true" />
     </FindUsagesManager>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="C:\Users\Darien\Dropbox\Workspaces\mykeystore.jks" />
+    <option name="KEY_ALIAS" value="myalias" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
   <component name="GradleLocalSettings">
     <option name="modificationStamps">
@@ -161,13 +176,13 @@
         <option value="$PROJECT_DIR$/res/menu/fav_menu.xml" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/DataWrapper.java" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/res/layout/list_item.xml" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/ItunesAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/JSONManager.java" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/ItunesListActivity.java" />
         <option value="$PROJECT_DIR$/src/com/example/rssreader/ItemService.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -299,6 +314,9 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="ExportedModule" value="rssreader" />
+    <property name="ExportedApkPath" value="C:\Users\Darien\Documents\rssreader\rssreader.apk" />
+    <property name="AndroidRunProguardForReleaseBuild" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -593,12 +611,12 @@
       <workItem from="1415206392254" duration="754000" />
       <workItem from="1415207190049" duration="4409000" />
       <workItem from="1415232774478" duration="19350000" />
-      <workItem from="1415293916310" duration="68653000" />
+      <workItem from="1415293916310" duration="69295000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93980000" />
+    <option name="totallyTimeSpent" value="94622000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -625,7 +643,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32724902" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3976532" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3976532" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -913,14 +931,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
-          <caret line="8" column="83" selection-start-line="8" selection-start-column="83" selection-end-line="8" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/list_item.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14592275" vertical-offset="0" max-vertical-offset="466">
@@ -1025,12 +1035,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/rssreader/ItemService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6834862" vertical-offset="263" max-vertical-offset="1751">
+        <state vertical-scroll-proportion="0.0" vertical-offset="263" max-vertical-offset="1751">
           <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#661#673#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3119266" vertical-offset="0" max-vertical-offset="442">
+          <caret line="8" column="84" selection-start-line="8" selection-start-column="84" selection-end-line="8" selection-end-column="84" />
+          <folding />
         </state>
       </provider>
     </entry>
