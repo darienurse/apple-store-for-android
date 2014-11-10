@@ -68,7 +68,7 @@ public class ItunesListActivity extends ListActivity {
                 populateFavList(prefValues);
                 mItem.setIcon(R.drawable.top25);
                 mItem.setTitle(TOP25);
-                mode.equals(FAV);
+                mode = FAV;
             }
             else{
                 String[] appNames = new String[itemsList.size()];
@@ -82,7 +82,7 @@ public class ItunesListActivity extends ListActivity {
                 setListAdapter(adapter);
                 mItem.setIcon(R.drawable.mario_star);
                 mItem.setTitle(FAV);
-                mode.equals(TOP25);
+                mode = TOP25;
             }
 
         }
