@@ -56,11 +56,11 @@ public class ItunesListActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate share_menu resource file.
-        getMenuInflater().inflate(R.menu.fav_menu, menu);
+        //getMenuInflater().inflate(R.menu.fav_menu, menu);
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem mItem){
         ArrayList<String> prefValues = new ArrayList<String>(sharedpreferences.getStringSet(FAV, null));
         if(mItem.getItemId() == R.id.menu_fav){
@@ -87,7 +87,7 @@ public class ItunesListActivity extends ListActivity {
 
         }
         return super.onOptionsItemSelected(mItem);
-    }
+    }*/
 
     private void setupPrefs(){
         sharedpreferences = getSharedPreferences("MyFavorites", Context.MODE_PRIVATE);
