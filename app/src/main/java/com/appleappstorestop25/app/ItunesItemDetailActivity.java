@@ -39,8 +39,8 @@ public class ItunesItemDetailActivity extends Activity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ItunesItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ItunesItemDetailFragment.ARG_ITEM_ID));
+            arguments.putInt(ItunesItemDetailFragment.ARG_ITEM_ID,
+                    getIntent().getIntExtra(ItunesItemDetailFragment.ARG_ITEM_ID,0));
             ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()

@@ -41,7 +41,7 @@
         android:layout_below="@id/artist"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="@color/genre"
+        android:textColor="@color/category"
         android:textSize="@dimen/contentType" />
 
     <!-- Release Date -->
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:textColor="@color/year"
+        android:textColor="@color/date"
         android:textSize="@dimen/date" />
 
 </RelativeLayout>

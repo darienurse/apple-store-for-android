@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.WindowManager;
 import com.appleappstorestop25.app.ItunesItemClasses.*;
 
@@ -36,14 +37,20 @@ public class ItunesItemListActivity extends Activity
      * device.
      */
     private boolean mTwoPane;
-    public static List<ItunesItem> itemsList = new ArrayList<ItunesItem>();
+    public static List<ItunesItem> itemsList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        new RequestItemsServiceTask().execute();
+
+        if(itemsList==null) {
+            new RequestItemsServiceTask().execute();
+        }
+        else {
+            setContentView(R.layout.activity_itunesitem_list);
+        }
 
         if (findViewById(R.id.itunesitem_detail_container) != null) {
             // The detail container view will be present only in the
@@ -68,6 +75,8 @@ public class ItunesItemListActivity extends Activity
      */
     @Override
     public void onItemSelected(Integer id) {
+        Log.d("DEBUG", "" + id);
+
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a

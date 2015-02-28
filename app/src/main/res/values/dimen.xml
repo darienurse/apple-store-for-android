@@ -5,5 +5,7 @@
     <dimen name="artist">15dip</dimen>
     <dimen name="contentType">13dip</dimen>
     <dimen name="date">12dip</dimen>
+    <dimen name="detail_horiz_margin">16dp</dimen>
+    <dimen name="photo_height">200dp</dimen>
 
 </resources>

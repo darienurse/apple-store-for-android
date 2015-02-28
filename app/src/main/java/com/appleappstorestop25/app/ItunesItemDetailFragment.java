@@ -2,13 +2,16 @@ package com.appleappstorestop25.app;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.appleappstorestop25.app.ItunesItemClasses.ItunesItem;
+import com.appleappstorestop25.app.dummy.DummyContent;
 
 /**
  * A fragment representing a single ItunesItem detail screen.
@@ -43,6 +46,8 @@ public class ItunesItemDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
+            Log.d("DEBUG", "args " + getArguments().getInt(ARG_ITEM_ID));
+
             mItem = ItunesItemListActivity.itemsList.get(getArguments().getInt(ARG_ITEM_ID));
         }
     }
@@ -54,7 +59,10 @@ public class ItunesItemDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.itunesitem_detail)).setText(mItem.summary);
+            ((TextView) rootView.findViewById(R.id.article_title)).setText(mItem.name);
+            ((TextView) rootView.findViewById(R.id.article_byline)).setText(mItem.artist);
+            ((TextView) rootView.findViewById(R.id.article_body)).setText(mItem.summary);
+            ((ImageView) rootView.findViewById(R.id.article_photo)).setImageBitmap(mItem.image.big_bm);
         }
 
         return rootView;
