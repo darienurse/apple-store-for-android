@@ -26,9 +26,8 @@ artist
 category ---id, term, category, label
 releaseDate
 */
-public class ItunesItem implements Parcelable {
-    public final String
-            name;
+public class ItunesItem {
+    public final String name;
     public final ItunesItemImage image;
     public final String summary;
     public final ItunesItemPrice price;
@@ -41,6 +40,7 @@ public class ItunesItem implements Parcelable {
     public final String artist;
     public final ItunesItemCategory category;
     public final String releaseDate;
+    public final Integer rank;
 
     public ItunesItem(String name,
                       ItunesItemImage image,
@@ -54,7 +54,8 @@ public class ItunesItem implements Parcelable {
                       String bundleId,
                       String artist,
                       ItunesItemCategory category,
-                      String releaseDate){
+                      String releaseDate,
+                      Integer rank) {
         this.name = name;
         this.image = image;
         this.summary = summary;
@@ -68,61 +69,12 @@ public class ItunesItem implements Parcelable {
         this.artist = artist;
         this.category = category;
         this.releaseDate = releaseDate;
-    }
-
-    protected ItunesItem(Parcel in) {
-        name = in.readString();
-        image = (ItunesItemImage) in.readValue(ItunesItemImage.class.getClassLoader());
-        summary = in.readString();
-        price = (ItunesItemPrice) in.readValue(ItunesItemPrice.class.getClassLoader());
-        contentType = in.readString();
-        rights = in.readString();
-        title = in.readString();
-        link = (URL) in.readValue(URL.class.getClassLoader());
-        id = in.readByte() == 0x00 ? null : in.readInt();
-        bundleId = in.readString();
-        artist = in.readString();
-        category = (ItunesItemCategory) in.readValue(ItunesItemCategory.class.getClassLoader());
-        releaseDate = in.readString();
+        this.rank = rank;
     }
 
     @Override
-    public int describeContents() {
-        return 0;
+    public String toString() {
+        return name;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeValue(image);
-        dest.writeString(summary);
-        dest.writeValue(price);
-        dest.writeString(contentType);
-        dest.writeString(rights);
-        dest.writeString(title);
-        dest.writeValue(link);
-        if (id == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(id);
-        }
-        dest.writeString(bundleId);
-        dest.writeString(artist);
-        dest.writeValue(category);
-        dest.writeString(releaseDate);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<ItunesItem> CREATOR = new Parcelable.Creator<ItunesItem>() {
-        @Override
-        public ItunesItem createFromParcel(Parcel in) {
-            return new ItunesItem(in);
-        }
-
-        @Override
-        public ItunesItem[] newArray(int size) {
-            return new ItunesItem[size];
-        }
-    };
 }

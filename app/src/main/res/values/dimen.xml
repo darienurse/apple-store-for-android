@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="name">17dp</dimen>
+    <dimen name="artist">15dip</dimen>
+    <dimen name="contentType">13dip</dimen>
+    <dimen name="date">12dip</dimen>
+
+</resources>

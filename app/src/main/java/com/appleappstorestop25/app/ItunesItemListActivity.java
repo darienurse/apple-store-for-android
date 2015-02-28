@@ -1,10 +1,14 @@
 package com.appleappstorestop25.app;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import com.appleappstorestop25.app.ItunesItemClasses.*;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -31,11 +35,13 @@ public class ItunesItemListActivity extends Activity
      * device.
      */
     private boolean mTwoPane;
+    public static List<ItunesItem> itemsList = new ArrayList<ItunesItem>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_itunesitem_list);
+        new RequestItemsServiceTask().execute();
 
         if (findViewById(R.id.itunesitem_detail_container) != null) {
             // The detail container view will be present only in the
@@ -59,13 +65,13 @@ public class ItunesItemListActivity extends Activity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(Integer id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ItunesItemDetailFragment.ARG_ITEM_ID, id);
+            arguments.putInt(ItunesItemDetailFragment.ARG_ITEM_ID, id);
             ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
@@ -78,6 +84,43 @@ public class ItunesItemListActivity extends Activity
             Intent detailIntent = new Intent(this, ItunesItemDetailActivity.class);
             detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
+        }
+    }
+
+    /**
+     * populate list in background while showing progress dialog.
+     */
+    private class RequestItemsServiceTask
+            extends AsyncTask<Void, Void, Void> {
+        private ProgressDialog dialog =
+                new ProgressDialog(ItunesItemListActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Please wait..");
+            dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... unused) {
+            ItemService itemService = new ItemService();
+            try {
+                itemsList = itemService.findAllItems();
+            } catch (Throwable e) {
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            /*intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);*/
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+                setContentView(R.layout.activity_itunesitem_list);
+            }
+            //finish();
         }
     }
 }

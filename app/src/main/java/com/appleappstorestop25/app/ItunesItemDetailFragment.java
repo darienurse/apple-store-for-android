@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.appleappstorestop25.app.dummy.DummyContent;
+import com.appleappstorestop25.app.ItunesItemClasses.ItunesItem;
 
 /**
  * A fragment representing a single ItunesItem detail screen.
@@ -26,7 +26,7 @@ public class ItunesItemDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private ItunesItem mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -43,7 +43,7 @@ public class ItunesItemDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = ItunesItemListActivity.itemsList.get(getArguments().getInt(ARG_ITEM_ID));
         }
     }
 
@@ -54,7 +54,7 @@ public class ItunesItemDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.itunesitem_detail)).setText(mItem.content);
+            ((TextView) rootView.findViewById(R.id.itunesitem_detail)).setText(mItem.summary);
         }
 
         return rootView;

@@ -60,7 +60,8 @@ public class ItemService {
                         new URL(obj.getJSONObject("category").getJSONObject("attributes").getString("scheme"))
                 );
                 String releaseDate = obj.getJSONObject("im:releaseDate").getJSONObject("attributes").getString("label");
-                foundItems.add(new ItunesItemBuilder().setName(name)
+                foundItems.add(new ItunesItemBuilder()
+                        .setName(name)
                         .setImage(image)
                         .setSummary(summary)
                         .setPrice(price)
@@ -73,6 +74,7 @@ public class ItemService {
                         .setArtist(artist)
                         .setCategory(scheme)
                         .setReleaseDate(releaseDate)
+                        .setRank(i)
                         .createItunesItem());
             }
 

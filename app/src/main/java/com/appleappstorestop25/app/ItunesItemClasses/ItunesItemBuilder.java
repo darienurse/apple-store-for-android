@@ -19,6 +19,7 @@ public class ItunesItemBuilder {
     private String artist;
     private ItunesItemCategory category;
     private String releaseDate;
+    private Integer rank;
 
     public ItunesItemBuilder setName(String name) {
         this.name = name;
@@ -84,8 +85,13 @@ public class ItunesItemBuilder {
         this.releaseDate = releaseDate;
         return this;
     }
+    public ItunesItemBuilder setRank(Integer rank) {
+        this.rank = rank;
+        return this;
+    }
 
     public ItunesItem createItunesItem() {
-        return new ItunesItem(name, image, summary, price, contentType, rights, title, link, id, bundleId, artist, category, releaseDate);
+        return new ItunesItem(name, image, summary, price, contentType, rights, title, link, id, bundleId, artist, category, releaseDate, rank);
     }
+
 }
