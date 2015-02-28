@@ -1,5 +1,7 @@
 package com.appleappstorestop25.app.ItunesItemClasses;
 
+import android.content.Intent;
+
 import java.net.URL;
 
 /**
@@ -72,6 +74,16 @@ public class ItunesItem {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Intent generateShareIntent(){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "App Details on " + this.name);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Checkout this app: " + this.name
+                + "\n" + this.link);
+        sendIntent.setType("text/plain");
+        return sendIntent;
     }
 
 }

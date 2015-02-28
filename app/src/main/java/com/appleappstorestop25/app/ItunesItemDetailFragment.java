@@ -8,10 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
 import com.appleappstorestop25.app.ItunesItemClasses.ItunesItem;
-import com.appleappstorestop25.app.dummy.DummyContent;
 
 /**
  * A fragment representing a single ItunesItem detail screen.
@@ -25,6 +22,7 @@ public class ItunesItemDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
+
 
     /**
      * The dummy content this fragment is presenting.
@@ -46,8 +44,6 @@ public class ItunesItemDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            Log.d("DEBUG", "args " + getArguments().getInt(ARG_ITEM_ID));
-
             mItem = ItunesItemListActivity.itemsList.get(getArguments().getInt(ARG_ITEM_ID));
         }
     }
@@ -66,5 +62,9 @@ public class ItunesItemDetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    public ItunesItem getItem() {
+        return mItem;
     }
 }

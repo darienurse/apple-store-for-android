@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ShareActionProvider;
+import com.appleappstorestop25.app.ItunesItemClasses.ItunesItem;
 
 
 /**
@@ -17,6 +20,9 @@ import android.view.MenuItem;
  * more than a {@link ItunesItemDetailFragment}.
  */
 public class ItunesItemDetailActivity extends Activity {
+
+    private ShareActionProvider mShareActionProvider;
+    private ItunesItem itunesItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +46,16 @@ public class ItunesItemDetailActivity extends Activity {
             // using a fragment transaction.
             Bundle arguments = new Bundle();
             arguments.putInt(ItunesItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getIntExtra(ItunesItemDetailFragment.ARG_ITEM_ID,0));
+                    getIntent().getIntExtra(ItunesItemDetailFragment.ARG_ITEM_ID, 0));
             ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
                     .add(R.id.itunesitem_detail_container, fragment)
                     .commit();
+            if (arguments.containsKey(ItunesItemDetailFragment.ARG_ITEM_ID)) {
+                itunesItem = ItunesItemListActivity.itemsList.get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
+            }
+
         }
     }
 
@@ -64,5 +74,29 @@ public class ItunesItemDetailActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate share_menu resource file.
+        getMenuInflater().inflate(R.menu.share_menu, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem mItem = menu.findItem(R.id.menu_item_share);
+
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
+
+        setShareIntent(itunesItem.generateShareIntent());
+
+        // Return true to display share_menu
+        return true;
+    }
+
+    // Call to update the share intent
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
     }
 }
