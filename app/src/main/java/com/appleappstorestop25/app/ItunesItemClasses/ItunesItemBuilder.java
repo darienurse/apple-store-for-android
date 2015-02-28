@@ -17,7 +17,7 @@ public class ItunesItemBuilder {
     private Integer id;
     private String bundleId;
     private String artist;
-    private ItunesItemCategory category;
+    private ItunesItemCategory categoryObject;
     private String releaseDate;
     private Integer rank;
 
@@ -76,8 +76,8 @@ public class ItunesItemBuilder {
         return this;
     }
 
-    public ItunesItemBuilder setCategory(ItunesItemCategory category) {
-        this.category = category;
+    public ItunesItemBuilder setCategoryObject(ItunesItemCategory categoryObject) {
+        this.categoryObject = categoryObject;
         return this;
     }
 
@@ -91,7 +91,8 @@ public class ItunesItemBuilder {
     }
 
     public ItunesItem createItunesItem() {
-        return new ItunesItem(name, image, summary, price, contentType, rights, title, link, id, bundleId, artist, category, releaseDate, rank);
+        return new ItunesItem(name, image, summary, price, contentType, rights, title, link, id, bundleId, artist, categoryObject, releaseDate, rank);
     }
+
 
 }

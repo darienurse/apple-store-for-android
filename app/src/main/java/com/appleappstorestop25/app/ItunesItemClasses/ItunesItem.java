@@ -1,8 +1,5 @@
 package com.appleappstorestop25.app.ItunesItemClasses;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.net.URL;
 
 /**
@@ -23,7 +20,7 @@ link
 id
 bundleId
 artist
-category ---id, term, category, label
+categoryObject ---id, term, categoryObject, label
 releaseDate
 */
 public class ItunesItem {
@@ -38,7 +35,7 @@ public class ItunesItem {
     public final Integer id;
     public final String bundleId;
     public final String artist;
-    public final ItunesItemCategory category;
+    public final ItunesItemCategory categoryObject;
     public final String releaseDate;
     public final Integer rank;
 
@@ -53,7 +50,7 @@ public class ItunesItem {
                       Integer id,
                       String bundleId,
                       String artist,
-                      ItunesItemCategory category,
+                      ItunesItemCategory categoryObject,
                       String releaseDate,
                       Integer rank) {
         this.name = name;
@@ -67,7 +64,7 @@ public class ItunesItem {
         this.id = id;
         this.bundleId = bundleId;
         this.artist = artist;
-        this.category = category;
+        this.categoryObject = categoryObject;
         this.releaseDate = releaseDate;
         this.rank = rank;
     }

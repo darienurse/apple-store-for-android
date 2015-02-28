@@ -54,10 +54,10 @@ public class ItunesAdapter extends BaseAdapter {
             imageLoader = AppController.getInstance().getImageLoader();*/
         ImageView thumbNail = (ImageView) convertView
                 .findViewById(R.id.thumbnail);
-        TextView title = (TextView) convertView.findViewById(R.id.name);
-        TextView rating = (TextView) convertView.findViewById(R.id.artist);
-        TextView genre = (TextView) convertView.findViewById(R.id.contentType);
-        TextView year = (TextView) convertView.findViewById(R.id.date);
+        TextView name = (TextView) convertView.findViewById(R.id.name);
+        TextView artist = (TextView) convertView.findViewById(R.id.artist);
+        TextView category = (TextView) convertView.findViewById(R.id.contentType);
+        TextView date = (TextView) convertView.findViewById(R.id.date);
 
         // getting movie data for the row
         ItunesItem m = itunesItems.get(position);
@@ -66,17 +66,17 @@ public class ItunesAdapter extends BaseAdapter {
         //thumbNail..setImageUrl(m.getThumbnailUrl(), imageLoader);
         thumbNail.setImageBitmap(m.image.big_bm);
 
-        // title
-        title.setText(m.name);
+        // name
+        name.setText(m.name);
 
-        // rating
-        rating.setText("Rating: " + String.valueOf(m.artist));
+        // artist
+        artist.setText(String.valueOf(m.artist));
 
-        // genre
-        genre.setText(m.contentType);
+        // categoryObject
+        category.setText(m.categoryObject.category);
 
-        // release year
-        year.setText(m.releaseDate);
+        // release date
+        date.setText("Released: " + m.releaseDate);
 
         return convertView;
     }

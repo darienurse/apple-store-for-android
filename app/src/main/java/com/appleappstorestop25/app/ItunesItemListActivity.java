@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.WindowManager;
 import com.appleappstorestop25.app.ItunesItemClasses.*;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class ItunesItemListActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         new RequestItemsServiceTask().execute();
 
         if (findViewById(R.id.itunesitem_detail_container) != null) {

@@ -72,7 +72,7 @@ public class ItemService {
                         .setId(id)
                         .setBundleId(bundleId)
                         .setArtist(artist)
-                        .setCategory(scheme)
+                        .setCategoryObject(scheme)
                         .setReleaseDate(releaseDate)
                         .setRank(i)
                         .createItunesItem());
