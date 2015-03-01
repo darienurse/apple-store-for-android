@@ -2,24 +2,27 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp" >
+                android:layout_height="match_parent"
+                android:background="@drawable/shadow"
+                android:padding="8dp">
 
     <!-- Thumbnail Image -->
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/thumbnail"
         android:layout_width="@dimen/thumbnail_width"
-        android:layout_height="@dimen/thumbnail_width"
-        android:scaleType="centerCrop"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp" />
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="8dp"
+        android:adjustViewBounds="true"/>
 
     <!-- App Name -->
     <TextView
         android:id="@+id/name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
         android:maxLines="1"
         android:ellipsize="end"
