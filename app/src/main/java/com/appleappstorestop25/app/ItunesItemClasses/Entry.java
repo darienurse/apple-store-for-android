@@ -335,11 +335,22 @@ public class Entry {
     public Intent generateShareIntent(){
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "App Details on " + this.getImName().getLabel());
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Checkout this app: " + this.getImName().getLabel()
+        String name = this.getImName().getLabel();
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "App Details on " + name);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Checkout this app: " + name
                 + "\n" + this.link.getAttributes().getHref());
         sendIntent.setType("text/plain");
         return sendIntent;
+    }
+
+    public String getFormattedName(){
+        String name = this.getImName().getLabel();
+        name = name.replaceAll("\\p{Pd}", "-");
+        int dashIndex = name.indexOf("-");
+        if (dashIndex != -1) {
+            name = name.substring(0, dashIndex).trim();
+        }
+        return name;
     }
 
 }

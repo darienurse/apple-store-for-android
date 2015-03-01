@@ -67,8 +67,7 @@ public class ItunesAdapter extends BaseAdapter {
         thumbNail.setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
 
         // name
-        name.setText(itunesItem.getImName().getLabel());
-        Log.d("DEBUG", itunesItem.getImName().getLabel());
+        name.setText(itunesItem.getFormattedName());
 
         // artist
         artist.setText(itunesItem.getImArtist().getLabel());
@@ -77,7 +76,7 @@ public class ItunesAdapter extends BaseAdapter {
         category.setText(itunesItem.getCategory().getAttributes().getTerm());
 
         // release date
-        date.setText("Released:\n" + itunesItem.getImReleaseDate().getAttributes().getLabel());
+        date.setText(itunesItem.getImReleaseDate().getAttributes().getLabel());
 
         return convertView;
     }

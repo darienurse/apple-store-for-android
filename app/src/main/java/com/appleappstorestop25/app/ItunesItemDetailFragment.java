@@ -56,10 +56,9 @@ public class ItunesItemDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (itunesItem != null) {
-            ((TextView) rootView.findViewById(R.id.article_title)).setText(itunesItem.getImName().getLabel());
+            ((TextView) rootView.findViewById(R.id.article_title)).setText(itunesItem.getFormattedName());
             ((TextView) rootView.findViewById(R.id.article_byline)).setText(itunesItem.getImArtist().getLabel());
             ((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());
-            //((ImageView) rootView.findViewById(R.id.article_photo)).setImageBitmap(itunesItem.image.big_bm);
             ((NetworkImageView) rootView.findViewById(R.id.article_photo)).setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);;
         }
 
