@@ -1,14 +1,14 @@
 package com.appleappstorestop25.app;
 
-import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import com.appleappstorestop25.app.ItunesItemClasses.ItunesItem;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 
 /**
  * A fragment representing a single ItunesItem detail screen.
@@ -22,12 +22,9 @@ public class ItunesItemDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
+    private Entry itunesItem;
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private ItunesItem mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,7 +41,8 @@ public class ItunesItemDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = ItunesItemListActivity.itemsList.get(getArguments().getInt(ARG_ITEM_ID));
+            itunesItem = ItunesItemListFragment.getItunesItemList()
+                    .get(getArguments().getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
         }
     }
 
@@ -53,18 +51,20 @@ public class ItunesItemDetailFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_itunesitem_detail, container, false);
 
+        if (imageLoader == null)
+            imageLoader = AppController.getInstance().getImageLoader();
+
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.article_title)).setText(mItem.name);
-            ((TextView) rootView.findViewById(R.id.article_byline)).setText(mItem.artist);
-            ((TextView) rootView.findViewById(R.id.article_body)).setText(mItem.summary);
-            ((ImageView) rootView.findViewById(R.id.article_photo)).setImageBitmap(mItem.image.big_bm);
+        if (itunesItem != null) {
+            ((TextView) rootView.findViewById(R.id.article_title)).setText(itunesItem.getImName().getLabel());
+            ((TextView) rootView.findViewById(R.id.article_byline)).setText(itunesItem.getImArtist().getLabel());
+            ((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());
+            //((ImageView) rootView.findViewById(R.id.article_photo)).setImageBitmap(itunesItem.image.big_bm);
+            ((NetworkImageView) rootView.findViewById(R.id.article_photo)).setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);;
         }
 
         return rootView;
     }
 
-    public ItunesItem getItem() {
-        return mItem;
-    }
+
 }

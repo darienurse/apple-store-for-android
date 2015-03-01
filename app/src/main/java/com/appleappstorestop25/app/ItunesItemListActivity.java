@@ -40,7 +40,7 @@ public class ItunesItemListActivity extends Activity
      * device.
      */
     private boolean mTwoPane;
-    public static List<ItunesItem> itemsList;
+
     private ShareActionProvider mShareActionProvider;
 
 
@@ -49,23 +49,18 @@ public class ItunesItemListActivity extends Activity
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        if(itemsList==null) {
-            new RequestItemsServiceTask().execute();
+
+
+        setContentView(R.layout.activity_itunesitem_list);
+        if (findViewById(R.id.itunesitem_detail_container) != null) {
+            mTwoPane = true;
+
+            // In two-pane mode, list items should be given the
+            // 'activated' state when touched.
+            ((ItunesItemListFragment) getFragmentManager()
+                    .findFragmentById(R.id.itunesitem_list))
+                    .setActivateOnItemClick(true);
         }
-        else {
-            setContentView(R.layout.activity_itunesitem_list);
-            if (findViewById(R.id.itunesitem_detail_container) != null) {
-                mTwoPane = true;
-
-                // In two-pane mode, list items should be given the
-                // 'activated' state when touched.
-                ((ItunesItemListFragment) getFragmentManager()
-                        .findFragmentById(R.id.itunesitem_list))
-                        .setActivateOnItemClick(true);
-            }
-        }
-
-
     }
 
     @Override
@@ -101,7 +96,7 @@ public class ItunesItemListActivity extends Activity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(Integer id) {
+    public void onItunesItemSelected(Integer id) {
         Log.d("DEBUG", "" + id);
 
         if (mTwoPane) {
@@ -115,62 +110,12 @@ public class ItunesItemListActivity extends Activity
             getFragmentManager().beginTransaction()
                     .replace(R.id.itunesitem_detail_container, fragment)
                     .commit();
-            if (arguments.containsKey(ItunesItemDetailFragment.ARG_ITEM_ID)) {
-                ItunesItem itunesItem = ItunesItemListActivity.itemsList.get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
-                setShareIntent(itunesItem.generateShareIntent());
-            }
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItunesItemDetailActivity.class);
             detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
-        }
-    }
-
-    /**
-     * populate list in background while showing progress dialog.
-     */
-    private class RequestItemsServiceTask
-            extends AsyncTask<Void, Void, Void> {
-        private ProgressDialog dialog =
-                new ProgressDialog(ItunesItemListActivity.this);
-
-        @Override
-        protected void onPreExecute() {
-            dialog.setMessage("Please wait..");
-            dialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... unused) {
-            ItemService itemService = new ItemService();
-            try {
-                itemsList = itemService.findAllItems();
-            } catch (Throwable e) {
-
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void unused) {
-            /*intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);*/
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-                setContentView(R.layout.activity_itunesitem_list);
-                if (findViewById(R.id.itunesitem_detail_container) != null) {
-                    mTwoPane = true;
-
-                    // In two-pane mode, list items should be given the
-                    // 'activated' state when touched.
-                    ((ItunesItemListFragment) getFragmentManager()
-                            .findFragmentById(R.id.itunesitem_list))
-                            .setActivateOnItemClick(true);
-                }
-            }
-            //finish();
         }
     }
 }

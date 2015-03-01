@@ -1,25 +1,27 @@
 package com.appleappstorestop25.app;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 
-import com.appleappstorestop25.app.ItunesItemClasses.ItunesAdapter;
-import com.appleappstorestop25.app.ItunesItemClasses.ItunesItem;
 
-/**
- * A list fragment representing a list of ItunesItems. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link ItunesItemDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
- */
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.appleappstorestop25.app.ItunesItemClasses.Entry;
+import com.appleappstorestop25.app.ItunesItemClasses.ItunesRSSResponse;
+import com.google.gson.Gson;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItunesItemListFragment extends ListFragment {
 
     /**
@@ -48,7 +50,7 @@ public class ItunesItemListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(Integer id);
+        public void onItunesItemSelected(Integer id);
     }
 
     /**
@@ -57,23 +59,79 @@ public class ItunesItemListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(Integer id) {
+        public void onItunesItemSelected(Integer id) {
         }
     };
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    private static final String TAG = ItunesItemListFragment.class.getSimpleName();
+
+    public static List<Entry> getItunesItemList() {
+        return itunesItemList;
+    }
+
+    private static List<Entry> itunesItemList = new ArrayList<Entry>();
+
+    private static final String url = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topgrossingapplications/sf=143441/limit=25/json";
+    private ProgressDialog pDialog;
+    private ItunesAdapter adapter;
+
     public ItunesItemListFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setListAdapter(new ItunesAdapter(
-                getActivity(),
-                ItunesItemListActivity.itemsList));
+        adapter = new ItunesAdapter(getActivity(), itunesItemList);
+        setListAdapter(adapter);
+
+        //pDialog = new ProgressDialog(this.getActivity().getBaseContext());
+        // Showing progress dialog before making http request
+        //pDialog.setMessage("Loading...");
+        //pDialog.show();
+
+        // Creating volley request obj
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString());
+                        Gson gson = new Gson();
+                        ItunesRSSResponse rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
+                        Log.d(TAG, rssResponse.getFeed().getAuthor().getName().getLabel());
+                        itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                        Log.d(TAG, ""+adapter.getCount());
+                        //hidePDialog();
+
+                        // notifying list adapter about data changes
+                        // so that it renders the list view with updated data
+                        adapter.notifyDataSetChanged();
+                        Log.d(TAG, ""+adapter.getCount());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                hidePDialog();
+
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        hidePDialog();
+    }
+
+    private void hidePDialog() {
+        if (pDialog != null) {
+            pDialog.dismiss();
+            pDialog = null;
+        }
     }
 
     @Override
@@ -110,10 +168,7 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(ItunesItemListActivity.itemsList.get(position).rank);
+        mCallbacks.onItunesItemSelected(position);
     }
 
     @Override

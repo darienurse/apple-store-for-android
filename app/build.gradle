@@ -14,7 +14,7 @@ repositories {
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
         applicationId "com.appleappstorestop25.app"
@@ -34,4 +34,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:21.0.3'
+    compile 'javax.annotation:jsr250-api:1.0'
 }

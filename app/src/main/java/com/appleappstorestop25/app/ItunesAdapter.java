@@ -1,28 +1,30 @@
-package com.appleappstorestop25.app.ItunesItemClasses;
+package com.appleappstorestop25.app;
 
 /**
  * Created by Darien on 9/27/2014.
  */
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import com.appleappstorestop25.app.R;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 
 import java.util.List;
 
 public class ItunesAdapter extends BaseAdapter {
-    private Activity activity;
+    private Context context;
     private LayoutInflater inflater;
-    private List<ItunesItem> itunesItems;
-    //ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    private List<Entry> itunesItems;
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public ItunesAdapter(Activity activity, List<ItunesItem> itunesItems) {
-        this.activity = activity;
+    public ItunesAdapter(Context context, List<Entry> itunesItems) {
+        this.context = context;
         this.itunesItems = itunesItems;
     }
 
@@ -45,38 +47,37 @@ public class ItunesAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (inflater == null)
-            inflater = (LayoutInflater) activity
+            inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
             convertView = inflater.inflate(R.layout.list_row, null);
 
-        /*if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();*/
-        ImageView thumbNail = (ImageView) convertView
-                .findViewById(R.id.thumbnail);
+        if (imageLoader == null)
+            imageLoader = AppController.getInstance().getImageLoader();
+        NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);;
         TextView name = (TextView) convertView.findViewById(R.id.name);
         TextView artist = (TextView) convertView.findViewById(R.id.artist);
         TextView category = (TextView) convertView.findViewById(R.id.contentType);
         TextView date = (TextView) convertView.findViewById(R.id.date);
 
-        // getting movie data for the row
-        ItunesItem m = itunesItems.get(position);
+        // getting app data for the row
+        Entry itunesItem = itunesItems.get(position);
 
         // thumbnail image
-        //thumbNail..setImageUrl(m.getThumbnailUrl(), imageLoader);
-        thumbNail.setImageBitmap(m.image.big_bm);
+        thumbNail.setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
 
         // name
-        name.setText(m.name);
+        name.setText(itunesItem.getImName().getLabel());
+        Log.d("DEBUG", itunesItem.getImName().getLabel());
 
         // artist
-        artist.setText(String.valueOf(m.artist));
+        artist.setText(itunesItem.getImArtist().getLabel());
 
         // categoryObject
-        category.setText(m.categoryObject.category);
+        category.setText(itunesItem.getCategory().getAttributes().getTerm());
 
         // release date
-        date.setText("Released: " + m.releaseDate);
+        date.setText("Released:\n" + itunesItem.getImReleaseDate().getAttributes().getLabel());
 
         return convertView;
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="name">17dp</dimen>
-    <dimen name="artist">15dip</dimen>
-    <dimen name="contentType">13dip</dimen>
-    <dimen name="date">12dip</dimen>
-    <dimen name="detail_horiz_margin">16dp</dimen>
+    <dimen name="name">17px</dimen>
+    <dimen name="artist">15px</dimen>
+    <dimen name="contentType">13px</dimen>
+    <dimen name="date">12px</dimen>
+    <dimen name="detail_horiz_margin">16px</dimen>
     <dimen name="photo_height">200dp</dimen>
 
 </resources>

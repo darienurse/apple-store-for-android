@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:foreground="@drawable/photo_background_protection">
                 <!--suppress AndroidLintContentDescription -->
-                <ImageView
+                <com.android.volley.toolbox.NetworkImageView
                     android:id="@+id/article_photo"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/photo_height"

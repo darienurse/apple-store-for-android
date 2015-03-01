@@ -1,14 +1,13 @@
 package com.appleappstorestop25.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
-import com.appleappstorestop25.app.ItunesItemClasses.ItunesItem;
-
+import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 
 /**
  * An activity representing a single ItunesItem detail screen. This
@@ -22,7 +21,7 @@ import com.appleappstorestop25.app.ItunesItemClasses.ItunesItem;
 public class ItunesItemDetailActivity extends Activity {
 
     private ShareActionProvider mShareActionProvider;
-    private ItunesItem itunesItem;
+    private Entry itunesItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,10 @@ public class ItunesItemDetailActivity extends Activity {
                     .add(R.id.itunesitem_detail_container, fragment)
                     .commit();
             if (arguments.containsKey(ItunesItemDetailFragment.ARG_ITEM_ID)) {
-                itunesItem = ItunesItemListActivity.itemsList.get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
+                itunesItem = ItunesItemListFragment.getItunesItemList()
+                        .get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
+
+                //itunesItem =  ItunesItemListActivity.itemsList.get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
             }
 
         }
