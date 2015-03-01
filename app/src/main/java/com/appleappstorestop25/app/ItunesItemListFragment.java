@@ -2,11 +2,8 @@ package com.appleappstorestop25.app;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.ListFragment;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -87,16 +84,10 @@ public class ItunesItemListFragment extends ListFragment {
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 
-        pDialog = new ProgressDialog(this.getActivity());
+        //pDialog = new ProgressDialog(this.getActivity().getBaseContext());
         // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
-
-        // 1 second delay before showing the loading screen. If the network is strong, the loading wont show.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                if(pDialog != null) pDialog.show();
-            }}, 1000);
+        //pDialog.setMessage("Loading...");
+        //pDialog.show();
 
         // Creating volley request obj
 
@@ -108,10 +99,9 @@ public class ItunesItemListFragment extends ListFragment {
                         Gson gson = new Gson();
                         ItunesRSSResponse rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
                         Log.d(TAG, rssResponse.getFeed().getAuthor().getName().getLabel());
-                        itunesItemList.clear();
                         itunesItemList.addAll(rssResponse.getFeed().getEntry());
                         Log.d(TAG, ""+adapter.getCount());
-                        hidePDialog();
+                        //hidePDialog();
 
                         // notifying list adapter about data changes
                         // so that it renders the list view with updated data
@@ -147,8 +137,6 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getListView().setDivider(new ColorDrawable(android.R.color.darker_gray));
-        getListView().setDividerHeight(16);
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
