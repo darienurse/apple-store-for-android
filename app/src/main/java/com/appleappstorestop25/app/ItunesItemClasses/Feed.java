@@ -5,11 +5,12 @@ import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
 import javax.validation.Valid;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
-public class Feed {
+public class Feed implements Serializable {
 
     @Expose
     @Valid

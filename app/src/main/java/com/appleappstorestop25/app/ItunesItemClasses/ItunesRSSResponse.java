@@ -5,9 +5,10 @@ import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
 import javax.validation.Valid;
+import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
-public class ItunesRSSResponse {
+public class ItunesRSSResponse implements Serializable {
 
     @Expose
     @Valid

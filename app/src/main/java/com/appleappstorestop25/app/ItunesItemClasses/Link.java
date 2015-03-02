@@ -5,9 +5,10 @@ import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
 import javax.validation.Valid;
+import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
-public class Link {
+public class Link implements Serializable {
 
     @Expose
     @Valid

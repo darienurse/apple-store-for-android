@@ -4,9 +4,10 @@ package com.appleappstorestop25.app.ItunesItemClasses;
 import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
+import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
-public class Attributes_______ {
+public class Attributes_______ implements Serializable {
 
     @Expose
     private String label;

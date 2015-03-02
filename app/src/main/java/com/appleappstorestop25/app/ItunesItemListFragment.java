@@ -50,8 +50,9 @@ public class ItunesItemListFragment extends ListFragment {
     public interface Callbacks {
         /**
          * Callback for when an item has been selected.
+         * @param item
          */
-        public void onItunesItemSelected(Integer id);
+        public void onItunesItemSelected(Entry item);
     }
 
     /**
@@ -60,7 +61,7 @@ public class ItunesItemListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItunesItemSelected(Integer id) {
+        public void onItunesItemSelected(Entry item) {
         }
     };
 

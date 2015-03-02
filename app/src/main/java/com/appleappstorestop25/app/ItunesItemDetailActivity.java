@@ -36,16 +36,15 @@ public class ItunesItemDetailActivity extends FragmentActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putInt(ItunesItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getIntExtra(ItunesItemDetailFragment.ARG_ITEM_ID, 0));
+            arguments.putSerializable(ItunesItemDetailFragment.ARG_ITEM_ID,
+                    getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID));
             ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.itunesitem_detail_container, fragment)
                     .commit();
             if (arguments.containsKey(ItunesItemDetailFragment.ARG_ITEM_ID)) {
-                itunesItem = ItunesItemListFragment.getItunesItemList()
-                        .get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
+                itunesItem = (Entry) arguments.getSerializable(ItunesItemDetailFragment.ARG_ITEM_ID);
             }
         }
         else

@@ -36,9 +36,9 @@ public class ItunesItemDetailFragment extends Fragment {
     public ItunesItemDetailFragment() {
     }
 
-    public static ItunesItemDetailFragment newInstance(int id) {
+    public static ItunesItemDetailFragment newInstance(Entry item) {
         Bundle arguments = new Bundle();
-        arguments.putInt(ItunesItemDetailFragment.ARG_ITEM_ID, id);
+        arguments.putSerializable(ItunesItemDetailFragment.ARG_ITEM_ID, item);
         ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -49,8 +49,7 @@ public class ItunesItemDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            itunesItem = ItunesItemListFragment.getItunesItemList()
-                    .get(getArguments().getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
+            itunesItem = (Entry) getArguments().getSerializable(ItunesItemDetailFragment.ARG_ITEM_ID);
             getActivity().getActionBar().setTitle(itunesItem.getFormattedName());
         }
     }
@@ -68,7 +67,7 @@ public class ItunesItemDetailFragment extends Fragment {
         if (itunesItem != null) {
             ((TextView) rootView.findViewById(R.id.article_title)).setText(itunesItem.getFormattedName());
             ((TextView) rootView.findViewById(R.id.article_byline)).setText(itunesItem.getImArtist().getLabel());
-            ((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());
+            //((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());
             ((NetworkImageView) rootView.findViewById(R.id.article_photo)).setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
         }
 

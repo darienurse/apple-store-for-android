@@ -1,6 +1,5 @@
 package com.appleappstorestop25.app;
 
-import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -8,8 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.ShareActionProvider;
+import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 import com.appleappstorestop25.app.SlidingTabs.SlidingTabsColorsFragment;
 
 
@@ -93,21 +92,22 @@ public class ItunesItemListActivity extends FragmentActivity
     /**
      * Callback method from {@link ItunesItemListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
+     * @param item
      */
     @Override
-    public void onItunesItemSelected(Integer id) {
-        Log.d("DEBUG", "" + id);
+    public void onItunesItemSelected(Entry item) {
+        Log.d("DEBUG", "" + item);
 
         if (mTwoPane) {
-            setShareIntent(ItunesItemListFragment.getItunesItemList().get(id).generateShareIntent());
+            setShareIntent(item.generateShareIntent());
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(id))
+                    .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(item))
                     .commit();
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItunesItemDetailActivity.class);
-            detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, item);
             startActivity(detailIntent);
         }
     }
