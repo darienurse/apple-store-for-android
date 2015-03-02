@@ -1,6 +1,8 @@
 package com.appleappstorestop25.app;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ShareActionProvider;
+import com.appleappstorestop25.app.SlidingTabs.SlidingTabsColorsFragment;
 
 
 /**
@@ -26,7 +29,7 @@ import android.widget.ShareActionProvider;
  * {@link ItunesItemListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class ItunesItemListActivity extends Activity
+public class ItunesItemListActivity extends FragmentActivity
         implements ItunesItemListFragment.Callbacks {
 
     /**
@@ -41,20 +44,21 @@ public class ItunesItemListActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-
-
         setContentView(R.layout.activity_itunesitem_list);
         if (findViewById(R.id.itunesitem_detail_container) != null) {
             mTwoPane = true;
-
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
-            ((ItunesItemListFragment) getFragmentManager()
+            ((ItunesItemListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.itunesitem_list))
                     .setActivateOnItemClick(true);
 
+        }
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            SlidingTabsColorsFragment fragment = new SlidingTabsColorsFragment();
+            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.commit();
         }
     }
 
@@ -96,7 +100,7 @@ public class ItunesItemListActivity extends Activity
 
         if (mTwoPane) {
             setShareIntent(ItunesItemListFragment.getItunesItemList().get(id).generateShareIntent());
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(id))
                     .commit();
         } else {

@@ -7,11 +7,12 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 import javax.validation.Valid;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
-public class Entry {
+public class Entry implements Serializable{
 
     @SerializedName("im:name")
     @Expose

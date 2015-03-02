@@ -1,7 +1,7 @@
 package com.appleappstorestop25.app;
 
 import android.app.Activity;
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,6 +28,8 @@ public class ItunesItemListFragment extends ListFragment {
      * activated item position. Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
+
+    public static final String ARG_URL_ID = "url_link_id";
 
     /**
      * The fragment's current callback object, which is notified of list item
@@ -64,17 +66,25 @@ public class ItunesItemListFragment extends ListFragment {
 
     private static final String TAG = ItunesItemListFragment.class.getSimpleName();
 
-    public static List<Entry> getItunesItemList() {
+    public List<Entry> getItunesItemList() {
         return itunesItemList;
     }
 
-    private static List<Entry> itunesItemList = new ArrayList<Entry>();
+    private List<Entry> itunesItemList = new ArrayList<Entry>();
 
-    private static final String url = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topgrossingapplications/sf=143441/limit=25/json";
+    //private static final String url = "https://itunes.apple.com/us/rss/topgrossingapplications/limit=25/json";
     private ProgressDialog pDialog;
     private ItunesAdapter adapter;
 
     public ItunesItemListFragment() {
+    }
+
+    public static ItunesItemListFragment newInstance(String url) {
+        Bundle arguments = new Bundle();
+        arguments.putString(ARG_URL_ID, url);
+        ItunesItemListFragment fragment = new ItunesItemListFragment();
+        fragment.setArguments(arguments);
+        return fragment;
     }
 
     @Override
@@ -96,7 +106,7 @@ public class ItunesItemListFragment extends ListFragment {
 
         // Creating volley request obj
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(url, null,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(getArguments().getString(ARG_URL_ID), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -176,7 +186,7 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItunesItemSelected(position);
+        mCallbacks.onItunesItemSelected(itunesItemList.get(position));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.appleappstorestop25.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +19,7 @@ import com.appleappstorestop25.app.ItunesItemClasses.Entry;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItunesItemDetailFragment}.
  */
-public class ItunesItemDetailActivity extends Activity {
+public class ItunesItemDetailActivity extends FragmentActivity {
 
     private ShareActionProvider mShareActionProvider;
     private Entry itunesItem;
@@ -39,14 +40,12 @@ public class ItunesItemDetailActivity extends Activity {
                     getIntent().getIntExtra(ItunesItemDetailFragment.ARG_ITEM_ID, 0));
             ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
             fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.itunesitem_detail_container, fragment)
                     .commit();
             if (arguments.containsKey(ItunesItemDetailFragment.ARG_ITEM_ID)) {
                 itunesItem = ItunesItemListFragment.getItunesItemList()
                         .get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
-
-                //itunesItem =  ItunesItemListActivity.itemsList.get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
             }
         }
         else

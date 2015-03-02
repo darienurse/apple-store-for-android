@@ -28,8 +28,10 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        categoryList.add(new CategoryAttribute("Top Grossing", Color.RED, "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topgrossingapplications/sf=143441/limit=25/json"));
-        categoryList.add(new CategoryAttribute("Top Free", Color.BLUE, "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/sf=143441/limit=25/json"));
+        categoryList.add(new CategoryAttribute("Top Grossing Apps", Color.RED, "https://itunes.apple.com/us/rss/topgrossingapplications/limit=25/json"));
+        categoryList.add(new CategoryAttribute("Top Free Apps", Color.BLUE, "https://itunes.apple.com/us/rss/topfreeapplications/limit=25/json"));
+        categoryList.add(new CategoryAttribute("Top Songs", Color.GREEN, "https://itunes.apple.com/us/rss/topgrossingapplications/limit=25/json"));
+        categoryList.add(new CategoryAttribute("Top Albums", Color.YELLOW, "https://itunes.apple.com/us/rss/topfreeapplications/limit=25/json"));
     }
 
     public static synchronized AppController getInstance() {

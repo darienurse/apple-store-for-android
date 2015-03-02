@@ -16,8 +16,9 @@
 
 package com.appleappstorestop25.app.SlidingTabs;
 
-import com.appleappstorestop25.app.AppController;
-import com.appleappstorestop25.app.R;
+import com.appleappstorestop25.app.*;
+import com.appleappstorestop25.app.ItunesItemClasses.Attributes;
+import com.appleappstorestop25.app.ItunesItemClasses.Category;
 import com.appleappstorestop25.app.SlidingTabs.SlidingTabLayout;
 
 import android.graphics.Color;
@@ -46,11 +47,13 @@ public class SlidingTabsColorsFragment extends Fragment {
      */
     static class SamplePagerItem {
         private final CharSequence mTitle;
+        private final int mIndex;
         private final int mIndicatorColor;
         private final int mDividerColor;
 
-        SamplePagerItem(CharSequence title, int indicatorColor, int dividerColor) {
+        SamplePagerItem(CharSequence title, int index, int indicatorColor, int dividerColor) {
             mTitle = title;
+            mIndex = index;
             mIndicatorColor = indicatorColor;
             mDividerColor = dividerColor;
         }
@@ -59,7 +62,8 @@ public class SlidingTabsColorsFragment extends Fragment {
          * @return A new {@link Fragment} to be displayed by a {@link ViewPager}
          */
         Fragment createFragment() {
-            return null;//ContentFragment.newInstance(mTitle, mIndicatorColor, mDividerColor);
+            return ItunesItemListFragment.newInstance(
+                    AppController.categoryList.get(mIndex).getUrl());
         }
 
         /**
@@ -68,6 +72,12 @@ public class SlidingTabsColorsFragment extends Fragment {
          */
         CharSequence getTitle() {
             return mTitle;
+        }
+        /**
+         * @return the index used for indicator on the {@link SlidingTabLayout}
+         */
+        int getindex() {
+            return mIndex;
         }
 
         /**
@@ -112,29 +122,15 @@ public class SlidingTabsColorsFragment extends Fragment {
          * Populate our tab list with tabs. Each item contains a title, indicator color and divider
          * color, which are used by {@link SlidingTabLayout}.
          */
-        mTabs.add(new SamplePagerItem(
-                AppController.categoryList.get(0).getTitle(), // Title
-                Color.BLUE, // Indicator color
-                Color.GRAY // Divider color
-        ));
-
-        mTabs.add(new SamplePagerItem(
-                AppController.categoryList.get(1).getTitle(), // Title
-                Color.RED, // Indicator color
-                Color.GRAY // Divider color
-        ));
-
-        mTabs.add(new SamplePagerItem(
-                AppController.categoryList.get(0).getTitle(), // Title
-                Color.YELLOW, // Indicator color
-                Color.GRAY // Divider color
-        ));
-
-        mTabs.add(new SamplePagerItem(
-                AppController.categoryList.get(0).getTitle(), // Title
-                Color.GREEN, // Indicator color
-                Color.GRAY // Divider color
-        ));
+        int tabIndex = 0;
+        for(CategoryAttribute ca:AppController.categoryList){
+            mTabs.add(new SamplePagerItem(
+                    ca.getTitle(), // Title
+                    tabIndex++, //Index
+                    ca.getColor(), // Indicator color
+                    Color.GRAY // Divider color
+            ));
+        }
         // END_INCLUDE (populate_tabs)
     }
 
