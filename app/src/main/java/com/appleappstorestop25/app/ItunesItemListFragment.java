@@ -1,21 +1,17 @@
 package com.appleappstorestop25.app;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.app.ListFragment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-
-
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 import com.appleappstorestop25.app.ItunesItemClasses.ItunesRSSResponse;

@@ -60,6 +60,7 @@ public class ItunesItemListActivity extends Activity
             ((ItunesItemListFragment) getFragmentManager()
                     .findFragmentById(R.id.itunesitem_list))
                     .setActivateOnItemClick(true);
+
         }
     }
 
@@ -100,12 +101,10 @@ public class ItunesItemListActivity extends Activity
         Log.d("DEBUG", "" + id);
 
         if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
             Bundle arguments = new Bundle();
             arguments.putInt(ItunesItemDetailFragment.ARG_ITEM_ID, id);
             ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
+            setShareIntent(ItunesItemListFragment.getItunesItemList().get(id).generateShareIntent());
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
                     .replace(R.id.itunesitem_detail_container, fragment)

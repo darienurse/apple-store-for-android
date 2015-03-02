@@ -61,7 +61,7 @@ public class ItunesItemDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.article_title)).setText(itunesItem.getFormattedName());
             ((TextView) rootView.findViewById(R.id.article_byline)).setText(itunesItem.getImArtist().getLabel());
             ((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());
-            ((NetworkImageView) rootView.findViewById(R.id.article_photo)).setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);;
+            ((NetworkImageView) rootView.findViewById(R.id.article_photo)).setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
         }
 
         return rootView;
