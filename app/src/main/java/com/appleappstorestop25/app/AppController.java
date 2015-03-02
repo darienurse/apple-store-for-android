@@ -1,6 +1,7 @@
 package com.appleappstorestop25.app;
 
 import android.app.Application;
+import android.graphics.Color;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -8,9 +9,18 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
+    public static final List<CategoryAttribute> categoryList = new ArrayList<CategoryAttribute>(){{
+        categoryMap.add(new CategoryAttribute("Top Grossing", Color.RED, "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topgrossingapplications/sf=143441/limit=25/json"));
+        categoryMap.add(new CategoryAttribute("Top Free", Color.BLUE, "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/sf=143441/limit=25/json"));
+    }};
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
