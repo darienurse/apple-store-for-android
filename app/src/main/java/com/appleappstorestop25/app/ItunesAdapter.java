@@ -67,7 +67,7 @@ public class ItunesAdapter extends BaseAdapter {
         thumbNail.setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
 
         // name
-        name.setText(itunesItem.getFormattedName());
+        name.setText((position+1)+". "+itunesItem.getFormattedName());
 
         // artist
         artist.setText(itunesItem.getImArtist().getLabel());
