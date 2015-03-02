@@ -40,11 +40,7 @@ public class ItunesItemDetailFragment extends Fragment {
         Bundle arguments = new Bundle();
         arguments.putInt(ItunesItemDetailFragment.ARG_ITEM_ID, id);
         ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
-        //setShareIntent(ItunesItemListFragment.getItunesItemList().get(id).generateShareIntent());
         fragment.setArguments(arguments);
-//        getFragmentManager().beginTransaction()
-//                .replace(R.id.itunesitem_detail_container, fragment)
-//                .commit();
         return fragment;
     }
 
