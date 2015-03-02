@@ -17,10 +17,7 @@ import java.util.Map;
 public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
-    public static final List<CategoryAttribute> categoryList = new ArrayList<CategoryAttribute>(){{
-        categoryMap.add(new CategoryAttribute("Top Grossing", Color.RED, "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topgrossingapplications/sf=143441/limit=25/json"));
-        categoryMap.add(new CategoryAttribute("Top Free", Color.BLUE, "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/sf=143441/limit=25/json"));
-    }};
+    public static  List<CategoryAttribute> categoryList = new ArrayList<CategoryAttribute>();
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
@@ -31,6 +28,8 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        categoryList.add(new CategoryAttribute("Top Grossing", Color.RED, "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topgrossingapplications/sf=143441/limit=25/json"));
+        categoryList.add(new CategoryAttribute("Top Free", Color.BLUE, "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/sf=143441/limit=25/json"));
     }
 
     public static synchronized AppController getInstance() {

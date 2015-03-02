@@ -101,13 +101,9 @@ public class ItunesItemListActivity extends Activity
         Log.d("DEBUG", "" + id);
 
         if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putInt(ItunesItemDetailFragment.ARG_ITEM_ID, id);
-            ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
             setShareIntent(ItunesItemListFragment.getItunesItemList().get(id).generateShareIntent());
-            fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
-                    .replace(R.id.itunesitem_detail_container, fragment)
+                    .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(id))
                     .commit();
         } else {
             // In single-pane mode, simply start the detail activity
