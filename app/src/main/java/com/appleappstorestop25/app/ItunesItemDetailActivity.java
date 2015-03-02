@@ -48,21 +48,18 @@ public class ItunesItemDetailActivity extends Activity {
 
                 //itunesItem =  ItunesItemListActivity.itemsList.get(arguments.getInt(ItunesItemDetailFragment.ARG_ITEM_ID));
             }
-
         }
+        else
+        /*TODO There is an issue with ManuelPeinado's FadingActionBar where if the user changes the screen orientation,
+        the application will crash. For now, the user will be bumped back to the listview on orientation change.*/
+            finish();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
+            // This ID represents the Home or Up button.
             NavUtils.navigateUpTo(this, new Intent(this, ItunesItemListActivity.class));
             return true;
         }
@@ -80,7 +77,7 @@ public class ItunesItemDetailActivity extends Activity {
         // Fetch and store ShareActionProvider
         mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
 
-        setShareIntent(itunesItem.generateShareIntent());
+        if(itunesItem!=null) setShareIntent(itunesItem.generateShareIntent());
 
         // Return true to display share_menu
         return true;

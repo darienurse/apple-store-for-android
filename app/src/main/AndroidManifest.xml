@@ -21,6 +21,7 @@
         <activity
             android:name=".ItunesItemDetailActivity"
             android:label="@string/title_itunesitem_detail"
+            android:theme="@style/AppTheme.TranslucentActionBar"
             android:parentActivityName=".ItunesItemListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
