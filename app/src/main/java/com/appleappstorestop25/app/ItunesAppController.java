@@ -1,23 +1,19 @@
 package com.appleappstorestop25.app;
 
-import android.app.Application;
 import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
 import com.appleappstorestop25.app.BaseClasses.AppController;
+import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ItunesAppController extends AppController {
 
     public static final int LOAD = 50;
 
-    public static  List<CategoryAttribute> categoryList;
+    private static List<CategoryAttribute> categoryList;
+    private static Map<String, String> appleToPlayStoreMap;
+
+    public static Map<Integer, Entry> userFavorites;
 
     public static ColorDrawable globalColorController;
 
@@ -27,6 +23,8 @@ public class ItunesAppController extends AppController {
     public void onCreate() {
         super.onCreate();
         categoryList = new ArrayList<CategoryAttribute>();
+        appleToPlayStoreMap = new HashMap<String, String>();
+        userFavorites = new LinkedHashMap<Integer, Entry>();
         globalColorController = new ColorDrawable();
         mInstance = this;
         categoryList.add(new CategoryAttribute("Top Grossing Apps", getResources().getColor(R.color.green), "https://itunes.apple.com/us/rss/topgrossingapplications/limit="+LOAD+"/json"));
@@ -35,6 +33,19 @@ public class ItunesAppController extends AppController {
         categoryList.add(new CategoryAttribute("Top TV Seasons", getResources().getColor(R.color.red), "https://itunes.apple.com/us/rss/toptvseasons/limit="+LOAD+"/json"));
         categoryList.add(new CategoryAttribute("Top Books", getResources().getColor(R.color.blue), "https://itunes.apple.com/us/rss/toppaidebooks/limit="+LOAD+"/json"));
         categoryList.add(new CategoryAttribute("Top Podcasts", getResources().getColor(R.color.purple), "https://itunes.apple.com/us/rss/toppodcasts/limit="+LOAD+"/json"));
+        appleToPlayStoreMap.put("Application", "apps");
+        appleToPlayStoreMap.put("Podcast", "all");
+        appleToPlayStoreMap.put("Music", "music");
+        appleToPlayStoreMap.put("MZRssItemTypeIdentifier.Book", "books");
+        appleToPlayStoreMap.put("TV Show", "tv");
+    }
+
+    public static List<CategoryAttribute> getCategoryList() {
+        return Collections.unmodifiableList(categoryList);
+    }
+
+    public static Map<String, String> getAppleToPlayStoreMap() {
+        return Collections.unmodifiableMap(appleToPlayStoreMap);
     }
 
     public static synchronized ItunesAppController getInstance() {

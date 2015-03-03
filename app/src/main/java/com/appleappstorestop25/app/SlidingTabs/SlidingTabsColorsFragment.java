@@ -59,7 +59,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          */
         Fragment createFragment() {
             return ItunesItemListFragment.newInstance(
-                    ItunesAppController.categoryList.get(mIndex).getUrl());
+                    ItunesAppController.getCategoryList().get(mIndex).getUrl());
         }
 
         /**
@@ -119,7 +119,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          * color, which are used by {@link SlidingTabLayout}.
          */
         int tabIndex = 0;
-        for(CategoryAttribute ca: ItunesAppController.categoryList){
+        for(CategoryAttribute ca: ItunesAppController.getCategoryList()){
             mTabs.add(new SamplePagerItem(
                     ca.getTitle(), // Title
                     tabIndex++, //Index

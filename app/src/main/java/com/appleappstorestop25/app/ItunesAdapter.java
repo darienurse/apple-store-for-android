@@ -13,6 +13,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 
+import java.util.Collection;
 import java.util.List;
 
 public class ItunesAdapter extends BaseAdapter {

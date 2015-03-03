@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- Search, should appear as action button -->
+    <item android:id="@+id/play_store_button"
+          android:icon="@drawable/play_store_icon"
+          android:title="@string/play_store_search"
+          android:showAsAction="ifRoom" />
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/fav_button"
+          android:icon="@drawable/ic_action_favorite"
+          android:title="@string/fav_string"
+          android:showAsAction="ifRoom" />
+</menu>

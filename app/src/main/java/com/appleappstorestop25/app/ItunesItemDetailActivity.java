@@ -2,6 +2,7 @@ package com.appleappstorestop25.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
@@ -54,31 +55,38 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button.
-            NavUtils.navigateUpTo(this, new Intent(this, ItunesItemListActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.share_menu, menu);
+        getMenuInflater().inflate(R.menu.details_menu, menu);
+        MenuItem mItem = menu.findItem(R.id.menu_item_share);
+        mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
+        if(itunesItem!=null) setShareIntent(itunesItem.generateShareIntent());
+        return true;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate share_menu resource file.
-        getMenuInflater().inflate(R.menu.share_menu, menu);
-
-        // Locate MenuItem with ShareActionProvider
-        MenuItem mItem = menu.findItem(R.id.menu_item_share);
-
-        // Fetch and store ShareActionProvider
-        mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
-
-        if(itunesItem!=null) setShareIntent(itunesItem.generateShareIntent());
-
-        // Return true to display share_menu
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // This ID represents the Home or Up button.
+                NavUtils.navigateUpTo(this, new Intent(this, ItunesItemListActivity.class));
+                return true;
+            case R.id.play_store_button:
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=" + itunesItem.getFormattedName()
+                            +"&c="+ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel()))));
+                return true;
+            case R.id.fav_button:
+                int itemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
+                if(ItunesAppController.userFavorites.containsKey(itemId)){
+                    ItunesAppController.userFavorites.remove(itemId);
+                }
+                else{
+                    ItunesAppController.userFavorites.put(itemId,itunesItem);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // Call to update the share intent

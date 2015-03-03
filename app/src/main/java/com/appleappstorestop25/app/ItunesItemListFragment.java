@@ -106,36 +106,38 @@ public class ItunesItemListFragment extends ListFragment {
             }}, 1000);
 
         // Creating volley request obj
+        if(getArguments()!=null) {
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(getArguments().getString(ARG_URL_ID), null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString());
-                        Gson gson = new Gson();
-                        ItunesRSSResponse rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
-                        Log.d(TAG, rssResponse.getFeed().getAuthor().getName().getLabel());
-                        itunesItemList.clear();
-                        itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                        Log.d(TAG, ""+adapter.getCount());
-                        hidePDialog();
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(getArguments().getString(ARG_URL_ID), null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d(TAG, response.toString());
+                            Gson gson = new Gson();
+                            ItunesRSSResponse rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
+                            Log.d(TAG, rssResponse.getFeed().getAuthor().getName().getLabel());
+                            itunesItemList.clear();
+                            itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                            Log.d(TAG, "" + adapter.getCount());
+                            hidePDialog();
 
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
-                        Log.d(TAG, ""+adapter.getCount());
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                hidePDialog();
+                            // notifying list adapter about data changes
+                            // so that it renders the list view with updated data
+                            adapter.notifyDataSetChanged();
+                            Log.d(TAG, "" + adapter.getCount());
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                    hidePDialog();
 
-            }
-        });
+                }
+            });
 
-        // Adding request to request queue
-        ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
+            // Adding request to request queue
+            ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
+        }
     }
 
     @Override
