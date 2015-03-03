@@ -88,7 +88,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
         this(context, attrs, 0);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public SlidingTabLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 

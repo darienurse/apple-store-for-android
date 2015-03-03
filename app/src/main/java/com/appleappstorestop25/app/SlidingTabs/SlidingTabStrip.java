@@ -151,6 +151,7 @@ class SlidingTabStrip extends LinearLayout {
             }
             ItunesAppController.globalColorController.setColor(color);
             setBackgroundColor(color);
+            mSelectedIndicatorPaint.setColor(getContrastColor(color));
 
             canvas.drawRect(left, height - mSelectedIndicatorThickness, right,
                     height, mSelectedIndicatorPaint);
@@ -189,6 +190,12 @@ class SlidingTabStrip extends LinearLayout {
         float g = (Color.green(color1) * ratio) + (Color.green(color2) * inverseRation);
         float b = (Color.blue(color1) * ratio) + (Color.blue(color2) * inverseRation);
         return Color.rgb((int) r, (int) g, (int) b);
+    }
+
+    private static int getContrastColor(int bgColor){
+        return Color.rgb(255-Color.red(bgColor),
+                255-Color.green(bgColor)/2,
+                255-Color.blue(bgColor));
     }
 
     private static class SimpleTabColorizer implements SlidingTabLayout.TabColorizer {

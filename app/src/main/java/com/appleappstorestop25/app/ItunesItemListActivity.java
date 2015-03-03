@@ -99,7 +99,7 @@ public class ItunesItemListActivity extends FragmentActivity
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             SlidingTabsColorsFragment fragment = new SlidingTabsColorsFragment();
-            transaction.replace(R.id.fragment_main_content, fragment);
+            transaction.replace(R.id.drawer_layout, fragment);
             transaction.commit();
         }
     }
@@ -108,9 +108,6 @@ public class ItunesItemListActivity extends FragmentActivity
     public boolean onCreateOptionsMenu(Menu menu) {
 
         if (mTwoPane) {
-            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-            menu.findItem(R.id.menu_item_share).setVisible(!drawerOpen);
-
             // Inflate share_menu resource file.
             getMenuInflater().inflate(R.menu.share_menu, menu);
             getMenuInflater().inflate(R.menu.details_menu, menu);
@@ -120,6 +117,9 @@ public class ItunesItemListActivity extends FragmentActivity
 
             // Fetch and store ShareActionProvider
             mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
+
+            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+            menu.findItem(R.id.menu_item_share).setVisible(!drawerOpen);
 
             // Return true to display share_menu
             return true;

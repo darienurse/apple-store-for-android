@@ -57,7 +57,7 @@ public class ItunesItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        //View rootView = inflater.inflate(R.layout.fragment_itunesitem_detail, container, false);
+        //View rootView = inflater.inflate(R.layout.itunesitem_detail, container, false);
         View rootView = mFadingHelper.createView(inflater);
 
         if (imageLoader == null)
@@ -81,7 +81,7 @@ public class ItunesItemDetailFragment extends Fragment {
         mFadingHelper = new FadingActionBarHelper()
                 .actionBarBackground(R.color.primary_apple_blue)
                 .headerLayout(R.layout.layout_header)
-                .contentLayout(R.layout.fragment_itunesitem_detail)
+                .contentLayout(R.layout.itunesitem_detail)
                 .parallax(false);
         mFadingHelper.initActionBar(activity);
     }
