@@ -80,7 +80,7 @@ public class ItunesItemDetailFragment extends Fragment {
 
         mFadingHelper = new FadingActionBarHelper()
                 .actionBarBackground(R.color.primary_apple_blue)
-                .headerLayout(R.layout.header_layout)
+                .headerLayout(R.layout.layout_header)
                 .contentLayout(R.layout.fragment_itunesitem_detail)
                 .parallax(false);
         mFadingHelper.initActionBar(activity);

@@ -137,7 +137,7 @@ public class SlidingTabsColorsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sample, container, false);
+        return inflater.inflate(R.layout.fragment_slider_pager, container, false);
     }
 
     // BEGIN_INCLUDE (fragment_onviewcreated)

@@ -57,7 +57,6 @@ class SlidingTabStrip extends LinearLayout {
 
     private SlidingTabLayout.TabColorizer mCustomTabColorizer;
     private final SimpleTabColorizer mDefaultTabColorizer;
-    private ColorDrawable mColorDrawable;
 
     SlidingTabStrip(Context context) {
         this(context, null);
@@ -66,8 +65,7 @@ class SlidingTabStrip extends LinearLayout {
     SlidingTabStrip(Context context, AttributeSet attrs) {
         super(context, attrs);
         ActionBar mActionBar = ((Activity) context).getActionBar();
-        mColorDrawable = ItunesAppController.globalColorController;
-        mActionBar.setBackgroundDrawable(mColorDrawable);
+        mActionBar.setBackgroundDrawable(ItunesAppController.globalColorController);
         setWillNotDraw(false);
 
         final float density = getResources().getDisplayMetrics().density;
@@ -151,7 +149,7 @@ class SlidingTabStrip extends LinearLayout {
                 right = (int) (mSelectionOffset * nextTitle.getRight() +
                         (1.0f - mSelectionOffset) * right);
             }
-            mColorDrawable.setColor(color);
+            ItunesAppController.globalColorController.setColor(color);
             setBackgroundColor(color);
 
             canvas.drawRect(left, height - mSelectedIndicatorThickness, right,
