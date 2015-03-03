@@ -128,7 +128,7 @@ public class SlidingTabsColorsFragment extends Fragment {
                     ca.getTitle(), // Title
                     tabIndex++, //Index
                     ca.getColor(), // Indicator color
-                    Color.GRAY // Divider color
+                    ca.getColor() // Divider color
             ));
         }
         // END_INCLUDE (populate_tabs)

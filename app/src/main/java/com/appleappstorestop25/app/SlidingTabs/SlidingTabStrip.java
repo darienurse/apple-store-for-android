@@ -17,10 +17,13 @@
 package com.appleappstorestop25.app.SlidingTabs;
 
 import android.R;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -53,13 +56,22 @@ class SlidingTabStrip extends LinearLayout {
 
     private SlidingTabLayout.TabColorizer mCustomTabColorizer;
     private final SimpleTabColorizer mDefaultTabColorizer;
+    private ColorDrawable mColorDrawable;
 
     SlidingTabStrip(Context context) {
-        this(context, null);
+        this(context, null, new ColorDrawable());
     }
 
-    SlidingTabStrip(Context context, AttributeSet attrs) {
+    SlidingTabStrip(Context context, ColorDrawable cd) {
+        this(context, null, cd);
+    }
+
+    SlidingTabStrip(Context context, AttributeSet attrs, ColorDrawable cd) {
         super(context, attrs);
+        ActionBar mActionBar = ((Activity) context).getActionBar();
+        mColorDrawable = cd;
+        mActionBar.setBackgroundDrawable(mColorDrawable);
+        //((Activity) context).findViewById(com.appleappstorestop25.app.R.id.sliding_tabs).setBackground(mColorDrawable);
         setWillNotDraw(false);
 
         final float density = getResources().getDisplayMetrics().density;
@@ -142,7 +154,7 @@ class SlidingTabStrip extends LinearLayout {
                 right = (int) (mSelectionOffset * nextTitle.getRight() +
                         (1.0f - mSelectionOffset) * right);
             }
-
+            mColorDrawable.setColor(color);
             mSelectedIndicatorPaint.setColor(color);
 
             canvas.drawRect(left, height - mSelectedIndicatorThickness, right,
@@ -177,6 +189,7 @@ class SlidingTabStrip extends LinearLayout {
      */
     private static int blendColors(int color1, int color2, float ratio) {
         final float inverseRation = 1f - ratio;
+        int result;
         float r = (Color.red(color1) * ratio) + (Color.red(color2) * inverseRation);
         float g = (Color.green(color1) * ratio) + (Color.green(color2) * inverseRation);
         float b = (Color.blue(color1) * ratio) + (Color.blue(color2) * inverseRation);
