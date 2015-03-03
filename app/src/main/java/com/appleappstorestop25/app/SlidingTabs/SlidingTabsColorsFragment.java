@@ -17,11 +17,7 @@
 package com.appleappstorestop25.app.SlidingTabs;
 
 import com.appleappstorestop25.app.*;
-import com.appleappstorestop25.app.ItunesItemClasses.Attributes;
-import com.appleappstorestop25.app.ItunesItemClasses.Category;
-import com.appleappstorestop25.app.SlidingTabs.SlidingTabLayout;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -63,7 +59,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          */
         Fragment createFragment() {
             return ItunesItemListFragment.newInstance(
-                    AppController.categoryList.get(mIndex).getUrl());
+                    ItunesAppController.categoryList.get(mIndex).getUrl());
         }
 
         /**
@@ -123,7 +119,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          * color, which are used by {@link SlidingTabLayout}.
          */
         int tabIndex = 0;
-        for(CategoryAttribute ca:AppController.categoryList){
+        for(CategoryAttribute ca: ItunesAppController.categoryList){
             mTabs.add(new SamplePagerItem(
                     ca.getTitle(), // Title
                     tabIndex++, //Index

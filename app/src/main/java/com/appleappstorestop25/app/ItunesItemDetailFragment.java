@@ -25,7 +25,7 @@ public class ItunesItemDetailFragment extends Fragment {
      */
     public static final String ARG_ITEM_ID = "item_id";
     private Entry itunesItem;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
     private FadingActionBarHelper mFadingHelper;
 
 
@@ -61,7 +61,7 @@ public class ItunesItemDetailFragment extends Fragment {
         View rootView = mFadingHelper.createView(inflater);
 
         if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
+            imageLoader = ItunesAppController.getInstance().getImageLoader();
 
         // Show the dummy content as text in a TextView.
         if (itunesItem != null) {

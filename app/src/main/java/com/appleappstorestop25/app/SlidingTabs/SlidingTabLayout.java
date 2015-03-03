@@ -19,7 +19,6 @@ package com.appleappstorestop25.app.SlidingTabs;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -78,7 +77,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
-    private ColorDrawable colorController;
 
     private final SlidingTabStrip mTabStrip;
 
@@ -93,8 +91,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public SlidingTabLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        colorController = new ColorDrawable();
-        setBackground(colorController);
 
         // Disable the Scroll Bar
         setHorizontalScrollBarEnabled(false);
@@ -103,7 +99,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
         mTitleOffset = (int) (TITLE_OFFSET_DIPS * getResources().getDisplayMetrics().density);
 
-        mTabStrip = new SlidingTabStrip(context, colorController);
+        mTabStrip = new SlidingTabStrip(context);
         addView(mTabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
 

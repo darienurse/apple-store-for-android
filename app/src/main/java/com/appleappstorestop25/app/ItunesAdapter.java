@@ -3,9 +3,7 @@ package com.appleappstorestop25.app;
 /**
  * Created by Darien on 9/27/2014.
  */
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,7 @@ public class ItunesAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<Entry> itunesItems;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
 
     public ItunesAdapter(Context context, List<Entry> itunesItems) {
         this.context = context;
@@ -53,7 +51,7 @@ public class ItunesAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_row, null);
 
         if (imageLoader == null)
-            imageLoader = AppController.getInstance().getImageLoader();
+            imageLoader = ItunesAppController.getInstance().getImageLoader();
         NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);;
         TextView name = (TextView) convertView.findViewById(R.id.name);
         TextView artist = (TextView) convertView.findViewById(R.id.artist);

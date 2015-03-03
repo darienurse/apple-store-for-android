@@ -28,10 +28,11 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
+import com.appleappstorestop25.app.ItunesAppController;
 
 class SlidingTabStrip extends LinearLayout {
 
-    private static final int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 2;
+    private static final int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 0;
     private static final byte DEFAULT_BOTTOM_BORDER_COLOR_ALPHA = 0x26;
     private static final int SELECTED_INDICATOR_THICKNESS_DIPS = 8;
     private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5;
@@ -59,19 +60,14 @@ class SlidingTabStrip extends LinearLayout {
     private ColorDrawable mColorDrawable;
 
     SlidingTabStrip(Context context) {
-        this(context, null, new ColorDrawable());
+        this(context, null);
     }
 
-    SlidingTabStrip(Context context, ColorDrawable cd) {
-        this(context, null, cd);
-    }
-
-    SlidingTabStrip(Context context, AttributeSet attrs, ColorDrawable cd) {
+    SlidingTabStrip(Context context, AttributeSet attrs) {
         super(context, attrs);
         ActionBar mActionBar = ((Activity) context).getActionBar();
-        mColorDrawable = cd;
+        mColorDrawable = ItunesAppController.globalColorController;
         mActionBar.setBackgroundDrawable(mColorDrawable);
-        //((Activity) context).findViewById(com.appleappstorestop25.app.R.id.sliding_tabs).setBackground(mColorDrawable);
         setWillNotDraw(false);
 
         final float density = getResources().getDisplayMetrics().density;
@@ -94,6 +90,7 @@ class SlidingTabStrip extends LinearLayout {
 
         mSelectedIndicatorThickness = (int) (SELECTED_INDICATOR_THICKNESS_DIPS * density);
         mSelectedIndicatorPaint = new Paint();
+        mSelectedIndicatorPaint.setColor(Color.WHITE);
 
         mDividerHeight = DEFAULT_DIVIDER_HEIGHT;
         mDividerPaint = new Paint();
@@ -155,7 +152,7 @@ class SlidingTabStrip extends LinearLayout {
                         (1.0f - mSelectionOffset) * right);
             }
             mColorDrawable.setColor(color);
-            mSelectedIndicatorPaint.setColor(color);
+            setBackgroundColor(color);
 
             canvas.drawRect(left, height - mSelectedIndicatorThickness, right,
                     height, mSelectedIndicatorPaint);

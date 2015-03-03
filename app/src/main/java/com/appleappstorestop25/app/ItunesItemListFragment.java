@@ -135,7 +135,7 @@ public class ItunesItemListFragment extends ListFragment {
         });
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq);
+        ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 
     @Override
