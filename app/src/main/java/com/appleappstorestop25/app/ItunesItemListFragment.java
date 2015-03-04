@@ -103,7 +103,7 @@ public class ItunesItemListFragment extends ListFragment {
         handler.postDelayed(new Runnable() {
             public void run() {
                 if(pDialog != null) pDialog.show();
-            }}, 1000);
+            }}, 4000);
 
         // Creating volley request obj
         if(getArguments()!=null) {

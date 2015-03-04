@@ -12,7 +12,6 @@
         android:divider="?android:attr/dividerHorizontal"
         android:orientation="horizontal"
         android:showDividers="middle"
-        android:id="@+id/fragment_main_content"
         tools:context=".ItunesItemListActivity">
 
         <fragment

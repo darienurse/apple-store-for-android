@@ -48,10 +48,6 @@ public class ItunesItemDetailActivity extends FragmentActivity {
                 itunesItem = (Entry) arguments.getSerializable(ItunesItemDetailFragment.ARG_ITEM_ID);
             }
         }
-        else
-        /*TODO There is an issue with ManuelPeinado's FadingActionBar where if the user changes the screen orientation,
-        the application will crash. For now, the user will be bumped back to the listview on orientation change.*/
-            finish();
     }
 
     @Override
@@ -60,7 +56,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         getMenuInflater().inflate(R.menu.details_menu, menu);
         MenuItem mItem = menu.findItem(R.id.menu_item_share);
         mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
-        if(itunesItem!=null) setShareIntent(itunesItem.generateShareIntent());
+        if(itunesItem != null) setShareIntent(itunesItem.generateShareIntent());
         return true;
     }
 

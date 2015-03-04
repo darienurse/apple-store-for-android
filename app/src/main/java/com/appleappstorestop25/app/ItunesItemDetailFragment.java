@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
-import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 
 /**
  * A fragment representing a single ItunesItem detail screen.
@@ -26,7 +25,6 @@ public class ItunesItemDetailFragment extends Fragment {
     public static final String ARG_ITEM_ID = "item_id";
     private Entry itunesItem;
     ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
-    private FadingActionBarHelper mFadingHelper;
 
 
     /**
@@ -57,8 +55,8 @@ public class ItunesItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        //View rootView = inflater.inflate(R.layout.itunesitem_detail, container, false);
-        View rootView = mFadingHelper.createView(inflater);
+        View rootView = inflater.inflate(R.layout.itunesitem_detail, container, false);
+
 
         if (imageLoader == null)
             imageLoader = ItunesAppController.getInstance().getImageLoader();
@@ -73,18 +71,5 @@ public class ItunesItemDetailFragment extends Fragment {
 
         return rootView;
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        mFadingHelper = new FadingActionBarHelper()
-                .actionBarBackground(R.color.primary_apple_blue)
-                .headerLayout(R.layout.layout_header)
-                .contentLayout(R.layout.itunesitem_detail)
-                .parallax(false);
-        mFadingHelper.initActionBar(activity);
-    }
-
 
 }
