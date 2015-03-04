@@ -34,6 +34,8 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         setContentView(R.layout.activity_itunesitem_detail);
         unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
         favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
+        itunesItem = (Entry)  getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
+
 
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,9 +51,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.itunesitem_detail_container, fragment)
                     .commit();
-            if (arguments.containsKey(ItunesItemDetailFragment.ARG_ITEM_ID)) {
-                itunesItem = (Entry) arguments.getSerializable(ItunesItemDetailFragment.ARG_ITEM_ID);
-            }
+
         }
     }
 
@@ -62,7 +62,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         MenuItem mItem = menu.findItem(R.id.menu_item_share);
         MenuItem mFavButton = menu.findItem(R.id.fav_button);
         mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
-        if (itunesItem != null) {
+        //if (itunesItem != null) {
             setShareIntent(itunesItem.generateShareIntent());
             int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
             if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
@@ -70,7 +70,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
             } else {
                 mFavButton.setIcon(unfavorite);
             }
-        }
+        //}
         return true;
     }
 
@@ -80,23 +80,25 @@ public class ItunesItemDetailActivity extends FragmentActivity {
             case android.R.id.home:
                 // This ID represents the Home or Up button.
                 NavUtils.navigateUpTo(this, new Intent(this, ItunesItemListActivity.class));
-                return true;
+                break;
             case R.id.play_store_button:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=" + itunesItem.getFormattedName()
                         + "&c=" + ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel()))));
-                return true;
+                break;
             case R.id.fav_button:
-                int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
-                if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
-                    ItunesAppController.userFavorites.remove(itunesItemId);
-                    Log.d("NURSE", "Removing, Map size: " + ItunesAppController.userFavorites.size());
-                    item.setIcon(unfavorite);
-                } else {
-                    ItunesAppController.userFavorites.put(itunesItemId, itunesItem);
-                    Log.d("NURSE", "Adding, Map size: " + ItunesAppController.userFavorites.size());
-                    item.setIcon(favorite);
-                }
-                return true;
+                //if(itunesItem!=null) {
+                    int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
+                    if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
+                        ItunesAppController.userFavorites.remove(itunesItemId);
+                        Log.d("NURSE", "Removing, Map size: " + ItunesAppController.userFavorites.size());
+                        item.setIcon(unfavorite);
+                    } else {
+                        ItunesAppController.userFavorites.put(itunesItemId, itunesItem);
+                        Log.d("NURSE", "Adding, Map size: " + ItunesAppController.userFavorites.size());
+                        item.setIcon(favorite);
+                    }
+                //}
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

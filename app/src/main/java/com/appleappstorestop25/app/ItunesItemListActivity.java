@@ -227,8 +227,8 @@ public class ItunesItemListActivity extends FragmentActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            mDrawerLayout.closeDrawers();
             onItunesItemSelected((Entry) mDrawerList.getItemAtPosition((position)));
+            mDrawerLayout.closeDrawers();
         }
     }
 }
