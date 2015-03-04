@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -15,18 +14,14 @@ public class Attributes________ implements Serializable {
     private String href;
 
     /**
-     * 
-     * @return
-     *     The rel
+     * @return The rel
      */
     public String getRel() {
         return rel;
     }
 
     /**
-     * 
-     * @param rel
-     *     The rel
+     * @param rel The rel
      */
     public void setRel(String rel) {
         this.rel = rel;
@@ -38,18 +33,14 @@ public class Attributes________ implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The href
+     * @return The href
      */
     public String getHref() {
         return href;
     }
 
     /**
-     * 
-     * @param href
-     *     The href
+     * @param href The href
      */
     public void setHref(String href) {
         this.href = href;

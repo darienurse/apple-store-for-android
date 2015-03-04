@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -15,18 +14,14 @@ public class ItunesRSSResponse implements Serializable {
     private Feed feed;
 
     /**
-     * 
-     * @return
-     *     The feed
+     * @return The feed
      */
     public Feed getFeed() {
         return feed;
     }
 
     /**
-     * 
-     * @param feed
-     *     The feed
+     * @param feed The feed
      */
     public void setFeed(Feed feed) {
         this.feed = feed;

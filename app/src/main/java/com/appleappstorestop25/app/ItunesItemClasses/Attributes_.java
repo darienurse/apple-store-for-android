@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -15,18 +14,14 @@ public class Attributes_ implements Serializable {
     private String currency;
 
     /**
-     * 
-     * @return
-     *     The amount
+     * @return The amount
      */
     public String getAmount() {
         return amount;
     }
 
     /**
-     * 
-     * @param amount
-     *     The amount
+     * @param amount The amount
      */
     public void setAmount(String amount) {
         this.amount = amount;
@@ -38,18 +33,14 @@ public class Attributes_ implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The currency
+     * @return The currency
      */
     public String getCurrency() {
         return currency;
     }
 
     /**
-     * 
-     * @param currency
-     *     The currency
+     * @param currency The currency
      */
     public void setCurrency(String currency) {
         this.currency = currency;

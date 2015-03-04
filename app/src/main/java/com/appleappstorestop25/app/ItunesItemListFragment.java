@@ -1,11 +1,11 @@
 package com.appleappstorestop25.app;
 
 import android.app.Activity;
-import android.support.v4.app.ListFragment;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -23,57 +23,28 @@ import java.util.List;
 
 public class ItunesItemListFragment extends ListFragment {
 
+    public static final String ARG_URL_ID = "url_link_id";
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
-
-    public static final String ARG_URL_ID = "url_link_id";
-
-    /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
-    private Callbacks mCallbacks = sDummyCallbacks;
-
-    /**
-     * The current activated item position. Only used on tablets.
-     */
-    private int mActivatedPosition = ListView.INVALID_POSITION;
-
-    /**
-     * A callback interface that all activities containing this fragment must
-     * implement. This mechanism allows activities to be notified of item
-     * selections.
-     */
-    public interface Callbacks {
-        /**
-         * Callback for when an item has been selected.
-         * @param item
-         */
-        public void onItunesItemSelected(Entry item);
-    }
-
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does
-     * nothing. Used only when this fragment is not attached to an activity.
-     */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static final String TAG = ItunesItemListFragment.class.getSimpleName();
+    private static Callbacks sItunesCallbacks = new Callbacks() {
         @Override
         public void onItunesItemSelected(Entry item) {
         }
     };
-
-    private static final String TAG = ItunesItemListFragment.class.getSimpleName();
-
-    public List<Entry> getItunesItemList() {
-        return itunesItemList;
-    }
-
+    /**
+     * The fragment's current callback object, which is notified of list item
+     * clicks.
+     */
+    private Callbacks mCallbacks = sItunesCallbacks;
+    /**
+     * The current activated item position. Only used on tablets.
+     */
+    private int mActivatedPosition = ListView.INVALID_POSITION;
     private List<Entry> itunesItemList = new ArrayList<Entry>();
-
-    //private static final String url = "https://itunes.apple.com/us/rss/topgrossingapplications/limit=25/json";
     private ProgressDialog pDialog;
     private ItunesAdapter adapter;
 
@@ -102,11 +73,12 @@ public class ItunesItemListFragment extends ListFragment {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                if(pDialog != null) pDialog.show();
-            }}, 4000);
+                if (pDialog != null) pDialog.show();
+            }
+        }, 4000);
 
         // Creating volley request obj
-        if(getArguments()!=null) {
+        if (getArguments() != null) {
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(getArguments().getString(ARG_URL_ID), null,
                     new Response.Listener<JSONObject>() {
@@ -183,7 +155,7 @@ public class ItunesItemListFragment extends ListFragment {
         super.onDetach();
 
         // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = sItunesCallbacks;
     }
 
     @Override
@@ -221,5 +193,19 @@ public class ItunesItemListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callbacks {
+        /**
+         * Callback for when an item has been selected.
+         *
+         * @param item
+         */
+        public void onItunesItemSelected(Entry item);
     }
 }

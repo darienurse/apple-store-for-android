@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -17,18 +16,14 @@ public class ImImage implements Serializable {
     private Attributes attributes;
 
     /**
-     * 
-     * @return
-     *     The label
+     * @return The label
      */
     public String getLabel() {
         return label;
     }
 
     /**
-     * 
-     * @param label
-     *     The label
+     * @param label The label
      */
     public void setLabel(String label) {
         this.label = label;
@@ -40,18 +35,14 @@ public class ImImage implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The attributes
+     * @return The attributes
      */
     public Attributes getAttributes() {
         return attributes;
     }
 
     /**
-     * 
-     * @param attributes
-     *     The attributes
+     * @param attributes The attributes
      */
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;

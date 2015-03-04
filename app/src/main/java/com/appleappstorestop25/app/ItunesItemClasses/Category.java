@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -15,18 +14,14 @@ public class Category implements Serializable {
     private Attributes______ attributes;
 
     /**
-     * 
-     * @return
-     *     The attributes
+     * @return The attributes
      */
     public Attributes______ getAttributes() {
         return attributes;
     }
 
     /**
-     * 
-     * @param attributes
-     *     The attributes
+     * @param attributes The attributes
      */
     public void setAttributes(Attributes______ attributes) {
         this.attributes = attributes;

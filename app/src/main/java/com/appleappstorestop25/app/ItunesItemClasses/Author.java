@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -18,18 +17,14 @@ public class Author implements Serializable {
     private Uri uri;
 
     /**
-     * 
-     * @return
-     *     The name
+     * @return The name
      */
     public Name getName() {
         return name;
     }
 
     /**
-     * 
-     * @param name
-     *     The name
+     * @param name The name
      */
     public void setName(Name name) {
         this.name = name;
@@ -41,18 +36,14 @@ public class Author implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The uri
+     * @return The uri
      */
     public Uri getUri() {
         return uri;
     }
 
     /**
-     * 
-     * @param uri
-     *     The uri
+     * @param uri The uri
      */
     public void setUri(Uri uri) {
         this.uri = uri;

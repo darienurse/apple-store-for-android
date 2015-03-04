@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -18,18 +17,14 @@ public class Attributes____ implements Serializable {
     private String imBundleId;
 
     /**
-     * 
-     * @return
-     *     The imId
+     * @return The imId
      */
     public String getImId() {
         return imId;
     }
 
     /**
-     * 
-     * @param imId
-     *     The im:id
+     * @param imId The im:id
      */
     public void setImId(String imId) {
         this.imId = imId;
@@ -41,18 +36,14 @@ public class Attributes____ implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The imBundleId
+     * @return The imBundleId
      */
     public String getImBundleId() {
         return imBundleId;
     }
 
     /**
-     * 
-     * @param imBundleId
-     *     The im:bundleId
+     * @param imBundleId The im:bundleId
      */
     public void setImBundleId(String imBundleId) {
         this.imBundleId = imBundleId;

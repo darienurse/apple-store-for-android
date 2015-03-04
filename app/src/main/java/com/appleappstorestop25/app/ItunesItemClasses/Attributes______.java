@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -21,18 +20,14 @@ public class Attributes______ implements Serializable {
     private String label;
 
     /**
-     * 
-     * @return
-     *     The imId
+     * @return The imId
      */
     public String getImId() {
         return imId;
     }
 
     /**
-     * 
-     * @param imId
-     *     The im:id
+     * @param imId The im:id
      */
     public void setImId(String imId) {
         this.imId = imId;
@@ -44,18 +39,14 @@ public class Attributes______ implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The term
+     * @return The term
      */
     public String getTerm() {
         return term;
     }
 
     /**
-     * 
-     * @param term
-     *     The term
+     * @param term The term
      */
     public void setTerm(String term) {
         this.term = term;
@@ -67,18 +58,14 @@ public class Attributes______ implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The scheme
+     * @return The scheme
      */
     public String getScheme() {
         return scheme;
     }
 
     /**
-     * 
-     * @param scheme
-     *     The scheme
+     * @param scheme The scheme
      */
     public void setScheme(String scheme) {
         this.scheme = scheme;
@@ -90,18 +77,14 @@ public class Attributes______ implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The label
+     * @return The label
      */
     public String getLabel() {
         return label;
     }
 
     /**
-     * 
-     * @param label
-     *     The label
+     * @param label The label
      */
     public void setLabel(String label) {
         this.label = label;

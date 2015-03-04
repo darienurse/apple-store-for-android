@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -15,18 +14,14 @@ public class ImContentType implements Serializable {
     private Attributes__ attributes;
 
     /**
-     * 
-     * @return
-     *     The attributes
+     * @return The attributes
      */
     public Attributes__ getAttributes() {
         return attributes;
     }
 
     /**
-     * 
-     * @param attributes
-     *     The attributes
+     * @param attributes The attributes
      */
     public void setAttributes(Attributes__ attributes) {
         this.attributes = attributes;

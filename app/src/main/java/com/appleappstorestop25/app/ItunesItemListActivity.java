@@ -1,13 +1,16 @@
 package com.appleappstorestop25.app;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +19,11 @@ import android.widget.ListView;
 import android.widget.ShareActionProvider;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 import com.appleappstorestop25.app.SlidingTabs.SlidingTabsColorsFragment;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 /**
@@ -39,52 +45,31 @@ import java.util.ArrayList;
 public class ItunesItemListActivity extends FragmentActivity
         implements ItunesItemListFragment.Callbacks {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
+    private final String mDrawerTitle = "Favorites";
+    private final String mTitle = "App name";//getString(getApplicationInfo().labelRes);
+    private final String USER_PREFS_FAV = "favorites";
     private boolean mTwoPane;
     private ShareActionProvider mShareActionProvider;
     private DrawerLayout mDrawerLayout;
-    private final String mDrawerTitle = "Favorites";
-    private final String mTitle = "App name";//getString(getApplicationInfo().labelRes);
     private ListView mDrawerList;
     private Entry itunesItem;
     private ActionBarDrawerToggle mDrawerToggle;
-
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itunesitem_list);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new ItunesAdapter(this, new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+        gson = new Gson();
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        Set<String> restoredFav = prefs.getStringSet(USER_PREFS_FAV, null);
+        if (restoredFav != null) {
+            for (String s : restoredFav) {
+                Entry itunesE = gson.fromJson(s, Entry.class);
+                ItunesAppController.userFavorites.put(Integer.parseInt(itunesE.getId().getAttributes().getImId().toString()), itunesE);
             }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
+        }
+        setUpNavigationDrawer();
         if (findViewById(R.id.itunesitem_detail_container) != null) {
             mTwoPane = true;
             // In two-pane mode, list items should be given the
@@ -132,13 +117,6 @@ public class ItunesItemListActivity extends FragmentActivity
         }
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            onItunesItemSelected((Entry) mDrawerList.getItemAtPosition((position)));
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -166,7 +144,6 @@ public class ItunesItemListActivity extends FragmentActivity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onItunesItemSelected(Entry item) {
         itunesItem = item;
@@ -185,6 +162,26 @@ public class ItunesItemListActivity extends FragmentActivity
     }
 
     @Override
+    protected void onStop() {
+        Log.d("NURSE", "On destroy Map size: " + ItunesAppController.userFavorites.size());
+        Set<String> favSet = new LinkedHashSet<String>();
+        for (Entry e : ItunesAppController.userFavorites.values())
+            favSet.add(gson.toJson(e));
+        SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putStringSet(USER_PREFS_FAV, favSet);
+        editor.apply();
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //TODO Find a way to use Notifydatasetchange instead
+        mDrawerList.setAdapter(new DrawerAdapter(this, new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -195,5 +192,43 @@ public class ItunesItemListActivity extends FragmentActivity
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void setUpNavigationDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList.setAdapter(new DrawerAdapter(this, new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            mDrawerLayout.closeDrawers();
+            onItunesItemSelected((Entry) mDrawerList.getItemAtPosition((position)));
+        }
     }
 }

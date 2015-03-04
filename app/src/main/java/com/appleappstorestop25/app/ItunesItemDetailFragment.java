@@ -1,8 +1,8 @@
 package com.appleappstorestop25.app;
 
-import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +23,8 @@ public class ItunesItemDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
-    private Entry itunesItem;
     ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
+    private Entry itunesItem;
 
 
     /**
@@ -54,7 +54,7 @@ public class ItunesItemDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.itunesitem_detail, container, false);
 
 
@@ -65,7 +65,12 @@ public class ItunesItemDetailFragment extends Fragment {
         if (itunesItem != null) {
             ((TextView) rootView.findViewById(R.id.article_title)).setText(itunesItem.getFormattedName());
             ((TextView) rootView.findViewById(R.id.article_byline)).setText(itunesItem.getImArtist().getLabel());
-            //((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());
+            try {
+                ((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());
+            } catch (NullPointerException e) {
+                ((TextView) rootView.findViewById(R.id.article_body)).setText("No description available");
+                Log.d("NURSE", e.toString());
+            }
             ((NetworkImageView) rootView.findViewById(R.id.article_photo)).setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
         }
 

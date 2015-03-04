@@ -1,4 +1,3 @@
-
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -15,18 +14,14 @@ public class Link implements Serializable {
     private Attributes___ attributes;
 
     /**
-     * 
-     * @return
-     *     The attributes
+     * @return The attributes
      */
     public Attributes___ getAttributes() {
         return attributes;
     }
 
     /**
-     * 
-     * @param attributes
-     *     The attributes
+     * @param attributes The attributes
      */
     public void setAttributes(Attributes___ attributes) {
         this.attributes = attributes;

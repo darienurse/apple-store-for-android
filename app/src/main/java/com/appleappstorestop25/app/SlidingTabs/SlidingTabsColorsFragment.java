@@ -16,8 +16,6 @@
 
 package com.appleappstorestop25.app.SlidingTabs;
 
-import com.appleappstorestop25.app.*;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +24,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.appleappstorestop25.app.CategoryAttribute;
+import com.appleappstorestop25.app.ItunesAppController;
+import com.appleappstorestop25.app.ItunesItemListFragment;
+import com.appleappstorestop25.app.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,73 +39,16 @@ import java.util.List;
  */
 public class SlidingTabsColorsFragment extends Fragment {
 
-    /**
-     * This class represents a tab to be displayed by {@link ViewPager} and it's associated
-     * {@link SlidingTabLayout}.
-     */
-    static class SamplePagerItem {
-        private final CharSequence mTitle;
-        private final int mIndex;
-        private final int mIndicatorColor;
-        private final int mDividerColor;
-
-        SamplePagerItem(CharSequence title, int index, int indicatorColor, int dividerColor) {
-            mTitle = title;
-            mIndex = index;
-            mIndicatorColor = indicatorColor;
-            mDividerColor = dividerColor;
-        }
-
-        /**
-         * @return A new {@link Fragment} to be displayed by a {@link ViewPager}
-         */
-        Fragment createFragment() {
-            return ItunesItemListFragment.newInstance(
-                    ItunesAppController.getCategoryList().get(mIndex).getUrl());
-        }
-
-        /**
-         * @return the title which represents this tab. In this sample this is used directly by
-         * {@link android.support.v4.view.PagerAdapter#getPageTitle(int)}
-         */
-        CharSequence getTitle() {
-            return mTitle;
-        }
-        /**
-         * @return the index used for indicator on the {@link SlidingTabLayout}
-         */
-        int getindex() {
-            return mIndex;
-        }
-
-        /**
-         * @return the color to be used for indicator on the {@link SlidingTabLayout}
-         */
-        int getIndicatorColor() {
-            return mIndicatorColor;
-        }
-
-        /**
-         * @return the color to be used for right divider on the {@link SlidingTabLayout}
-         */
-        int getDividerColor() {
-            return mDividerColor;
-        }
-    }
-
     static final String LOG_TAG = "SlidingTabsColorsFragment";
-
     /**
      * A custom {@link ViewPager} title strip which looks much like Tabs present in Android v4.0 and
      * above, but is designed to give continuous feedback to the user when scrolling.
      */
     private SlidingTabLayout mSlidingTabLayout;
-
     /**
      * A {@link ViewPager} which will be used in conjunction with the {@link SlidingTabLayout} above.
      */
     private ViewPager mViewPager;
-
     /**
      * List of {@link SamplePagerItem} which represent this sample's tabs.
      */
@@ -119,7 +64,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          * color, which are used by {@link SlidingTabLayout}.
          */
         int tabIndex = 0;
-        for(CategoryAttribute ca: ItunesAppController.getCategoryList()){
+        for (CategoryAttribute ca : ItunesAppController.getCategoryList()) {
             mTabs.add(new SamplePagerItem(
                     ca.getTitle(), // Title
                     tabIndex++, //Index
@@ -136,15 +81,14 @@ public class SlidingTabsColorsFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_slider_pager, container, false);
     }
 
-    // BEGIN_INCLUDE (fragment_onviewcreated)
     /**
      * This is called after the {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)} has finished.
      * Here we can pick out the {@link View}s we need to configure from the content view.
-     *
+     * <p/>
      * We set the {@link ViewPager}'s adapter to be an instance of
      * {@link SampleFragmentPagerAdapter}. The {@link SlidingTabLayout} is then given the
      * {@link ViewPager} so that it can populate itself.
@@ -184,13 +128,70 @@ public class SlidingTabsColorsFragment extends Fragment {
         // END_INCLUDE (tab_colorizer)
         // END_INCLUDE (setup_slidingtablayout)
     }
+
+    // BEGIN_INCLUDE (fragment_onviewcreated)
+
+    /**
+     * This class represents a tab to be displayed by {@link ViewPager} and it's associated
+     * {@link SlidingTabLayout}.
+     */
+    static class SamplePagerItem {
+        private final CharSequence mTitle;
+        private final int mIndex;
+        private final int mIndicatorColor;
+        private final int mDividerColor;
+
+        SamplePagerItem(CharSequence title, int index, int indicatorColor, int dividerColor) {
+            mTitle = title;
+            mIndex = index;
+            mIndicatorColor = indicatorColor;
+            mDividerColor = dividerColor;
+        }
+
+        /**
+         * @return A new {@link Fragment} to be displayed by a {@link ViewPager}
+         */
+        Fragment createFragment() {
+            return ItunesItemListFragment.newInstance(
+                    ItunesAppController.getCategoryList().get(mIndex).getUrl());
+        }
+
+        /**
+         * @return the title which represents this tab. In this sample this is used directly by
+         * {@link android.support.v4.view.PagerAdapter#getPageTitle(int)}
+         */
+        CharSequence getTitle() {
+            return mTitle;
+        }
+
+        /**
+         * @return the index used for indicator on the {@link SlidingTabLayout}
+         */
+        int getindex() {
+            return mIndex;
+        }
+
+        /**
+         * @return the color to be used for indicator on the {@link SlidingTabLayout}
+         */
+        int getIndicatorColor() {
+            return mIndicatorColor;
+        }
+
+        /**
+         * @return the color to be used for right divider on the {@link SlidingTabLayout}
+         */
+        int getDividerColor() {
+            return mDividerColor;
+        }
+    }
     // END_INCLUDE (fragment_onviewcreated)
 
     /**
      * The {@link FragmentPagerAdapter} used to display pages in this sample. The individual pages
      * are instances of {@link com.appleappstorestop25.app.ItunesItemListFragment} which just display three lines of text. Each page is
      * created by the relevant {@link SamplePagerItem} for the requested position.
-     * <p>
+     * <p/>
      * The important section of this class is the {@link #getPageTitle(int)} method which controls
      * what is displayed in the {@link SlidingTabLayout}.
      */
@@ -202,7 +203,7 @@ public class SlidingTabsColorsFragment extends Fragment {
 
         /**
          * Return the {@link android.support.v4.app.Fragment} to be displayed at {@code position}.
-         * <p>
+         * <p/>
          * Here we return the value returned from {@link SamplePagerItem#createFragment()}.
          */
         @Override
@@ -216,10 +217,11 @@ public class SlidingTabsColorsFragment extends Fragment {
         }
 
         // BEGIN_INCLUDE (pageradapter_getpagetitle)
+
         /**
          * Return the title of the item at {@code position}. This is important as what this method
          * returns is what is displayed in the {@link SlidingTabLayout}.
-         * <p>
+         * <p/>
          * Here we return the value returned from {@link SamplePagerItem#getTitle()}.
          */
         @Override
