@@ -141,7 +141,6 @@ public class ItunesItemListActivity extends FragmentActivity
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         switch (item.getItemId()) {
             case R.id.play_store_button:
                 launchPlayStoreSearch();

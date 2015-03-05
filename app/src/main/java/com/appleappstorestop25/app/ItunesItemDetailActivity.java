@@ -42,15 +42,10 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putSerializable(ItunesItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID));
-            ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
-            fragment.setArguments(arguments);
+            ItunesItemDetailFragment fragment = ItunesItemDetailFragment.newInstance(itunesItem);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.itunesitem_detail_container, fragment)
                     .commit();
-
         }
     }
 
@@ -61,7 +56,6 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         MenuItem mItem = menu.findItem(R.id.menu_item_share);
         MenuItem mFavButton = menu.findItem(R.id.fav_button);
         mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
-        //if (itunesItem != null) {
         setShareIntent(itunesItem.generateShareIntent(getResources().getString(R.string.app_name)));
         int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
 
@@ -70,7 +64,6 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         } else {
             mFavButton.setIcon(unfavorite);
         }
-        //}
         return true;
     }
 

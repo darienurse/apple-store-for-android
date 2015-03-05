@@ -26,7 +26,6 @@ public class ItunesItemDetailFragment extends Fragment {
     ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
     private Entry itunesItem;
 
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -68,7 +67,6 @@ public class ItunesItemDetailFragment extends Fragment {
                 ((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());
             } catch (NullPointerException e) {
                 ((TextView) rootView.findViewById(R.id.article_body)).setText("No description available");
-                Log.d("NURSE", e.toString());
             }
             ((NetworkImageView) rootView.findViewById(R.id.article_photo)).setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
         }
