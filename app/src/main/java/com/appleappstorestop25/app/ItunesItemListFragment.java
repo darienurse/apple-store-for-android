@@ -130,6 +130,7 @@ public class ItunesItemListFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         getListView().setDivider(new ColorDrawable(android.R.color.darker_gray));
         getListView().setDividerHeight(16);
+        setActivateOnItemClick(true);
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null

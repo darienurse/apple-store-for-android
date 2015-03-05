@@ -48,7 +48,6 @@ public class ItunesItemDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             itunesItem = (Entry) getArguments().getSerializable(ItunesItemDetailFragment.ARG_ITEM_ID);
-            getActivity().getActionBar().setTitle(itunesItem.getFormattedName());
         }
     }
 

@@ -284,23 +284,27 @@ public class Entry implements Serializable {
         return this;
     }
 
-    public Intent generateShareIntent() {
+    public Intent generateShareIntent(String appName) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         String name = this.getImName().getLabel();
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "App Details on " + name);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Checkout this app: " + name
-                + "\n" + this.link.getAttributes().getHref());
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Details on " + name);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                "Checkout this content: " + name
+                        + "(" + this.link.getAttributes().getHref() + ")"
+                        + "\n provided by " + appName + " created by @darienurse");
         sendIntent.setType("text/plain");
         return sendIntent;
     }
 
     public String getFormattedName() {
         String name = this.getImName().getLabel();
-        name = name.replaceAll("\\p{Pd}", "-");
-        int dashIndex = name.indexOf("-");
-        if (dashIndex != -1) {
-            name = name.substring(0, dashIndex).trim();
+        if (name.length() > 30) {
+            name = name.replaceAll("\\p{Pd}", "-");
+            int dashIndex = name.indexOf("-");
+            if (dashIndex != -1) {
+                name = name.substring(0, dashIndex).trim();
+            }
         }
         return name;
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Apple App Store\'s Top 25</string>
+    <string name="app_name">Apple Store for Android</string>
     <string name="share_menu_name">Share</string>
     <string name="title_itunesitem_detail">ItunesItem Detail</string>
     <string name="drawer_open">Open Navigation Bar</string>

@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
@@ -34,8 +33,8 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         setContentView(R.layout.activity_itunesitem_detail);
         unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
         favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
-        itunesItem = (Entry)  getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
-
+        itunesItem = (Entry) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
+        getActionBar().setTitle(itunesItem.getFormattedName());
 
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,13 +62,14 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         MenuItem mFavButton = menu.findItem(R.id.fav_button);
         mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
         //if (itunesItem != null) {
-            setShareIntent(itunesItem.generateShareIntent());
-            int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
-            if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
-                mFavButton.setIcon(favorite);
-            } else {
-                mFavButton.setIcon(unfavorite);
-            }
+        setShareIntent(itunesItem.generateShareIntent(getResources().getString(R.string.app_name)));
+        int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
+
+        if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
+            mFavButton.setIcon(favorite);
+        } else {
+            mFavButton.setIcon(unfavorite);
+        }
         //}
         return true;
     }
@@ -78,29 +78,34 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // This ID represents the Home or Up button.
                 NavUtils.navigateUpTo(this, new Intent(this, ItunesItemListActivity.class));
                 break;
             case R.id.play_store_button:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=" + itunesItem.getFormattedName()
-                        + "&c=" + ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel()))));
+                launchPlayStoreSearch();
                 break;
             case R.id.fav_button:
-                //if(itunesItem!=null) {
-                    int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
-                    if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
-                        ItunesAppController.userFavorites.remove(itunesItemId);
-                        Log.d("NURSE", "Removing, Map size: " + ItunesAppController.userFavorites.size());
-                        item.setIcon(unfavorite);
-                    } else {
-                        ItunesAppController.userFavorites.put(itunesItemId, itunesItem);
-                        Log.d("NURSE", "Adding, Map size: " + ItunesAppController.userFavorites.size());
-                        item.setIcon(favorite);
-                    }
-                //}
+                handleFavorite(item);
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void launchPlayStoreSearch() {
+        String formattedName = itunesItem.getFormattedName();
+        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel());
+        startActivity(new Intent(Intent.ACTION_VIEW
+                , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
+    }
+
+    private void handleFavorite(MenuItem item) {
+        int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
+        if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
+            ItunesAppController.userFavorites.remove(itunesItemId);
+            item.setIcon(unfavorite);
+        } else {
+            ItunesAppController.userFavorites.put(itunesItemId, itunesItem);
+            item.setIcon(favorite);
+        }
     }
 
     // Call to update the share intent

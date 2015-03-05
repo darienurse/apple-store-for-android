@@ -8,7 +8,7 @@ import java.util.*;
 
 public class ItunesAppController extends AppController {
 
-    public static final int LOAD = 50;
+    public static final int LOAD = 200;
     public static Map<Integer, Entry> userFavorites;
     public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryList;

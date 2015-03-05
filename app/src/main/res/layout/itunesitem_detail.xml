@@ -17,72 +17,72 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:paddingBottom="32dp">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foreground="@drawable/photo_background_protection">
-            <!--suppress AndroidLintContentDescription -->
-            <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/article_photo"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/photo_height"
-                android:scaleType="centerCrop"/>
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical"
-            android:layout_marginLeft="@dimen/detail_horiz_margin"
-            android:layout_marginRight="@dimen/detail_horiz_margin"
             android:layout_marginBottom="16dp">
 
-
-            <TextView
-                android:id="@+id/article_title"
-                style="?android:attr/textAppearanceLarge"
-                android:textSize="26sp"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textIsSelectable="true"
-                android:textColor="#fff"
-                android:fontFamily="sans-serif-condensed"
-                android:textStyle="bold"
-                android:lineSpacingMultiplier="0.85"
-                android:paddingBottom="4dp"/>
+                android:foreground="@drawable/photo_background_protection">
+                <!--suppress AndroidLintContentDescription -->
+                <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/article_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/photo_height"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
 
-            <TextView
-                android:id="@+id/article_byline"
-                style="?android:attr/textAppearanceSmall"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#8fff"/>
-        </LinearLayout>
-    </FrameLayout>
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="@dimen/detail_horiz_margin"
+                android:layout_marginRight="@dimen/detail_horiz_margin"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/article_body"
-        android:textColorLink="@color/secondary_android_green"
-        style="?android:attr/textAppearanceMedium"
-        android:textIsSelectable="true"
-        android:textSize="16sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/detail_horiz_margin"
-        android:layout_marginRight="@dimen/detail_horiz_margin"
-        android:textColor="#c000"
-        android:lineSpacingMultiplier="1.25"/>
-   </LinearLayout>
+
+                <TextView
+                    android:id="@+id/article_title"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:lineSpacingMultiplier="0.85"
+                    android:paddingBottom="4dp"
+                    android:textColor="#fff"
+                    android:textIsSelectable="true"
+                    android:textSize="26sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/article_byline"
+                    style="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8fff"/>
+            </LinearLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/article_body"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/detail_horiz_margin"
+            android:layout_marginRight="@dimen/detail_horiz_margin"
+            android:lineSpacingMultiplier="1.25"
+            android:textColor="#c000"
+            android:textColorLink="@color/secondary_android_green"
+            android:textIsSelectable="true"
+            android:textSize="16sp"/>
+    </LinearLayout>
 
 </ScrollView>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -46,8 +48,13 @@ public class ItunesItemListActivity extends FragmentActivity
         implements ItunesItemListFragment.Callbacks {
 
     private final String mDrawerTitle = "Favorites";
-    private final String mTitle = "App name";//getString(getApplicationInfo().labelRes);
     private final String USER_PREFS_FAV = "favorites";
+    private final String SAVED_ITEM = "saved_item";
+    Drawable unfavorite;
+    Drawable favorite;
+    MenuItem mFavButton;
+    private String mAppName;
+    private String mTitle;
     private boolean mTwoPane;
     private ShareActionProvider mShareActionProvider;
     private DrawerLayout mDrawerLayout;
@@ -61,6 +68,16 @@ public class ItunesItemListActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itunesitem_list);
         gson = new Gson();
+        mTwoPane = getResources().getBoolean(R.bool.has_two_panes);
+        mAppName = getResources().getString(R.string.app_name);
+        mTitle = mAppName;
+        favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
+        unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
+        if (savedInstanceState != null && savedInstanceState.containsKey(SAVED_ITEM)) {
+            itunesItem = (Entry) savedInstanceState.getSerializable(SAVED_ITEM);
+            mTitle = itunesItem.getFormattedName();
+        }
+
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         Set<String> restoredFav = prefs.getStringSet(USER_PREFS_FAV, null);
         if (restoredFav != null) {
@@ -70,41 +87,41 @@ public class ItunesItemListActivity extends FragmentActivity
             }
         }
         setUpNavigationDrawer();
-        if (findViewById(R.id.itunesitem_detail_container) != null) {
-            mTwoPane = true;
-            // In two-pane mode, list items should be given the
-            // 'activated' state when touched.
-            ((ItunesItemListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.itunesitem_list))
-                    .setActivateOnItemClick(true);
 
-        }
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             SlidingTabsColorsFragment fragment = new SlidingTabsColorsFragment();
             transaction.replace(R.id.itunesitem_list, fragment);
             transaction.commit();
         }
+        Log.d("NURSE", "TwoPane enabled: " + mTwoPane);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         if (mTwoPane) {
-            // Inflate share_menu resource file.
             getMenuInflater().inflate(R.menu.share_menu, menu);
             getMenuInflater().inflate(R.menu.details_menu, menu);
 
-            // Locate MenuItem with ShareActionProvider
             MenuItem mItem = menu.findItem(R.id.menu_item_share);
+            mFavButton = menu.findItem(R.id.fav_button);
 
-            // Fetch and store ShareActionProvider
             mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
+            if (itunesItem != null) {
+                int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
+                if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
+                    mFavButton.setIcon(favorite);
+                } else {
+                    mFavButton.setIcon(unfavorite);
+                }
+            }
 
             boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
             menu.findItem(R.id.menu_item_share).setVisible(!drawerOpen);
+            menu.findItem(R.id.fav_button).setVisible(!drawerOpen);
+            menu.findItem(R.id.play_store_button).setVisible(!drawerOpen);
 
-            // Return true to display share_menu
             return true;
         } else
             return super.onCreateOptionsMenu(menu);
@@ -127,28 +144,25 @@ public class ItunesItemListActivity extends FragmentActivity
 
         switch (item.getItemId()) {
             case R.id.play_store_button:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=" + itunesItem.getFormattedName()
-                        + "&c=" + ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel()))));
-                return true;
+                launchPlayStoreSearch();
+                break;
             case R.id.fav_button:
-                int itemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
-                if (ItunesAppController.userFavorites.containsKey(itemId)) {
-                    ItunesAppController.userFavorites.remove(itemId);
-                } else {
-                    ItunesAppController.userFavorites.put(itemId, itunesItem);
-                }
-                return true;
+                handleFavorite(item);
+                break;
         }
-        // Handle your other action bar items...
-
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onItunesItemSelected(Entry item) {
-        itunesItem = item;
+        mTitle = item.getFormattedName();
+        getActionBar().setTitle(mTitle);
         if (mTwoPane) {
-            setShareIntent(item.generateShareIntent());
+            if (itunesItem == null) toggleFavorite(item);
+            else toggleFavorite(itunesItem, item);
+            itunesItem = item;
+            setShareIntent(item.generateShareIntent(mAppName));
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(itunesItem))
                     .commit();
@@ -156,14 +170,13 @@ public class ItunesItemListActivity extends FragmentActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItunesItemDetailActivity.class);
-            detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, itunesItem);
+            detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, item);
             startActivity(detailIntent);
         }
     }
 
     @Override
     protected void onStop() {
-        Log.d("NURSE", "On destroy Map size: " + ItunesAppController.userFavorites.size());
         Set<String> favSet = new LinkedHashSet<String>();
         for (Entry e : ItunesAppController.userFavorites.values())
             favSet.add(gson.toJson(e));
@@ -172,13 +185,6 @@ public class ItunesItemListActivity extends FragmentActivity
         editor.putStringSet(USER_PREFS_FAV, favSet);
         editor.apply();
         super.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //TODO Find a way to use Notifydatasetchange instead
-        mDrawerList.setAdapter(new DrawerAdapter(this, new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
     }
 
     @Override
@@ -192,6 +198,13 @@ public class ItunesItemListActivity extends FragmentActivity
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onResume() {
+        //TODO Find a way to use Notifydatasetchange instead
+        mDrawerList.setAdapter(new DrawerAdapter(getBaseContext(), new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
+        super.onResume();
     }
 
     private void setUpNavigationDrawer() {
@@ -213,6 +226,7 @@ public class ItunesItemListActivity extends FragmentActivity
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+
                 getActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
@@ -222,6 +236,53 @@ public class ItunesItemListActivity extends FragmentActivity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void handleFavorite(MenuItem item) {
+        int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
+        if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
+            ItunesAppController.userFavorites.remove(itunesItemId);
+            item.setIcon(unfavorite);
+        } else {
+            ItunesAppController.userFavorites.put(itunesItemId, itunesItem);
+            item.setIcon(favorite);
+        }
+        //TODO Find a way to use Notifydatasetchange instead
+        mDrawerList.setAdapter(new DrawerAdapter(getBaseContext(), new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
+    }
+
+    private void toggleFavorite(Entry e1, Entry e2) {
+        int e1ID = Integer.parseInt(e1.getId().getAttributes().getImId());
+        int e2ID = Integer.parseInt(e2.getId().getAttributes().getImId());
+        Map<Integer, Entry> userFavorites = ItunesAppController.userFavorites;
+        if (userFavorites.containsKey(e1ID) != userFavorites.containsKey(e2ID)) {
+            toggleFavorite(e2);
+        }
+    }
+
+    private void toggleFavorite(Entry e1) {
+        int e1ID = Integer.parseInt(e1.getId().getAttributes().getImId());
+        if (ItunesAppController.userFavorites.containsKey(e1ID)) {
+            mFavButton.setIcon(favorite);
+        } else {
+            mFavButton.setIcon(unfavorite);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (itunesItem != null) {
+            // Serialize and persist the itunes item.
+            outState.putSerializable(SAVED_ITEM, itunesItem);
+        }
+    }
+
+    private void launchPlayStoreSearch() {
+        String formattedName = itunesItem.getFormattedName();
+        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel());
+        startActivity(new Intent(Intent.ACTION_VIEW
+                , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {

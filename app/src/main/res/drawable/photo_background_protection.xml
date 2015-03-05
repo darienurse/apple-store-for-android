@@ -17,10 +17,10 @@
        android:shape="rectangle">
     <gradient
         android:angle="-90"
-        android:centerY="0.3"
-        android:startColor="#0000"
         android:centerColor="#0000"
+        android:centerY="0.3"
         android:endColor="#c000"
+        android:startColor="#0000"
         android:type="linear"
         android:useLevel="false"/>
 </shape>

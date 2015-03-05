@@ -19,53 +19,53 @@
     <!-- App Name -->
     <TextView
         android:id="@+id/name"
+        style="?android:textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toEndOf="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:maxLines="1"
         android:ellipsize="end"
-        style="?android:textAppearanceLarge"
-        android:textStyle="bold" />
+        android:maxLines="1"
+        android:textStyle="bold"/>
 
     <!-- Artist -->
     <TextView
         android:id="@+id/artist"
+        style="?android:textAppearanceMedium"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
-        android:maxLines="1"
         android:ellipsize="end"
-        style="?android:textAppearanceMedium" />
+        android:maxLines="1"/>
 
     <!-- contentType -->
     <TextView
         android:id="@+id/contentType"
+        style="?android:textAppearance"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/artist"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/thumbnail"
         android:layout_toLeftOf="@+id/date"
-        android:textColor="@color/category"
-        android:maxLines="1"
+        android:layout_toRightOf="@+id/thumbnail"
         android:ellipsize="end"
-        style="?android:textAppearance" />
+        android:maxLines="1"
+        android:textColor="@color/category"/>
 
     <!-- Release Date -->
     <TextView
         android:id="@+id/date"
+        style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="5dp"
-        android:maxLines="1"
         android:ellipsize="end"
-        android:textColor="@color/date"
-        style="?android:textAppearanceSmall"/>
+        android:maxLines="1"
+        android:textColor="@color/date"/>
 
 </RelativeLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="0dp">
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="0dp">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,23 +21,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="@dimen/detail_horiz_margin"
         android:layout_marginRight="@dimen/detail_horiz_margin"
-        android:layout_marginBottom="16dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/article_title"
             style="?android:attr/textAppearanceLarge"
-            android:textSize="26sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:textColor="#fff"
             android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"
             android:lineSpacingMultiplier="0.85"
-            android:paddingBottom="4dp"/>
+            android:paddingBottom="4dp"
+            android:textColor="#fff"
+            android:textIsSelectable="true"
+            android:textSize="26sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/article_byline"
