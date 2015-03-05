@@ -9,13 +9,15 @@ Apple Store for Android is a mobile app the streams information from [Itunes’s
 
 ###Features
 ####Sliding Nagivation Mobile
-![SlidingM](http://i.imgur.com/XC0x3Gv.gif=100x)
+![SlidingM](http://i.imgur.com/XC0x3Gv.gif)
 ####Sliding Nagivation Tablet
-![link](http://i.imgur.com/YhDRxBf.gifv)
+![SlidingT](http://i.imgur.com/YhDRxBf.gif)
 ####Favoriting
-![link](http://i.imgur.com/8NetGDk.webm)
+![Favoriting](http://i.imgur.com/8NetGDk.gif)
 ####Sharing
+![Sharing](http://i.imgur.com/WlCd9Bj.gif)
 ####Search on Play Store
+![Play Store](http://i.imgur.com/aNIM9tr.gif)
 
 ###Version
 1.0
