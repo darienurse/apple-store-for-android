@@ -155,9 +155,9 @@ public class ItunesItemListActivity extends FragmentActivity
 
     @Override
     public void onItunesItemSelected(Entry item) {
-        mTitle = item.getFormattedName();
-        getActionBar().setTitle(mTitle);
         if (mTwoPane) {
+            mTitle = item.getFormattedName();
+            getActionBar().setTitle(mTitle);
             if (itunesItem == null) toggleFavorite(item);
             else toggleFavorite(itunesItem, item);
             itunesItem = item;
@@ -225,7 +225,6 @@ public class ItunesItemListActivity extends FragmentActivity
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
                 getActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }

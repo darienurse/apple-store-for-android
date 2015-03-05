@@ -45,7 +45,7 @@ public class ItunesItemListFragment extends ListFragment {
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
-    private List<Entry> itunesItemList = new ArrayList<Entry>();
+    private List<Entry> itunesItemList;
     private ProgressDialog pDialog;
     private ItunesAdapter adapter;
 
@@ -63,6 +63,7 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        itunesItemList = new ArrayList<Entry>();
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 
