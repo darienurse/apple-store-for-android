@@ -7,6 +7,13 @@ Apple Store for Android is a mobile app the streams information from [Itunes’s
 - Top Books
 - Top Podcasts
 
+###Features
+####Sliding Nagivation Mobile
+![](http://i.imgur.com/XC0x3Gv.gifv)
+####Sliding Nagivation Tablet
+####Favoriting
+####Sharing
+####Search on Play Store
 
 ###Version
 1.0
