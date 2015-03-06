@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.appleappstorestop25.app.ItunesAppController.LOAD;
+
 public class ItunesItemListFragment extends ListFragment {
 
     public static final String ARG_URL_ID = "url_link_id";
@@ -63,7 +65,7 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        itunesItemList = new ArrayList<Entry>();
+        itunesItemList = new ArrayList<Entry>(LOAD);
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 

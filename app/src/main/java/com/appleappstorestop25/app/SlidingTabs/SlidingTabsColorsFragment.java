@@ -52,7 +52,7 @@ public class SlidingTabsColorsFragment extends Fragment {
     /**
      * List of {@link SamplePagerItem} which represent this sample's tabs.
      */
-    private List<SamplePagerItem> mTabs = new ArrayList<SamplePagerItem>();
+    private List<SamplePagerItem> mTabs = new ArrayList<SamplePagerItem>(ItunesAppController.NUM_CATEGORIES);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

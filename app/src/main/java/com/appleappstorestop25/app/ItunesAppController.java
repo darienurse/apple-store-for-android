@@ -10,6 +10,8 @@ import java.util.*;
 public class ItunesAppController extends AppController {
 
     public static final int LOAD = 199;
+    public static final int NUM_CATEGORIES = 6;
+    public static final int NUM_MAPPINGS = 5;
     public static Map<Integer, Entry> userFavorites;
     public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryList;
@@ -44,8 +46,8 @@ public class ItunesAppController extends AppController {
     @Override
     public void onCreate() {
         super.onCreate();
-        categoryList = new ArrayList<CategoryAttribute>();
-        appleToPlayStoreMap = new HashMap<String, String>();
+        categoryList = new ArrayList<CategoryAttribute>(NUM_CATEGORIES);
+        appleToPlayStoreMap = new HashMap<String, String>(NUM_MAPPINGS);
         userFavorites = new LinkedHashMap<Integer, Entry>();
         globalColorController = new ColorDrawable();
         mInstance = this;
