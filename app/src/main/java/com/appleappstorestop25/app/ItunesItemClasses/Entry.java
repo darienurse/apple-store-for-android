@@ -1,6 +1,5 @@
 package com.appleappstorestop25.app.ItunesItemClasses;
 
-import android.content.Intent;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

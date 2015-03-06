@@ -75,9 +75,9 @@ public class ItunesAdapter extends BaseAdapter {
             mArtist = itunesItem.getImArtist().getLabel();
             mCategory = itunesItem.getCategory().getAttributes().getTerm();
             mDate = itunesItem.getImReleaseDate().getAttributes().getLabel();
-        }catch (NullPointerException e){
-            Log.e(ItunesAdapter.class.getName(), e.toString()+
-                    "\nCaused by dereferencing "+mName+ "at index " + position);
+        } catch (NullPointerException e) {
+            Log.e(ItunesAdapter.class.getName(), e.toString() +
+                    "\nCaused by dereferencing " + mName + "at index " + position);
         }
 
         // thumbnail image
