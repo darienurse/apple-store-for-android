@@ -23,7 +23,7 @@ Apple Store for Android is a mobile app the streams information from [Itunes’s
 1.0
 ###Known Issues
 -	The application may lag such the interface temporarily freezes.
--	Sometimes content may not display on screen. I believe this may be a result of how information is stored between activities.
+-	Sometimes content may not display on screen. I believe this may be a result of how information is stored between activities. For now, closing the app and reopening usually resolves the issue.
 -	No user feedback provided if there is a network connection issue.
 
 ###Acknowledgments
