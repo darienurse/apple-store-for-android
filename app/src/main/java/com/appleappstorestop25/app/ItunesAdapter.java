@@ -25,7 +25,7 @@ public class ItunesAdapter extends BaseAdapter {
     private String mName;
     private String mUrl;
     private String mCategory;
-    private String mDate;
+    private String mPrice;
     private String mArtist;
 
     public ItunesAdapter(Context context, List<Entry> itunesItems) {
@@ -60,21 +60,20 @@ public class ItunesAdapter extends BaseAdapter {
         if (imageLoader == null)
             imageLoader = ItunesAppController.getInstance().getImageLoader();
         NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
-        ;
         TextView name = (TextView) convertView.findViewById(R.id.name);
         TextView artist = (TextView) convertView.findViewById(R.id.artist);
         TextView category = (TextView) convertView.findViewById(R.id.contentType);
-        TextView date = (TextView) convertView.findViewById(R.id.date);
+        TextView price = (TextView) convertView.findViewById(R.id.price);
 
         // getting app data for the row
         Entry itunesItem = itunesItems.get(position);
-        //TODO find out why dereferencing for mDate causes NullPointer
         try {
             mUrl = itunesItem.getImImage().get(2).getLabel();
             mName = itunesItem.getImName().getLabel();
             mArtist = itunesItem.getImArtist().getLabel();
             mCategory = itunesItem.getCategory().getAttributes().getTerm();
-            mDate = itunesItem.getImReleaseDate().getAttributes().getLabel();
+            mPrice = itunesItem.getImPrice().getLabel().replaceFirst("-","");
+            mPrice = (mPrice.equals("Get"))?"Free":mPrice;
         } catch (NullPointerException e) {
             Log.e(ItunesAdapter.class.getName(), e.toString() +
                     "\nCaused by dereferencing " + mName + "at index " + position);
@@ -92,8 +91,8 @@ public class ItunesAdapter extends BaseAdapter {
         // categoryObject
         category.setText(mCategory);
 
-        // release date
-        date.setText(mDate);
+        // price
+        price.setText(mPrice);
         return convertView;
     }
 
