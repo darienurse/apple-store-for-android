@@ -34,7 +34,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
         favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
         itunesItem = (Entry) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
-        getActionBar().setTitle(itunesItem.getFormattedName());
+        getActionBar().setTitle(itunesItem.getImName().getLabel());
 
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -56,7 +56,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         MenuItem mItem = menu.findItem(R.id.menu_item_share);
         MenuItem mFavButton = menu.findItem(R.id.fav_button);
         mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
-        setShareIntent(itunesItem.generateShareIntent(getResources().getString(R.string.app_name)));
+        setShareIntent(ItunesAppController.generateShareIntent(itunesItem, getResources().getString(R.string.app_name)));
         int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
 
         if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
@@ -84,7 +84,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     }
 
     private void launchPlayStoreSearch() {
-        String formattedName = itunesItem.getFormattedName();
+        String formattedName = itunesItem.getImName().getLabel();
         String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel());
         startActivity(new Intent(Intent.ACTION_VIEW
                 , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));

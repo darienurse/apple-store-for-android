@@ -61,7 +61,7 @@ public class ItunesItemDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (itunesItem != null) {
-            ((TextView) rootView.findViewById(R.id.article_title)).setText(itunesItem.getFormattedName());
+            ((TextView) rootView.findViewById(R.id.article_title)).setText(itunesItem.getImName().getLabel());
             ((TextView) rootView.findViewById(R.id.article_byline)).setText(itunesItem.getImArtist().getLabel());
             try {
                 ((TextView) rootView.findViewById(R.id.article_body)).setText(itunesItem.getSummary().getLabel());

@@ -5,6 +5,7 @@ package com.appleappstorestop25.app;
  */
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,11 @@ public class ItunesAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<Entry> itunesItems;
+    private String mName;
+    private String mUrl;
+    private String mCategory;
+    private String mDate;
+    private String mArtist;
 
     public ItunesAdapter(Context context, List<Entry> itunesItems) {
         this.context = context;
@@ -62,22 +68,32 @@ public class ItunesAdapter extends BaseAdapter {
 
         // getting app data for the row
         Entry itunesItem = itunesItems.get(position);
+        //TODO find out why dereferencing for mDate causes NullPointer
+        try {
+            mUrl = itunesItem.getImImage().get(2).getLabel();
+            mName = itunesItem.getImName().getLabel();
+            mArtist = itunesItem.getImArtist().getLabel();
+            mCategory = itunesItem.getCategory().getAttributes().getTerm();
+            mDate = itunesItem.getImReleaseDate().getAttributes().getLabel();
+        }catch (NullPointerException e){
+            Log.e(ItunesAdapter.class.getName(), e.toString()+
+                    "\nCaused by dereferencing "+mName+ "at index " + position);
+        }
 
         // thumbnail image
-        thumbNail.setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
+        thumbNail.setImageUrl(mUrl, imageLoader);
 
         // name
-        name.setText((position + 1) + ". " + itunesItem.getFormattedName());
+        name.setText((position + 1) + ". " + mName);
 
         // artist
-        artist.setText(itunesItem.getImArtist().getLabel());
+        artist.setText(mArtist);
 
         // categoryObject
-        category.setText(itunesItem.getCategory().getAttributes().getTerm());
+        category.setText(mCategory);
 
         // release date
-        date.setText(itunesItem.getImReleaseDate().getAttributes().getLabel());
-
+        date.setText(mDate);
         return convertView;
     }
 

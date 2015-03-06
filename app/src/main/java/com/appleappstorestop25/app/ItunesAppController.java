@@ -1,5 +1,6 @@
 package com.appleappstorestop25.app;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import com.appleappstorestop25.app.BaseClasses.AppController;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
@@ -46,5 +47,18 @@ public class ItunesAppController extends AppController {
         appleToPlayStoreMap.put("Music", "music");
         appleToPlayStoreMap.put("MZRssItemTypeIdentifier.Book", "books");
         appleToPlayStoreMap.put("TV Show", "tv");
+    }
+
+    public static Intent generateShareIntent(Entry itunesItem, String appName) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        String name = itunesItem.getImName().getLabel();
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Details on " + name);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                "Checkout this content: " + name
+                        + "(" + itunesItem.getLink().getAttributes().getHref() + ")"
+                        + "\n provided by " + appName + " created by @darienurse");
+        sendIntent.setType("text/plain");
+        return sendIntent;
     }
 }

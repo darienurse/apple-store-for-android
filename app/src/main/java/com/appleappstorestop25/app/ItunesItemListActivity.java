@@ -75,7 +75,7 @@ public class ItunesItemListActivity extends FragmentActivity
         unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
         if (savedInstanceState != null && savedInstanceState.containsKey(SAVED_ITEM)) {
             itunesItem = (Entry) savedInstanceState.getSerializable(SAVED_ITEM);
-            mTitle = itunesItem.getFormattedName();
+            mTitle = itunesItem.getImName().getLabel();
         }
 
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
@@ -156,12 +156,12 @@ public class ItunesItemListActivity extends FragmentActivity
     @Override
     public void onItunesItemSelected(Entry item) {
         if (mTwoPane) {
-            mTitle = item.getFormattedName();
+            mTitle = item.getImName().getLabel();
             getActionBar().setTitle(mTitle);
             if (itunesItem == null) toggleFavorite(item);
             else toggleFavorite(itunesItem, item);
             itunesItem = item;
-            setShareIntent(item.generateShareIntent(mAppName));
+            setShareIntent(ItunesAppController.generateShareIntent(itunesItem, mAppName));
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(itunesItem))
                     .commit();
@@ -277,7 +277,7 @@ public class ItunesItemListActivity extends FragmentActivity
     }
 
     private void launchPlayStoreSearch() {
-        String formattedName = itunesItem.getFormattedName();
+        String formattedName = itunesItem.getImName().getLabel();
         String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel());
         startActivity(new Intent(Intent.ACTION_VIEW
                 , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
