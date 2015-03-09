@@ -1,17 +1,21 @@
 package com.appleappstorestop25.app;
 
+import java.io.Serializable;
+
 /**
  * Created by Darien on 3/2/2015.
  */
-public class CategoryAttribute {
+public class CategoryAttribute implements Serializable {
     private final String title;
     private final Integer color;
     private final String url;
+    private final Class itemClass;
 
-    public CategoryAttribute(String title, Integer c, String url) {
+    public CategoryAttribute(String title, Integer c, String url, Class itemClass) {
         this.title = title;
         this.color = c;
         this.url = url;
+        this.itemClass = itemClass;
     }
 
     public String getUrl() {
@@ -24,5 +28,9 @@ public class CategoryAttribute {
 
     public String getTitle() {
         return title;
+    }
+
+    public Class getItemClass() {
+        return itemClass;
     }
 }

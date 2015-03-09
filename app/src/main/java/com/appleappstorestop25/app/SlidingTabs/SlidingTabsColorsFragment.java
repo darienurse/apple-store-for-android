@@ -159,7 +159,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          */
         Fragment createFragment() {
             return ItunesItemListFragment.newInstance(
-                    ItunesAppController.getCategoryList().get(mIndex).getUrl());
+                    ItunesAppController.getCategoryList().get(mIndex));
         }
 
         /**

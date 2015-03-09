@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.appleappstorestop25.app.ItunesItemClasses.Category;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 import com.appleappstorestop25.app.ItunesItemClasses.ItunesRSSResponse;
 import com.google.gson.Gson;
@@ -25,7 +26,7 @@ import static com.appleappstorestop25.app.ItunesAppController.LOAD;
 
 public class ItunesItemListFragment extends ListFragment {
 
-    public static final String ARG_URL_ID = "url_link_id";
+    public static final String ARG_ATTRI_ID = "url_link_id";
     public static final String SAVED_LIST_ID = "saved_list_id";
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -50,13 +51,14 @@ public class ItunesItemListFragment extends ListFragment {
     private List<Entry> itunesItemList;
     private ProgressDialog pDialog;
     private ItunesAdapter adapter;
+    private ItunesRSSResponse rssResponse;
 
     public ItunesItemListFragment() {
     }
 
-    public static ItunesItemListFragment newInstance(String url) {
+    public static ItunesItemListFragment newInstance(CategoryAttribute ca) {
         Bundle arguments = new Bundle();
-        arguments.putString(ARG_URL_ID, url);
+        arguments.putSerializable(ARG_ATTRI_ID, ca);
         ItunesItemListFragment fragment = new ItunesItemListFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -84,19 +86,25 @@ public class ItunesItemListFragment extends ListFragment {
         // Load saved objects from savedInstance state bundle
         if (savedInstanceState != null && savedInstanceState.containsKey(SAVED_LIST_ID)) {
             itunesItemList.clear();
-            itunesItemList.addAll((List<Entry>) savedInstanceState.getSerializable(SAVED_LIST_ID));
-            adapter.notifyDataSetChanged();
+            rssResponse = (ItunesRSSResponse) savedInstanceState.getSerializable(SAVED_LIST_ID);
+            try {
+                itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                adapter.notifyDataSetChanged();
+            }catch(NullPointerException e){
+                e.printStackTrace();
+            }
             hidePDialog();
         }
         // Creating volley request obj if the savedInstanceState bundle is empty
-        if (getArguments() != null && getArguments().containsKey(ARG_URL_ID) && itunesItemList.isEmpty()) {
-            JsonObjectRequest jsonObjReq = new JsonObjectRequest(getArguments().getString(ARG_URL_ID), null,
+        if (getArguments() != null && getArguments().containsKey(ARG_ATTRI_ID) && itunesItemList.isEmpty()) {
+            CategoryAttribute ca = (CategoryAttribute) getArguments().getSerializable(ARG_ATTRI_ID);
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(ca.getUrl(), null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d(TAG, response.toString());
                             Gson gson = new Gson();
-                            ItunesRSSResponse rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
+                            rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
                             Log.d(TAG, rssResponse.getFeed().getAuthor().getName().getLabel());
                             itunesItemList.clear();
                             itunesItemList.addAll(rssResponse.getFeed().getEntry());
@@ -183,7 +191,7 @@ public class ItunesItemListFragment extends ListFragment {
             // Serialize and persist the activated item position.
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
-        outState.putSerializable(SAVED_LIST_ID, (java.io.Serializable) itunesItemList);
+        outState.putSerializable(SAVED_LIST_ID, rssResponse);
     }
 
     /**
