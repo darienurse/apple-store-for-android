@@ -28,6 +28,8 @@ import com.appleappstorestop25.app.CategoryAttribute;
 import com.appleappstorestop25.app.ItunesAppController;
 import com.appleappstorestop25.app.ItunesItemListFragment;
 import com.appleappstorestop25.app.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +110,10 @@ public class SlidingTabsColorsFragment extends Fragment {
         // it's PagerAdapter set.
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
+
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         // BEGIN_INCLUDE (tab_colorizer)
         // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve

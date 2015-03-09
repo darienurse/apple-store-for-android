@@ -8,5 +8,6 @@
     <string name="drawer_close">Close Navigation Bar</string>
     <string name="fav_string">Add to Favorites</string>
     <string name="play_store_search">Find in Play Store</string>
+    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
 
 </resources>
