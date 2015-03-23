@@ -66,27 +66,28 @@ public class ItunesItemListFragment extends ListFragment {
         itunesItemList = new ArrayList<Entry>(LOAD);
         if (getArguments() != null && getArguments().containsKey(ARG_ATTRI_ID)) {
             catAttr = (CategoryAttribute) getArguments().getSerializable(ARG_ATTRI_ID);
-            if(catAttr.getRssResponse() != null)
+            rssResponse = catAttr.getRssResponse();
+            if(rssResponse != null)
                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
         }
 
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 
-        pDialog = new ProgressDialog(this.getActivity(),R.style.AppTheme);
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Loading... " + catAttr.getTitle());
-
-        // 1 second delay before showing the loading screen. If the network is strong, the loading wont show.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                if (pDialog != null) pDialog.show();
-            }
-        }, 1000);
-
-        // Creating volley request obj if the savedInstanceState bundle is empty
         if (catAttr !=null && itunesItemList.isEmpty()) {
+            pDialog = new ProgressDialog(this.getActivity(),R.style.Theme_MyDialog);
+            // Showing progress dialog before making http request
+            pDialog.setMessage("Loading... " + catAttr.getTitle());
+
+            // 1 second delay before showing the loading screen. If the network is strong, the loading wont show.
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    if (pDialog != null) pDialog.show();
+                }
+            }, 3000);
+
+            // Creating volley request obj if the savedInstanceState bundle is empty
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(catAttr.getUrl(), null,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -111,7 +112,6 @@ public class ItunesItemListFragment extends ListFragment {
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.d(TAG, "Error: " + error.getMessage());
                     hidePDialog();
-
                 }
             });
 
