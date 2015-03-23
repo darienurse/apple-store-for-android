@@ -13,7 +13,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.appleappstorestop25.app.ItunesItemClasses.Category;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 import com.appleappstorestop25.app.ItunesItemClasses.ItunesRSSResponse;
 import com.google.gson.Gson;
@@ -24,14 +23,10 @@ import java.util.List;
 
 import static com.appleappstorestop25.app.ItunesAppController.LOAD;
 
+
 public class ItunesItemListFragment extends ListFragment {
 
     public static final String ARG_ATTRI_ID = "url_link_id";
-    public static final String SAVED_LIST_ID = "saved_list_id";
-    /**
-     * The serialization (saved instance state) Bundle key representing the
-     * activated item position. Only used on tablets.
-     */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String TAG = ItunesItemListFragment.class.getSimpleName();
     private static Callbacks sItunesCallbacks = new Callbacks() {
@@ -52,6 +47,7 @@ public class ItunesItemListFragment extends ListFragment {
     private ProgressDialog pDialog;
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
+    private CategoryAttribute catAttr;
 
     public ItunesItemListFragment() {
     }
@@ -68,12 +64,18 @@ public class ItunesItemListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         itunesItemList = new ArrayList<Entry>(LOAD);
+        if (getArguments() != null && getArguments().containsKey(ARG_ATTRI_ID)) {
+            catAttr = (CategoryAttribute) getArguments().getSerializable(ARG_ATTRI_ID);
+            if(catAttr.getRssResponse() != null)
+                itunesItemList.addAll(rssResponse.getFeed().getEntry());
+        }
+
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 
-        pDialog = new ProgressDialog(this.getActivity());
+        pDialog = new ProgressDialog(this.getActivity(),R.style.AppTheme);
         // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage("Loading... " + catAttr.getTitle());
 
         // 1 second delay before showing the loading screen. If the network is strong, the loading wont show.
         Handler handler = new Handler();
@@ -81,24 +83,11 @@ public class ItunesItemListFragment extends ListFragment {
             public void run() {
                 if (pDialog != null) pDialog.show();
             }
-        }, 4000);
+        }, 1000);
 
-        // Load saved objects from savedInstance state bundle
-        if (savedInstanceState != null && savedInstanceState.containsKey(SAVED_LIST_ID)) {
-            itunesItemList.clear();
-            rssResponse = (ItunesRSSResponse) savedInstanceState.getSerializable(SAVED_LIST_ID);
-            try {
-                itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                adapter.notifyDataSetChanged();
-            }catch(NullPointerException e){
-                e.printStackTrace();
-            }
-            hidePDialog();
-        }
         // Creating volley request obj if the savedInstanceState bundle is empty
-        if (getArguments() != null && getArguments().containsKey(ARG_ATTRI_ID) && itunesItemList.isEmpty()) {
-            CategoryAttribute ca = (CategoryAttribute) getArguments().getSerializable(ARG_ATTRI_ID);
-            JsonObjectRequest jsonObjReq = new JsonObjectRequest(ca.getUrl(), null,
+        if (catAttr !=null && itunesItemList.isEmpty()) {
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(catAttr.getUrl(), null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -108,6 +97,7 @@ public class ItunesItemListFragment extends ListFragment {
                             Log.d(TAG, rssResponse.getFeed().getAuthor().getName().getLabel());
                             itunesItemList.clear();
                             itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                            catAttr.setRssResponse(rssResponse);
                             Log.d(TAG, "" + adapter.getCount());
                             hidePDialog();
 
@@ -191,7 +181,6 @@ public class ItunesItemListFragment extends ListFragment {
             // Serialize and persist the activated item position.
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
-        outState.putSerializable(SAVED_LIST_ID, rssResponse);
     }
 
     /**
