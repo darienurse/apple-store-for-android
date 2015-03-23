@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
@@ -33,8 +34,16 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         setContentView(R.layout.activity_itunesitem_detail);
         unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
         favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
-        itunesItem = (Entry) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
-        getActionBar().setTitle(itunesItem.getImName().getLabel());
+        if (getIntent() != null && getIntent().hasExtra(ItunesItemDetailFragment.ARG_ITEM_ID)) {
+            itunesItem = (Entry) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
+            getActionBar().setTitle(itunesItem.getImName().getLabel());
+            //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
+        }else{
+            Log.e(getLocalClassName(), "You cannot launch "+
+                    getLocalClassName()+" without a valid value for " +
+                    ItunesItemDetailFragment.ARG_ITEM_ID + " in the intent.");
+            finish();
+        }
 
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
