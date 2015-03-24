@@ -55,10 +55,10 @@ public class ItunesAppController extends AppController {
         /*TODO: Currently, the itemClass field of CategoryAttribute is optimized for Apps only.
          Albums, TV Seasons, Book, and Podcasts happen to compile for this application but there is information loss,
          such as the Duration field. In the future, I must create specific json classes for each category*/
-        categoryList.add(new CategoryAttribute("Top Grossing Apps", getResources().getColor(R.color.green),
-                "https://itunes.apple.com/us/rss/topgrossingapplications/limit=" + LOAD + "/json", ItunesRSSResponse.class));
-        categoryList.add(new CategoryAttribute("Top Grossing Mac Apps", getResources().getColor(R.color.yellow),
-                "https://itunes.apple.com/us/rss/topgrossingmacapps/limit=" + LOAD + "/json", ItunesRSSResponse.class));
+        categoryList.add(new CategoryAttribute("Top Grossing Apps", getResources().getColor(R.color.green)
+                , "https://itunes.apple.com/us/rss/topgrossingapplications/limit=" + LOAD + "/json", ItunesRSSResponse.class));
+        categoryList.add(new CategoryAttribute("Top Grossing Mac Apps", getResources().getColor(R.color.yellow)
+                , "https://itunes.apple.com/us/rss/topgrossingmacapps/limit=" + LOAD + "/json", ItunesRSSResponse.class));
         categoryList.add(new CategoryAttribute("Top Albums", getResources().getColor(R.color.orange)
                 , "https://itunes.apple.com/us/rss/topalbums/limit=" + LOAD + "/explicit=true/json", ItunesRSSResponse.class));
         categoryList.add(new CategoryAttribute("Top TV Seasons", getResources().getColor(R.color.red)
