@@ -15,6 +15,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
 import com.appleappstorestop25.app.ItunesItemClasses.ItunesRSSResponse;
+import com.appleappstorestop25.app.ItunesItemClasses.LinkDeserializer;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
@@ -61,7 +62,7 @@ public class ItunesItemListFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         itunesItemList = new ArrayList<Entry>(LOAD);
         if (getArguments() != null && getArguments().containsKey(ARG_ATTRI_ID)) {
@@ -93,7 +94,7 @@ public class ItunesItemListFragment extends ListFragment {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d(TAG, response.toString());
-                            Gson gson = new Gson();
+                            Gson gson = LinkDeserializer.buildGson();
                             rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
                             Log.d(TAG, rssResponse.getFeed().getAuthor().getName().getLabel());
                             itunesItemList.clear();
@@ -110,8 +111,10 @@ public class ItunesItemListFragment extends ListFragment {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                    VolleyLog.v(TAG, "Error: " + error.getMessage());
+                    Log.d(TAG, "Error: " + error.getMessage());
                     hidePDialog();
+                    onCreate(savedInstanceState);
                 }
             });
 

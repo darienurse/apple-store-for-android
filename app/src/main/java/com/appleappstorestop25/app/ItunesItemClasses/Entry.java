@@ -7,6 +7,7 @@ import javax.annotation.Generated;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
@@ -39,7 +40,8 @@ public class Entry implements Serializable {
     private Title title;
     @Expose
     @Valid
-    private Link link;
+    private Link[] link;
+
     @Expose
     @Valid
     private Id id;
@@ -189,22 +191,21 @@ public class Entry implements Serializable {
     }
 
     /**
-     * @return The link
+     *
+     * @return
+     *     The link
      */
-    public Link getLink() {
-        return link;
+    public List<Link> getLink() {
+        return Arrays.asList(link);
     }
 
     /**
-     * @param link The link
+     *
+     * @param link
+     *     The link
      */
-    public void setLink(Link link) {
+    public void setLink(Link[] link) {
         this.link = link;
-    }
-
-    public Entry withLink(Link link) {
-        this.link = link;
-        return this;
     }
 
     /**
