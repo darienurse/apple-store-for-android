@@ -44,7 +44,7 @@ public class ItunesItemListFragment extends ListFragment {
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
-    private List<Entry> itunesItemList;
+    private List<Entry> itunesItemList= new ArrayList<Entry>(LOAD);
     private ProgressDialog pDialog;
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
@@ -64,7 +64,6 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        itunesItemList = new ArrayList<Entry>(LOAD);
         if (getArguments() != null && getArguments().containsKey(ARG_ATTRI_ID)) {
             catAttr = (CategoryAttribute) getArguments().getSerializable(ARG_ATTRI_ID);
             rssResponse = catAttr.getRssResponse();

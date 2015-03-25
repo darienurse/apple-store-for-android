@@ -7,39 +7,39 @@ import javax.annotation.Generated;
 import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
-public class ImContentType implements Serializable {
+public class ImContentType__ implements Serializable {
 
     @SerializedName("im:contentType")
     @Expose
-    private ImContentType_ imContentType;
+    private ImContentType___ imContentType;
     @Expose
-    private Attributes___ attributes;
+    private Attributes____________ attributes;
 
     /**
      * @return The imContentType
      */
-    public ImContentType_ getImContentType() {
+    public ImContentType___ getImContentType() {
         return imContentType;
     }
 
     /**
      * @param imContentType The im:contentType
      */
-    public void setImContentType(ImContentType_ imContentType) {
+    public void setImContentType(ImContentType___ imContentType) {
         this.imContentType = imContentType;
     }
 
     /**
      * @return The attributes
      */
-    public Attributes___ getAttributes() {
+    public Attributes____________ getAttributes() {
         return attributes;
     }
 
     /**
      * @param attributes The attributes
      */
-    public void setAttributes(Attributes___ attributes) {
+    public void setAttributes(Attributes____________ attributes) {
         this.attributes = attributes;
     }
 

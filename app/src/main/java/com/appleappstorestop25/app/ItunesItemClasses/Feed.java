@@ -3,7 +3,6 @@ package com.appleappstorestop25.app.ItunesItemClasses;
 import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,28 +11,20 @@ import java.util.List;
 public class Feed implements Serializable {
 
     @Expose
-    @Valid
     private Author author;
     @Expose
-    @Valid
     private List<Entry> entry = new ArrayList<Entry>();
     @Expose
-    @Valid
     private Updated updated;
     @Expose
-    @Valid
     private Rights_ rights;
     @Expose
-    @Valid
     private Title_ title;
     @Expose
-    @Valid
     private Icon icon;
     @Expose
-    @Valid
-    private List<Link_> link = new ArrayList<Link_>();
+    private List<Link__> link = new ArrayList<Link__>();
     @Expose
-    @Valid
     private Id_ id;
 
     /**
@@ -50,11 +41,6 @@ public class Feed implements Serializable {
         this.author = author;
     }
 
-    public Feed withAuthor(Author author) {
-        this.author = author;
-        return this;
-    }
-
     /**
      * @return The entry
      */
@@ -67,11 +53,6 @@ public class Feed implements Serializable {
      */
     public void setEntry(List<Entry> entry) {
         this.entry = entry;
-    }
-
-    public Feed withEntry(List<Entry> entry) {
-        this.entry = entry;
-        return this;
     }
 
     /**
@@ -88,11 +69,6 @@ public class Feed implements Serializable {
         this.updated = updated;
     }
 
-    public Feed withUpdated(Updated updated) {
-        this.updated = updated;
-        return this;
-    }
-
     /**
      * @return The rights
      */
@@ -105,11 +81,6 @@ public class Feed implements Serializable {
      */
     public void setRights(Rights_ rights) {
         this.rights = rights;
-    }
-
-    public Feed withRights(Rights_ rights) {
-        this.rights = rights;
-        return this;
     }
 
     /**
@@ -126,11 +97,6 @@ public class Feed implements Serializable {
         this.title = title;
     }
 
-    public Feed withTitle(Title_ title) {
-        this.title = title;
-        return this;
-    }
-
     /**
      * @return The icon
      */
@@ -145,28 +111,18 @@ public class Feed implements Serializable {
         this.icon = icon;
     }
 
-    public Feed withIcon(Icon icon) {
-        this.icon = icon;
-        return this;
-    }
-
     /**
      * @return The link
      */
-    public List<Link_> getLink() {
+    public List<Link__> getLink() {
         return link;
     }
 
     /**
      * @param link The link
      */
-    public void setLink(List<Link_> link) {
+    public void setLink(List<Link__> link) {
         this.link = link;
-    }
-
-    public Feed withLink(List<Link_> link) {
-        this.link = link;
-        return this;
     }
 
     /**
@@ -181,11 +137,6 @@ public class Feed implements Serializable {
      */
     public void setId(Id_ id) {
         this.id = id;
-    }
-
-    public Feed withId(Id_ id) {
-        this.id = id;
-        return this;
     }
 
 }

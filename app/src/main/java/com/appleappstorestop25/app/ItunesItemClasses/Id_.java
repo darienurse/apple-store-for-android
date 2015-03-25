@@ -25,9 +25,4 @@ public class Id_ implements Serializable {
         this.label = label;
     }
 
-    public Id_ withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
 }

@@ -25,9 +25,4 @@ public class Attributes implements Serializable {
         this.height = height;
     }
 
-    public Attributes withHeight(String height) {
-        this.height = height;
-        return this;
-    }
-
 }

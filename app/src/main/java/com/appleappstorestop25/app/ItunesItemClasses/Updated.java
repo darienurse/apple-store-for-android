@@ -25,9 +25,4 @@ public class Updated implements Serializable {
         this.label = label;
     }
 
-    public Updated withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
 }

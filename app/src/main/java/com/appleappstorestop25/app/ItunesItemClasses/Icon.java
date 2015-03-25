@@ -25,9 +25,4 @@ public class Icon implements Serializable {
         this.label = label;
     }
 
-    public Icon withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
 }

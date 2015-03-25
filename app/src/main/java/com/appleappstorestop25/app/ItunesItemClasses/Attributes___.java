@@ -9,67 +9,36 @@ import java.io.Serializable;
 public class Attributes___ implements Serializable {
 
     @Expose
-    private String rel;
+    private String term;
     @Expose
-    private String type;
-    @Expose
-    private String href;
+    private String label;
 
     /**
-     * @return The rel
+     * @return The term
      */
-    public String getRel() {
-        return rel;
+    public String getTerm() {
+        return term;
     }
 
     /**
-     * @param rel The rel
+     * @param term The term
      */
-    public void setRel(String rel) {
-        this.rel = rel;
-    }
-
-    public Attributes___ withRel(String rel) {
-        this.rel = rel;
-        return this;
+    public void setTerm(String term) {
+        this.term = term;
     }
 
     /**
-     * @return The type
+     * @return The label
      */
-    public String getType() {
-        return type;
+    public String getLabel() {
+        return label;
     }
 
     /**
-     * @param type The type
+     * @param label The label
      */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Attributes___ withType(String type) {
-        this.type = type;
-        return this;
-    }
-
-    /**
-     * @return The href
-     */
-    public String getHref() {
-        return href;
-    }
-
-    /**
-     * @param href The href
-     */
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public Attributes___ withHref(String href) {
-        this.href = href;
-        return this;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
 }

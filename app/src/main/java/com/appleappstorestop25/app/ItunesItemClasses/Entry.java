@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,47 +14,51 @@ public class Entry implements Serializable {
 
     @SerializedName("im:name")
     @Expose
-    @Valid
     private ImName imName;
     @SerializedName("im:image")
     @Expose
-    @Valid
     private List<ImImage> imImage = new ArrayList<ImImage>();
     @Expose
-    @Valid
     private Summary summary;
     @SerializedName("im:price")
     @Expose
-    @Valid
     private ImPrice imPrice;
     @SerializedName("im:contentType")
     @Expose
-    @Valid
     private ImContentType imContentType;
     @Expose
-    @Valid
     private Rights rights;
     @Expose
-    @Valid
     private Title title;
     @Expose
-    @Valid
     private Link[] link;
-
     @Expose
-    @Valid
     private Id id;
     @SerializedName("im:artist")
     @Expose
-    @Valid
     private ImArtist imArtist;
     @Expose
-    @Valid
     private Category category;
     @SerializedName("im:releaseDate")
     @Expose
-    @Valid
     private ImReleaseDate imReleaseDate;
+    @Expose
+    private Subtitle subtitle;
+    @SerializedName("im:vendorName")
+    @Expose
+    private ImVendorName imVendorName;
+    @SerializedName("im:publisher")
+    @Expose
+    private ImPublisher imPublisher;
+    @SerializedName("im:rentalPrice")
+    @Expose
+    private ImRentalPrice imRentalPrice;
+    @SerializedName("im:collection")
+    @Expose
+    private ImCollection imCollection;
+    @SerializedName("im:itemCount")
+    @Expose
+    private ImItemCount imItemCount;
 
     /**
      * @return The imName
@@ -69,11 +72,6 @@ public class Entry implements Serializable {
      */
     public void setImName(ImName imName) {
         this.imName = imName;
-    }
-
-    public Entry withImName(ImName imName) {
-        this.imName = imName;
-        return this;
     }
 
     /**
@@ -90,11 +88,6 @@ public class Entry implements Serializable {
         this.imImage = imImage;
     }
 
-    public Entry withImImage(List<ImImage> imImage) {
-        this.imImage = imImage;
-        return this;
-    }
-
     /**
      * @return The summary
      */
@@ -107,11 +100,6 @@ public class Entry implements Serializable {
      */
     public void setSummary(Summary summary) {
         this.summary = summary;
-    }
-
-    public Entry withSummary(Summary summary) {
-        this.summary = summary;
-        return this;
     }
 
     /**
@@ -128,11 +116,6 @@ public class Entry implements Serializable {
         this.imPrice = imPrice;
     }
 
-    public Entry withImPrice(ImPrice imPrice) {
-        this.imPrice = imPrice;
-        return this;
-    }
-
     /**
      * @return The imContentType
      */
@@ -145,11 +128,6 @@ public class Entry implements Serializable {
      */
     public void setImContentType(ImContentType imContentType) {
         this.imContentType = imContentType;
-    }
-
-    public Entry withImContentType(ImContentType imContentType) {
-        this.imContentType = imContentType;
-        return this;
     }
 
     /**
@@ -166,11 +144,6 @@ public class Entry implements Serializable {
         this.rights = rights;
     }
 
-    public Entry withRights(Rights rights) {
-        this.rights = rights;
-        return this;
-    }
-
     /**
      * @return The title
      */
@@ -185,24 +158,15 @@ public class Entry implements Serializable {
         this.title = title;
     }
 
-    public Entry withTitle(Title title) {
-        this.title = title;
-        return this;
-    }
-
     /**
-     *
-     * @return
-     *     The link
+     * @return The link
      */
     public List<Link> getLink() {
         return Arrays.asList(link);
     }
 
     /**
-     *
-     * @param link
-     *     The link
+     * @param link The link
      */
     public void setLink(Link[] link) {
         this.link = link;
@@ -222,11 +186,6 @@ public class Entry implements Serializable {
         this.id = id;
     }
 
-    public Entry withId(Id id) {
-        this.id = id;
-        return this;
-    }
-
     /**
      * @return The imArtist
      */
@@ -239,11 +198,6 @@ public class Entry implements Serializable {
      */
     public void setImArtist(ImArtist imArtist) {
         this.imArtist = imArtist;
-    }
-
-    public Entry withImArtist(ImArtist imArtist) {
-        this.imArtist = imArtist;
-        return this;
     }
 
     /**
@@ -260,11 +214,6 @@ public class Entry implements Serializable {
         this.category = category;
     }
 
-    public Entry withCategory(Category category) {
-        this.category = category;
-        return this;
-    }
-
     /**
      * @return The imReleaseDate
      */
@@ -279,8 +228,88 @@ public class Entry implements Serializable {
         this.imReleaseDate = imReleaseDate;
     }
 
-    public Entry withImReleaseDate(ImReleaseDate imReleaseDate) {
-        this.imReleaseDate = imReleaseDate;
-        return this;
+    /**
+     * @return The subtitle
+     */
+    public Subtitle getSubtitle() {
+        return subtitle;
     }
+
+    /**
+     * @param subtitle The subtitle
+     */
+    public void setSubtitle(Subtitle subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    /**
+     * @return The imVendorName
+     */
+    public ImVendorName getImVendorName() {
+        return imVendorName;
+    }
+
+    /**
+     * @param imVendorName The im:vendorName
+     */
+    public void setImVendorName(ImVendorName imVendorName) {
+        this.imVendorName = imVendorName;
+    }
+
+    /**
+     * @return The imPublisher
+     */
+    public ImPublisher getImPublisher() {
+        return imPublisher;
+    }
+
+    /**
+     * @param imPublisher The im:publisher
+     */
+    public void setImPublisher(ImPublisher imPublisher) {
+        this.imPublisher = imPublisher;
+    }
+
+    /**
+     * @return The imRentalPrice
+     */
+    public ImRentalPrice getImRentalPrice() {
+        return imRentalPrice;
+    }
+
+    /**
+     * @param imRentalPrice The im:rentalPrice
+     */
+    public void setImRentalPrice(ImRentalPrice imRentalPrice) {
+        this.imRentalPrice = imRentalPrice;
+    }
+
+    /**
+     * @return The imCollection
+     */
+    public ImCollection getImCollection() {
+        return imCollection;
+    }
+
+    /**
+     * @param imCollection The im:collection
+     */
+    public void setImCollection(ImCollection imCollection) {
+        this.imCollection = imCollection;
+    }
+
+    /**
+     * @return The imItemCount
+     */
+    public ImItemCount getImItemCount() {
+        return imItemCount;
+    }
+
+    /**
+     * @param imItemCount The im:itemCount
+     */
+    public void setImItemCount(ImItemCount imItemCount) {
+        this.imItemCount = imItemCount;
+    }
+
 }

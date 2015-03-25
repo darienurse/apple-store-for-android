@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
-public class Attributes_ implements Serializable {
+public class Attributes_________ implements Serializable {
 
     @Expose
     private String amount;

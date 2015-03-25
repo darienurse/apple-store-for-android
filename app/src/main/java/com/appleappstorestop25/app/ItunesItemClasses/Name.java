@@ -25,9 +25,4 @@ public class Name implements Serializable {
         this.label = label;
     }
 
-    public Name withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
 }

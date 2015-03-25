@@ -25,9 +25,4 @@ public class Title implements Serializable {
         this.label = label;
     }
 
-    public Title withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
 }

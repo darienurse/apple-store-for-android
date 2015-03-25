@@ -3,33 +3,26 @@ package com.appleappstorestop25.app.ItunesItemClasses;
 import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
-import javax.validation.Valid;
 import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
 public class Link_ implements Serializable {
 
     @Expose
-    @Valid
-    private Attributes________ attributes;
+    private Attributes__________ attributes;
 
     /**
      * @return The attributes
      */
-    public Attributes________ getAttributes() {
+    public Attributes__________ getAttributes() {
         return attributes;
     }
 
     /**
      * @param attributes The attributes
      */
-    public void setAttributes(Attributes________ attributes) {
+    public void setAttributes(Attributes__________ attributes) {
         this.attributes = attributes;
-    }
-
-    public Link_ withAttributes(Attributes________ attributes) {
-        this.attributes = attributes;
-        return this;
     }
 
 }

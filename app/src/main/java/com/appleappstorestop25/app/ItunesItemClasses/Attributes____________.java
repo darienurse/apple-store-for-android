@@ -6,10 +6,26 @@ import javax.annotation.Generated;
 import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
-public class Title_ implements Serializable {
+public class Attributes____________ implements Serializable {
 
     @Expose
+    private String term;
+    @Expose
     private String label;
+
+    /**
+     * @return The term
+     */
+    public String getTerm() {
+        return term;
+    }
+
+    /**
+     * @param term The term
+     */
+    public void setTerm(String term) {
+        this.term = term;
+    }
 
     /**
      * @return The label

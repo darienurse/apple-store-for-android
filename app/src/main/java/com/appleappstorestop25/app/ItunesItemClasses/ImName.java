@@ -25,9 +25,4 @@ public class ImName implements Serializable {
         this.label = label;
     }
 
-    public ImName withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
 }

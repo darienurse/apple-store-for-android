@@ -3,7 +3,6 @@ package com.appleappstorestop25.app.ItunesItemClasses;
 import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
-import javax.validation.Valid;
 import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
@@ -12,8 +11,7 @@ public class ImArtist implements Serializable {
     @Expose
     private String label;
     @Expose
-    @Valid
-    private Attributes_____ attributes;
+    private Attributes______ attributes;
 
     /**
      * @return The label
@@ -29,28 +27,18 @@ public class ImArtist implements Serializable {
         this.label = label;
     }
 
-    public ImArtist withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
     /**
      * @return The attributes
      */
-    public Attributes_____ getAttributes() {
+    public Attributes______ getAttributes() {
         return attributes;
     }
 
     /**
      * @param attributes The attributes
      */
-    public void setAttributes(Attributes_____ attributes) {
+    public void setAttributes(Attributes______ attributes) {
         this.attributes = attributes;
-    }
-
-    public ImArtist withAttributes(Attributes_____ attributes) {
-        this.attributes = attributes;
-        return this;
     }
 
 }

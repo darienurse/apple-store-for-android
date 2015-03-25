@@ -6,12 +6,10 @@ import javax.annotation.Generated;
 import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
-public class Attributes____ implements Serializable {
+public class Attributes_____________ implements Serializable {
 
     @Expose
     private String rel;
-    @Expose
-    private String type;
     @Expose
     private String href;
 
@@ -27,20 +25,6 @@ public class Attributes____ implements Serializable {
      */
     public void setRel(String rel) {
         this.rel = rel;
-    }
-
-    /**
-     * @return The type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * @param type The type
-     */
-    public void setType(String type) {
-        this.type = type;
     }
 
     /**

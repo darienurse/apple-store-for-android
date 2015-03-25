@@ -25,9 +25,4 @@ public class Summary implements Serializable {
         this.label = label;
     }
 
-    public Summary withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
 }

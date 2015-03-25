@@ -6,22 +6,22 @@ import javax.annotation.Generated;
 import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
-public class Link implements Serializable {
+public class ImContentType_ implements Serializable {
 
     @Expose
-    private Attributes____ attributes;
+    private Attributes__ attributes;
 
     /**
      * @return The attributes
      */
-    public Attributes____ getAttributes() {
+    public Attributes__ getAttributes() {
         return attributes;
     }
 
     /**
      * @param attributes The attributes
      */
-    public void setAttributes(Attributes____ attributes) {
+    public void setAttributes(Attributes__ attributes) {
         this.attributes = attributes;
     }
 

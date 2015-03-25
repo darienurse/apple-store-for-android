@@ -27,11 +27,6 @@ public class Attributes__ implements Serializable {
         this.term = term;
     }
 
-    public Attributes__ withTerm(String term) {
-        this.term = term;
-        return this;
-    }
-
     /**
      * @return The label
      */
@@ -44,11 +39,6 @@ public class Attributes__ implements Serializable {
      */
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    public Attributes__ withLabel(String label) {
-        this.label = label;
-        return this;
     }
 
 }

@@ -25,9 +25,4 @@ public class Rights_ implements Serializable {
         this.label = label;
     }
 
-    public Rights_ withLabel(String label) {
-        this.label = label;
-        return this;
-    }
-
 }

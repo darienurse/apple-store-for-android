@@ -3,17 +3,14 @@ package com.appleappstorestop25.app.ItunesItemClasses;
 import com.google.gson.annotations.Expose;
 
 import javax.annotation.Generated;
-import javax.validation.Valid;
 import java.io.Serializable;
 
 @Generated("org.jsonschema2pojo")
 public class Author implements Serializable {
 
     @Expose
-    @Valid
     private Name name;
     @Expose
-    @Valid
     private Uri uri;
 
     /**
@@ -30,11 +27,6 @@ public class Author implements Serializable {
         this.name = name;
     }
 
-    public Author withName(Name name) {
-        this.name = name;
-        return this;
-    }
-
     /**
      * @return The uri
      */
@@ -47,11 +39,6 @@ public class Author implements Serializable {
      */
     public void setUri(Uri uri) {
         this.uri = uri;
-    }
-
-    public Author withUri(Uri uri) {
-        this.uri = uri;
-        return this;
     }
 
 }

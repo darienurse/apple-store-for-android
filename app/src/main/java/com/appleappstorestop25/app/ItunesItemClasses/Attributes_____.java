@@ -1,6 +1,7 @@
 package com.appleappstorestop25.app.ItunesItemClasses;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 import java.io.Serializable;
@@ -8,26 +9,22 @@ import java.io.Serializable;
 @Generated("org.jsonschema2pojo")
 public class Attributes_____ implements Serializable {
 
+    @SerializedName("im:id")
     @Expose
-    private String href;
+    private String imId;
 
     /**
-     * @return The href
+     * @return The imId
      */
-    public String getHref() {
-        return href;
+    public String getImId() {
+        return imId;
     }
 
     /**
-     * @param href The href
+     * @param imId The im:id
      */
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public Attributes_____ withHref(String href) {
-        this.href = href;
-        return this;
+    public void setImId(String imId) {
+        this.imId = imId;
     }
 
 }
