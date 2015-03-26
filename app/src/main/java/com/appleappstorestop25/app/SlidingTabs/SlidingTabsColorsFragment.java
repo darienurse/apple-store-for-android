@@ -113,7 +113,8 @@ public class SlidingTabsColorsFragment extends Fragment {
 
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        //TODO: Figure out why the adview is crashing on tablet
+        //mAdView.loadAd(adRequest);
 
         // BEGIN_INCLUDE (tab_colorizer)
         // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve
@@ -158,8 +159,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          * @return A new {@link Fragment} to be displayed by a {@link ViewPager}
          */
         Fragment createFragment() {
-            return ItunesItemListFragment.newInstance(
-                    ItunesAppController.getCategoryList().get(mIndex));
+            return ItunesItemListFragment.newInstance(mIndex);
         }
 
         /**

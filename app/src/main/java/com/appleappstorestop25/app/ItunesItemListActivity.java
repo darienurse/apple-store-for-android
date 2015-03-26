@@ -19,13 +19,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
 import com.appleappstorestop25.app.ItunesItemClasses.Entry;
+import com.appleappstorestop25.app.ItunesItemClasses.LinkDeserializer;
 import com.appleappstorestop25.app.SlidingTabs.SlidingTabsColorsFragment;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -50,6 +48,7 @@ public class ItunesItemListActivity extends FragmentActivity
     private final String mDrawerTitle = "Favorites";
     private final String USER_PREFS_FAV = "favorites";
     private final String SAVED_ITEM = "saved_item";
+    public static final String ARG_ITEM_INDEX = "item_index";
     Drawable unfavorite;
     Drawable favorite;
     MenuItem mFavButton;
@@ -67,7 +66,7 @@ public class ItunesItemListActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itunesitem_list);
-        gson = new Gson();
+        gson = LinkDeserializer.buildGson();
         mTwoPane = getResources().getBoolean(R.bool.has_two_panes);
         mAppName = getResources().getString(R.string.app_name);
         mTitle = mAppName;
@@ -83,7 +82,7 @@ public class ItunesItemListActivity extends FragmentActivity
         if (restoredFav != null) {
             for (String s : restoredFav) {
                 Entry itunesE = gson.fromJson(s, Entry.class);
-                ItunesAppController.userFavorites.put(Integer.parseInt(itunesE.getId().getAttributes().getImId().toString()), itunesE);
+                ItunesAppController.userFavorites.add(itunesE);
             }
         }
         setUpNavigationDrawer();
@@ -109,8 +108,7 @@ public class ItunesItemListActivity extends FragmentActivity
 
             mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
             if (itunesItem != null) {
-                int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
-                if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
+                if (ItunesAppController.userFavorites.contains(itunesItem)) {
                     mFavButton.setIcon(favorite);
                 } else {
                     mFavButton.setIcon(unfavorite);
@@ -154,7 +152,15 @@ public class ItunesItemListActivity extends FragmentActivity
 
 
     @Override
-    public void onItunesItemSelected(Entry item) {
+    public void onItunesItemSelected(int itemIndex, int categoryIndex) {
+        Entry item;
+        if(categoryIndex==-1) {
+            item = ItunesAppController.userFavorites.get(itemIndex);
+        }
+        else {
+            item = ItunesAppController.getCategoryList().get(categoryIndex)
+                    .getRssResponse().getFeed().getEntry().get(itemIndex);
+        }
         if (mTwoPane) {
             mTitle = item.getImName().getLabel();
             getActionBar().setTitle(mTitle);
@@ -177,7 +183,7 @@ public class ItunesItemListActivity extends FragmentActivity
     @Override
     protected void onStop() {
         Set<String> favSet = new LinkedHashSet<String>();
-        for (Entry e : ItunesAppController.userFavorites.values())
+        for (Entry e : ItunesAppController.userFavorites)
             favSet.add(gson.toJson(e));
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
@@ -202,14 +208,15 @@ public class ItunesItemListActivity extends FragmentActivity
     @Override
     public void onResume() {
         //TODO Find a way to use Notifydatasetchange instead
-        mDrawerList.setAdapter(new DrawerAdapter(getBaseContext(), new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
+        //mDrawerList.setAdapter(new DrawerAdapter(getBaseContext(), new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
+        ((DrawerAdapter)mDrawerList.getAdapter()).notifyDataSetChanged();
         super.onResume();
     }
 
     private void setUpNavigationDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new DrawerAdapter(this, new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
+        mDrawerList.setAdapter(new DrawerAdapter(this, ItunesAppController.userFavorites));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -237,30 +244,26 @@ public class ItunesItemListActivity extends FragmentActivity
     }
 
     private void handleFavorite(MenuItem item) {
-        int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
-        if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
-            ItunesAppController.userFavorites.remove(itunesItemId);
+        if (ItunesAppController.userFavorites.contains(itunesItem)) {
+            ItunesAppController.userFavorites.remove(itunesItem);
             item.setIcon(unfavorite);
         } else {
-            ItunesAppController.userFavorites.put(itunesItemId, itunesItem);
+            ItunesAppController.userFavorites.add(itunesItem);
             item.setIcon(favorite);
         }
         //TODO Find a way to use Notifydatasetchange instead
-        mDrawerList.setAdapter(new DrawerAdapter(getBaseContext(), new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
+        ((DrawerAdapter)mDrawerList.getAdapter()).notifyDataSetChanged();
     }
 
     private void toggleFavorite(Entry e1, Entry e2) {
-        int e1ID = Integer.parseInt(e1.getId().getAttributes().getImId());
-        int e2ID = Integer.parseInt(e2.getId().getAttributes().getImId());
-        Map<Integer, Entry> userFavorites = ItunesAppController.userFavorites;
-        if (userFavorites.containsKey(e1ID) != userFavorites.containsKey(e2ID)) {
+        List<Entry> userFavorites = ItunesAppController.userFavorites;
+        if (userFavorites.contains(e1) != userFavorites.contains(e2)) {
             toggleFavorite(e2);
         }
     }
 
     private void toggleFavorite(Entry e1) {
-        int e1ID = Integer.parseInt(e1.getId().getAttributes().getImId());
-        if (ItunesAppController.userFavorites.containsKey(e1ID)) {
+        if (ItunesAppController.userFavorites.contains(e1)) {
             mFavButton.setIcon(favorite);
         } else {
             mFavButton.setIcon(unfavorite);
@@ -286,7 +289,8 @@ public class ItunesItemListActivity extends FragmentActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            onItunesItemSelected((Entry) mDrawerList.getItemAtPosition((position)));
+            //TODO Remove -1
+            onItunesItemSelected(position, -1);
             mDrawerLayout.closeDrawers();
         }
     }

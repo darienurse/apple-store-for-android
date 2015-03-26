@@ -12,7 +12,7 @@ public class ItunesAppController extends AppController {
     public static final int LOAD = 199;
     public static final int NUM_CATEGORIES = 6;
     public static final int NUM_MAPPINGS = 5;
-    public static Map<Integer, Entry> userFavorites;
+    public static List<Entry> userFavorites;
     public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryList;
     private static Map<String, String> appleToPlayStoreMap;
@@ -48,7 +48,7 @@ public class ItunesAppController extends AppController {
         super.onCreate();
         categoryList = new ArrayList<CategoryAttribute>(NUM_CATEGORIES);
         appleToPlayStoreMap = new HashMap<String, String>(NUM_MAPPINGS);
-        userFavorites = new LinkedHashMap<Integer, Entry>();
+        userFavorites = new ArrayList<Entry>();
         globalColorController = new ColorDrawable();
         mInstance = this;
         categoryList.add(new CategoryAttribute("Top Grossing Apps", getResources().getColor(R.color.green)

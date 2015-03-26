@@ -2,12 +2,10 @@ package com.appleappstorestop25.app;
 
 import com.appleappstorestop25.app.ItunesItemClasses.ItunesRSSResponse;
 
-import java.io.Serializable;
-
 /**
  * Created by Darien on 3/2/2015.
  */
-public class CategoryAttribute implements Serializable {
+public class CategoryAttribute  {
     private final String title;
     private final Integer color;
     private final String url;

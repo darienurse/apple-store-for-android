@@ -27,12 +27,12 @@ import static com.appleappstorestop25.app.ItunesAppController.LOAD;
 
 public class ItunesItemListFragment extends ListFragment {
 
-    public static final String ARG_ATTRI_ID = "url_link_id";
+    public static final String ARG_CAT_INDEX = "category_index";
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String TAG = ItunesItemListFragment.class.getSimpleName();
     private static Callbacks sItunesCallbacks = new Callbacks() {
         @Override
-        public void onItunesItemSelected(Entry item) {
+        public void onItunesItemSelected(int itemIndex,int categoryIndex) {
         }
     };
     /**
@@ -49,13 +49,14 @@ public class ItunesItemListFragment extends ListFragment {
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
     private CategoryAttribute catAttr;
+    private int categoryIndex;
 
     public ItunesItemListFragment() {
     }
 
-    public static ItunesItemListFragment newInstance(CategoryAttribute ca) {
+    public static ItunesItemListFragment newInstance(int categoryIndex) {
         Bundle arguments = new Bundle();
-        arguments.putSerializable(ARG_ATTRI_ID, ca);
+        arguments.putInt(ARG_CAT_INDEX, categoryIndex);
         ItunesItemListFragment fragment = new ItunesItemListFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -64,8 +65,9 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null && getArguments().containsKey(ARG_ATTRI_ID)) {
-            catAttr = (CategoryAttribute) getArguments().getSerializable(ARG_ATTRI_ID);
+        if (getArguments() != null && getArguments().containsKey(ARG_CAT_INDEX)) {
+            categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
+            catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
             rssResponse = catAttr.getRssResponse();
             if(rssResponse != null)
                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
@@ -173,7 +175,8 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItunesItemSelected(itunesItemList.get(position));
+        mCallbacks.onItunesItemSelected(position, categoryIndex);
+        //TODO try finishing here
     }
 
     @Override
@@ -216,8 +219,8 @@ public class ItunesItemListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          *
-         * @param item
+         * @param itemIndex
          */
-        public void onItunesItemSelected(Entry item);
+        public void onItunesItemSelected(int itemIndex, int categoryIndex);
     }
 }

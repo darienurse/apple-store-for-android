@@ -66,9 +66,8 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         MenuItem mFavButton = menu.findItem(R.id.fav_button);
         mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
         setShareIntent(ItunesAppController.generateShareIntent(itunesItem, getResources().getString(R.string.app_name)));
-        int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
 
-        if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
+        if (ItunesAppController.userFavorites.contains(itunesItem)) {
             mFavButton.setIcon(favorite);
         } else {
             mFavButton.setIcon(unfavorite);
@@ -100,12 +99,11 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     }
 
     private void handleFavorite(MenuItem item) {
-        int itunesItemId = Integer.parseInt(itunesItem.getId().getAttributes().getImId());
-        if (ItunesAppController.userFavorites.containsKey(itunesItemId)) {
-            ItunesAppController.userFavorites.remove(itunesItemId);
+        if (ItunesAppController.userFavorites.contains(itunesItem)) {
+            ItunesAppController.userFavorites.remove(itunesItem);
             item.setIcon(unfavorite);
         } else {
-            ItunesAppController.userFavorites.put(itunesItemId, itunesItem);
+            ItunesAppController.userFavorites.add(itunesItem);
             item.setIcon(favorite);
         }
     }

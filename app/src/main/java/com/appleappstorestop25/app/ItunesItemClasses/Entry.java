@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
-public class Entry implements Serializable {
+public class Entry implements Serializable{
 
     @SerializedName("im:name")
     @Expose
@@ -312,4 +312,16 @@ public class Entry implements Serializable {
         this.imItemCount = imItemCount;
     }
 
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Entry)) {
+            return false;
+        }
+        Entry entry2 = (Entry) obj;
+        return this.getId().getAttributes().getImId()
+                .equals(entry2.getId().getAttributes().getImId());
+    }
 }
