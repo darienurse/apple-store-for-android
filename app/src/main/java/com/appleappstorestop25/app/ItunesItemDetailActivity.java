@@ -38,9 +38,9 @@ public class ItunesItemDetailActivity extends FragmentActivity {
             itunesItem = (Entry) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
             getActionBar().setTitle(itunesItem.getImName().getLabel());
             //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
-        }else{
-            Log.e(getLocalClassName(), "You cannot launch "+
-                    getLocalClassName()+" without a valid value for " +
+        } else {
+            Log.e(getLocalClassName(), "You cannot launch " +
+                    getLocalClassName() + " without a valid value for " +
                     ItunesItemDetailFragment.ARG_ITEM_ID + " in the intent.");
             finish();
         }

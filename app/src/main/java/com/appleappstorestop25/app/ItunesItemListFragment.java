@@ -32,7 +32,7 @@ public class ItunesItemListFragment extends ListFragment {
     private static final String TAG = ItunesItemListFragment.class.getSimpleName();
     private static Callbacks sItunesCallbacks = new Callbacks() {
         @Override
-        public void onItunesItemSelected(int itemIndex,int categoryIndex) {
+        public void onItunesItemSelected(int itemIndex, int categoryIndex) {
         }
     };
     /**
@@ -44,7 +44,7 @@ public class ItunesItemListFragment extends ListFragment {
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
-    private List<Entry> itunesItemList= new ArrayList<Entry>(LOAD);
+    private List<Entry> itunesItemList = new ArrayList<Entry>(LOAD);
     private ProgressDialog pDialog;
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
@@ -69,15 +69,15 @@ public class ItunesItemListFragment extends ListFragment {
             categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
             catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
             rssResponse = catAttr.getRssResponse();
-            if(rssResponse != null)
+            if (rssResponse != null)
                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
         }
 
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 
-        if (catAttr !=null && itunesItemList.isEmpty()) {
-            pDialog = new ProgressDialog(this.getActivity(),R.style.Theme_MyDialog);
+        if (catAttr != null && itunesItemList.isEmpty()) {
+            pDialog = new ProgressDialog(this.getActivity(), R.style.Theme_MyDialog);
             // Showing progress dialog before making http request
             pDialog.setMessage("Loading... " + catAttr.getTitle());
 

@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
-public class Entry implements Serializable{
+public class Entry implements Serializable {
 
     @SerializedName("im:name")
     @Expose

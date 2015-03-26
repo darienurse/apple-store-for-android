@@ -23,7 +23,9 @@ import com.appleappstorestop25.app.ItunesItemClasses.LinkDeserializer;
 import com.appleappstorestop25.app.SlidingTabs.SlidingTabsColorsFragment;
 import com.google.gson.Gson;
 
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -45,10 +47,10 @@ import java.util.*;
 public class ItunesItemListActivity extends FragmentActivity
         implements ItunesItemListFragment.Callbacks {
 
+    public static final String ARG_ITEM_INDEX = "item_index";
     private final String mDrawerTitle = "Favorites";
     private final String USER_PREFS_FAV = "favorites";
     private final String SAVED_ITEM = "saved_item";
-    public static final String ARG_ITEM_INDEX = "item_index";
     Drawable unfavorite;
     Drawable favorite;
     MenuItem mFavButton;
@@ -154,10 +156,9 @@ public class ItunesItemListActivity extends FragmentActivity
     @Override
     public void onItunesItemSelected(int itemIndex, int categoryIndex) {
         Entry item;
-        if(categoryIndex==-1) {
+        if (categoryIndex == -1) {
             item = ItunesAppController.userFavorites.get(itemIndex);
-        }
-        else {
+        } else {
             item = ItunesAppController.getCategoryList().get(categoryIndex)
                     .getRssResponse().getFeed().getEntry().get(itemIndex);
         }
@@ -209,7 +210,7 @@ public class ItunesItemListActivity extends FragmentActivity
     public void onResume() {
         //TODO Find a way to use Notifydatasetchange instead
         //mDrawerList.setAdapter(new DrawerAdapter(getBaseContext(), new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
-        ((DrawerAdapter)mDrawerList.getAdapter()).notifyDataSetChanged();
+        ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
         super.onResume();
     }
 
@@ -252,7 +253,7 @@ public class ItunesItemListActivity extends FragmentActivity
             item.setIcon(favorite);
         }
         //TODO Find a way to use Notifydatasetchange instead
-        ((DrawerAdapter)mDrawerList.getAdapter()).notifyDataSetChanged();
+        ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
     }
 
     private void toggleFavorite(Entry e1, Entry e2) {

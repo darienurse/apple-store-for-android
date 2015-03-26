@@ -5,7 +5,7 @@ import com.appleappstorestop25.app.ItunesItemClasses.ItunesRSSResponse;
 /**
  * Created by Darien on 3/2/2015.
  */
-public class CategoryAttribute  {
+public class CategoryAttribute {
     private final String title;
     private final Integer color;
     private final String url;
