@@ -110,7 +110,7 @@ public class ItunesItemDetailFragment extends Fragment {
     private String getSummarySafely(Entry itunesItem) {
         try {
             String summary = itunesItem.getSummary().getLabel();
-            summary = summary.replaceAll("&apos;","'").replaceAll("&quot;", "\"");
+            summary = summary.replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
             return "\n" + summary + "\n\n";
         } catch (NullPointerException e) {
             return "";
@@ -165,6 +165,12 @@ public class ItunesItemDetailFragment extends Fragment {
         } catch (NullPointerException e) {
             return "";
         }
+    }
+
+    @Override
+    public void onStop() {
+        imageSliderView.stopAutoCycle();
+        super.onStop();
     }
 
     public class ImageExtractor extends AsyncTask<String, Void, List<String>> {
@@ -225,11 +231,5 @@ public class ItunesItemDetailFragment extends Fragment {
                 imageSliderView.setVisibility(View.VISIBLE);
             }
         }
-    }
-
-    @Override
-    public void onStop() {
-        imageSliderView.stopAutoCycle();
-        super.onStop();
     }
 }

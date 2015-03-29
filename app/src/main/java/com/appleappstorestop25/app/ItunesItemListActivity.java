@@ -52,10 +52,10 @@ public class ItunesItemListActivity extends FragmentActivity
     private final String mDrawerTitle = "Favorites";
     private final String USER_PREFS_FAV = "favorites";
     private final String SAVED_ITEM = "saved_item";
-    private ActionBar actionBar;
     Drawable unfavorite;
     Drawable favorite;
     MenuItem mFavButton;
+    private ActionBar actionBar;
     private String mAppName;
     private String mTitle;
     private boolean mTwoPane;
@@ -284,7 +284,7 @@ public class ItunesItemListActivity extends FragmentActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            onItunesItemSelected(position, ItunesAppController.getCategoryList().size()-1);
+            onItunesItemSelected(position, ItunesAppController.getCategoryList().size() - 1);
             mDrawerLayout.closeDrawers();
         }
     }

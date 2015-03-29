@@ -68,7 +68,7 @@ public class ItunesAppController extends AppController {
                 , "https://itunes.apple.com/us/rss/toppaidebooks/limit=" + LOAD + "/json"));
         categoryList.add(new CategoryAttribute("Top Podcasts", getResources().getColor(R.color.purple)
                 , "https://itunes.apple.com/us/rss/toppodcasts/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Favorites", Color.BLACK,"", userFavorites));
+        categoryList.add(new CategoryAttribute("Favorites", Color.BLACK, "", userFavorites));
         appleToPlayStoreMap.put("Application", "apps");
         appleToPlayStoreMap.put("Podcast", "all");
         appleToPlayStoreMap.put("Music", "music");
