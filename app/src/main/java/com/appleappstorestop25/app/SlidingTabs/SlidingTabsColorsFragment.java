@@ -111,6 +111,7 @@ public class SlidingTabsColorsFragment extends Fragment {
         mSlidingTabLayout.setViewPager(mViewPager);
 
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        //AdRequest adRequest = new AdRequest.Builder().addTestDevice("62A638A59BC36AFE2830972D02CE4D90").build();
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 

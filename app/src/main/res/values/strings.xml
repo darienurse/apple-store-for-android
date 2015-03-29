@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Apple Store for Android</string>
+    <string name="app_name">iTunes Store Viewer</string>
     <string name="share_menu_name">Share</string>
     <string name="title_itunesitem_detail">ItunesItem Detail</string>
     <string name="drawer_open">Open Navigation Bar</string>
@@ -9,5 +9,6 @@
     <string name="fav_string">Add to Favorites</string>
     <string name="play_store_search">Find in Play Store</string>
     <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id">ca-app-pub-6177948507262051/5192950128</string>
 
 </resources>
