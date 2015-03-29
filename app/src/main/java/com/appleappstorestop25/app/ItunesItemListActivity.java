@@ -285,6 +285,7 @@ public class ItunesItemListActivity extends FragmentActivity
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             onItunesItemSelected(position, ItunesAppController.getCategoryList().size()-1);
+            mDrawerLayout.closeDrawers();
         }
     }
 }

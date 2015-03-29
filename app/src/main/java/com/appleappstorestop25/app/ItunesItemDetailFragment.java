@@ -86,16 +86,85 @@ public class ItunesItemDetailFragment extends Fragment {
         if (itunesItem != null) {
             titleTextView.setText(itunesItem.getImName().getLabel());
             byLineTextView.setText(itunesItem.getImArtist().getLabel());
-            //TODO process summaries
-            try {
-                bodyTextView.setText(itunesItem.getSummary().getLabel());
-            } catch (NullPointerException e) {
-                bodyTextView.setText("No description available");
-            }
+            String summary = generateSummary(itunesItem);
+            //bodyTextView.setText(itunesItem.getSummary().getLabel());
+            bodyTextView.setText(summary);
             networkImageView.setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
             new ImageExtractor().execute(itunesItem.getLink().get(0).getAttributes().getHref());
         }
         return rootView;
+    }
+
+    private String generateSummary(Entry itunesItem) {
+        StringBuilder summary = new StringBuilder();
+        summary.append(getPriceSafely(itunesItem));
+        summary.append(getRentalPriceSafely(itunesItem));
+        summary.append(getCollectionNameSafely(itunesItem));
+        summary.append(getSummarySafely(itunesItem));
+        summary.append(getCategorySafely(itunesItem));
+        summary.append(getReleaseDateSafely(itunesItem));
+        summary.append(getRightsSafely(itunesItem));
+        return summary.toString().trim();
+    }
+
+    private String getSummarySafely(Entry itunesItem) {
+        try {
+            String summary = itunesItem.getSummary().getLabel();
+            summary = summary.replaceAll("&apos;","'").replaceAll("&quot;", "\"");
+            return "\n" + summary + "\n\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getRightsSafely(Entry itunesItem) {
+        try {
+            return itunesItem.getRights().getLabel().trim() + "\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getReleaseDateSafely(Entry itunesItem) {
+        try {
+            return "Release Date: " + itunesItem.getImReleaseDate().getAttributes().getLabel() + "\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getCategorySafely(Entry itunesItem) {
+        try {
+            return "Genre: " + itunesItem.getCategory().getAttributes().getLabel() + "\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getCollectionNameSafely(Entry itunesItem) {
+        try {
+            return "Album: " + itunesItem.getImCollection().getImName().getLabel() + "\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getRentalPriceSafely(Entry itunesItem) {
+        try {
+            return "Rental Price: " + itunesItem.getImRentalPrice().getLabel() + "\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getPriceSafely(Entry itunesItem) {
+        try {
+            String mPrice = itunesItem.getImPrice().getLabel().replaceFirst("-", "");
+            mPrice = (mPrice.equals("Get")) ? "Free" : mPrice;
+            return "Price: " + mPrice + "\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
     public class ImageExtractor extends AsyncTask<String, Void, List<String>> {
@@ -138,12 +207,12 @@ public class ItunesItemDetailFragment extends Fragment {
         }
 
         protected void onPostExecute(List<String> results) {
-            if (results == null) return;
+            if (results == null || results.isEmpty()) return;
             networkImageView.setImageUrl(results.remove(0), imageLoader);
             if (!results.isEmpty()) {
+                // initialize a SliderLayout for each image retrieved from the ImageExtractor
                 for (String name : results) {
                     TextSliderView textSliderView = new TextSliderView(getActivity());
-                    // initialize a SliderLayout
                     textSliderView
                             .image(name)
                             .setScaleType(BaseSliderView.ScaleType.CenterInside);
@@ -159,7 +228,7 @@ public class ItunesItemDetailFragment extends Fragment {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         imageSliderView.stopAutoCycle();
         super.onStop();
     }

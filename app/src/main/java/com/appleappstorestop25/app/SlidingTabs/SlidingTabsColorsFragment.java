@@ -112,8 +112,7 @@ public class SlidingTabsColorsFragment extends Fragment {
 
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        //TODO: Figure out why the adview is crashing on tablet
-        //mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);
 
         // BEGIN_INCLUDE (tab_colorizer)
         // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve

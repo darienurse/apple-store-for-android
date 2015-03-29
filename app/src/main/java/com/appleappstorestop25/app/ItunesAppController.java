@@ -62,8 +62,8 @@ public class ItunesAppController extends AppController {
                 , "https://itunes.apple.com/us/rss/topalbums/limit=" + LOAD + "/explicit=true/json"));
         categoryList.add(new CategoryAttribute("Top Movies", getResources().getColor(R.color.indigo)
                 , "https://itunes.apple.com/us/rss/topmovies/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Top TV Seasons", getResources().getColor(R.color.red)
-                , "https://itunes.apple.com/us/rss/toptvseasons/limit=" + LOAD + "/json"));
+        categoryList.add(new CategoryAttribute("Top TV Episodes", getResources().getColor(R.color.red)
+                , "https://itunes.apple.com/us/rss/toptvepisodes/limit=" + LOAD + "/json"));
         categoryList.add(new CategoryAttribute("Top Books", getResources().getColor(R.color.light_blue)
                 , "https://itunes.apple.com/us/rss/toppaidebooks/limit=" + LOAD + "/json"));
         categoryList.add(new CategoryAttribute("Top Podcasts", getResources().getColor(R.color.purple)
