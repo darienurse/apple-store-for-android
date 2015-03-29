@@ -83,6 +83,12 @@
             android:textColorLink="@color/secondary_android_green"
             android:textIsSelectable="true"
             android:textSize="16sp"/>
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </ScrollView>

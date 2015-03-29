@@ -69,8 +69,7 @@ public class ItunesItemListFragment extends ListFragment {
             categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
             catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
             rssResponse = catAttr.getRssResponse();
-            if (rssResponse != null)
-                itunesItemList.addAll(rssResponse.getFeed().getEntry());
+            itunesItemList.addAll(catAttr.getiTunesItems());
         }
 
         adapter = new ItunesAdapter(getActivity(), itunesItemList);

@@ -1,5 +1,6 @@
 package com.appleappstorestop25.app;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,6 +52,7 @@ public class ItunesItemListActivity extends FragmentActivity
     private final String mDrawerTitle = "Favorites";
     private final String USER_PREFS_FAV = "favorites";
     private final String SAVED_ITEM = "saved_item";
+    private ActionBar actionBar;
     Drawable unfavorite;
     Drawable favorite;
     MenuItem mFavButton;
@@ -68,6 +70,7 @@ public class ItunesItemListActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itunesitem_list);
+        actionBar = getActionBar();
         gson = LinkDeserializer.buildGson();
         mTwoPane = getResources().getBoolean(R.bool.has_two_panes);
         mAppName = getResources().getString(R.string.app_name);
@@ -155,16 +158,10 @@ public class ItunesItemListActivity extends FragmentActivity
 
     @Override
     public void onItunesItemSelected(int itemIndex, int categoryIndex) {
-        Entry item;
-        if (categoryIndex == -1) {
-            item = ItunesAppController.userFavorites.get(itemIndex);
-        } else {
-            item = ItunesAppController.getCategoryList().get(categoryIndex)
-                    .getRssResponse().getFeed().getEntry().get(itemIndex);
-        }
+        Entry item = ItunesAppController.getCategoryList().get(categoryIndex).getiTunesItems().get(itemIndex);
         if (mTwoPane) {
             mTitle = item.getImName().getLabel();
-            getActionBar().setTitle(mTitle);
+            actionBar.setTitle(mTitle);
             if (itunesItem == null) toggleFavorite(item);
             else toggleFavorite(itunesItem, item);
             itunesItem = item;
@@ -208,8 +205,6 @@ public class ItunesItemListActivity extends FragmentActivity
 
     @Override
     public void onResume() {
-        //TODO Find a way to use Notifydatasetchange instead
-        //mDrawerList.setAdapter(new DrawerAdapter(getBaseContext(), new ArrayList<Entry>(ItunesAppController.userFavorites.values())));
         ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
         super.onResume();
     }
@@ -226,22 +221,22 @@ public class ItunesItemListActivity extends FragmentActivity
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
+                actionBar.setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
+                actionBar.setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
     }
 
     private void handleFavorite(MenuItem item) {
@@ -252,7 +247,6 @@ public class ItunesItemListActivity extends FragmentActivity
             ItunesAppController.userFavorites.add(itunesItem);
             item.setIcon(favorite);
         }
-        //TODO Find a way to use Notifydatasetchange instead
         ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
     }
 
@@ -290,9 +284,7 @@ public class ItunesItemListActivity extends FragmentActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            //TODO Remove -1
-            onItunesItemSelected(position, -1);
-            mDrawerLayout.closeDrawers();
+            onItunesItemSelected(position, ItunesAppController.getCategoryList().size()-1);
         }
     }
 }
