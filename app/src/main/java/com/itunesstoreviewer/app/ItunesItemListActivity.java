@@ -19,10 +19,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
+import com.google.gson.Gson;
 import com.itunesstoreviewer.app.ItunesItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesItemClasses.LinkDeserializer;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
-import com.google.gson.Gson;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -87,7 +87,7 @@ public class ItunesItemListActivity extends FragmentActivity
         if (restoredFav != null) {
             for (String s : restoredFav) {
                 Entry itunesE = gson.fromJson(s, Entry.class);
-                if(!ItunesAppController.userFavorites.contains(itunesE))
+                if (!ItunesAppController.userFavorites.contains(itunesE))
                     ItunesAppController.userFavorites.add(itunesE);
             }
         }

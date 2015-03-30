@@ -24,12 +24,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.itunesstoreviewer.app.CategoryAttribute;
 import com.itunesstoreviewer.app.ItunesAppController;
 import com.itunesstoreviewer.app.ItunesItemListFragment;
 import com.itunesstoreviewer.app.R;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;

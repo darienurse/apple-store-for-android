@@ -13,10 +13,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 import com.itunesstoreviewer.app.ItunesItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesItemClasses.ItunesRSSResponse;
 import com.itunesstoreviewer.app.ItunesItemClasses.LinkDeserializer;
-import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
