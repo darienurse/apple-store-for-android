@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<LinearLayout android:id="@+id/errorLayout"
+              xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_vertical"
-              android:id="@+id/errorLayout">
+              android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/network_error_prompt"
-        android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:textColor="@android:color/black"
         android:layout_margin="8dp"
+        android:gravity="center"
+        android:text="@string/network_error_prompt"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black"
         />
 
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/retry_button"
-        android:id="@+id/button"
         android:layout_gravity="center_horizontal"
         android:layout_margin="8dp"
         android:clickable="true"
-        android:onClick="retryButtonClick"/>
+        android:onClick="retryButtonClick"
+        android:text="@string/retry_button"/>
 </LinearLayout>

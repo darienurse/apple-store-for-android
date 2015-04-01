@@ -1,21 +1,18 @@
 package com.itunesstoreviewer.app;
 
 import android.app.ActionBar;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -76,7 +73,7 @@ public class ItunesItemListActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itunesitem_list);
         actionBar = getActionBar();
-        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         gson = LinkDeserializer.buildGson();
         mTwoPane = getResources().getBoolean(R.bool.has_two_panes);
         mAppName = getResources().getString(R.string.app_name);
@@ -100,13 +97,12 @@ public class ItunesItemListActivity extends FragmentActivity
         setUpNavigationDrawer();
 
         if (savedInstanceState == null) {
-            if(hasNetworkConnection()) {
+            if (hasNetworkConnection()) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 SlidingTabsColorsFragment slidingTabsColorsFragment = new SlidingTabsColorsFragment();
                 transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
                 transaction.commit();
-            }
-            else{
+            } else {
                 networkError();
             }
         }
@@ -306,23 +302,22 @@ public class ItunesItemListActivity extends FragmentActivity
                 , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
     }
 
+    public void retryButtonClick(View v) {
+        if (hasNetworkConnection()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            SlidingTabsColorsFragment slidingTabsColorsFragment = new SlidingTabsColorsFragment();
+            transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
+            transaction.commit();
+        } else {
+            networkError();
+        }
+    }
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             onItunesItemSelected(position, ItunesAppController.getCategoryList().size() - 1);
             mDrawerLayout.closeDrawers();
-        }
-    }
-
-    public void retryButtonClick(View v){
-        if(hasNetworkConnection()){
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            SlidingTabsColorsFragment slidingTabsColorsFragment = new SlidingTabsColorsFragment();
-            transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
-            transaction.commit();
-        }
-        else{
-            networkError();
         }
     }
 }

@@ -1,12 +1,8 @@
 package com.itunesstoreviewer.app;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
@@ -84,45 +80,45 @@ public class ItunesItemListFragment extends ListFragment {
 
     private JsonObjectRequest getJsonObjectRequest() {
         return new JsonObjectRequest(catAttr.getUrl(), null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Gson gson = LinkDeserializer.buildGson();
-                                rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
-                                itunesItemList.clear();
-                                itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                                if(isAdded())
-                                    setListShown(!itunesItemList.isEmpty());
-                                catAttr.setRssResponse(rssResponse);
-                                // notifying list adapter about data changes
-                                // so that it renders the list view with updated data
-                                adapter.notifyDataSetChanged();
-                            }
-                        }, new Response.ErrorListener() {
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.v(TAG, "Error: " + error.getMessage());
-                        Log.d(TAG, "Error: " + error.getMessage());
-
-                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            Log.d(TAG, TimeoutError.class.toString() +" or "+ NoConnectionError.class.toString());
-                            mCallbacks.networkError();
-                        } else if (error instanceof AuthFailureError) {
-                            Log.d(TAG, AuthFailureError.class.toString());
-                        } else if (error instanceof ServerError) {
-                            Log.d(TAG, ServerError.class.toString());
-                        } else if (error instanceof NetworkError) {
-                            Log.d(TAG, NetworkError.class.toString());
-                        } else if (error instanceof ParseError) {
-                            Log.d(TAG, ParseError.class.toString());
-                        }
+                    public void onResponse(JSONObject response) {
+                        Gson gson = LinkDeserializer.buildGson();
+                        rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
+                        itunesItemList.clear();
+                        itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                        if (isAdded())
+                            setListShown(!itunesItemList.isEmpty());
+                        catAttr.setRssResponse(rssResponse);
+                        // notifying list adapter about data changes
+                        // so that it renders the list view with updated data
+                        adapter.notifyDataSetChanged();
                     }
-                });
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.v(TAG, "Error: " + error.getMessage());
+                Log.d(TAG, "Error: " + error.getMessage());
+
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Log.d(TAG, TimeoutError.class.toString() + " or " + NoConnectionError.class.toString());
+                    mCallbacks.networkError();
+                } else if (error instanceof AuthFailureError) {
+                    Log.d(TAG, AuthFailureError.class.toString());
+                } else if (error instanceof ServerError) {
+                    Log.d(TAG, ServerError.class.toString());
+                } else if (error instanceof NetworkError) {
+                    Log.d(TAG, NetworkError.class.toString());
+                } else if (error instanceof ParseError) {
+                    Log.d(TAG, ParseError.class.toString());
+                }
+            }
+        });
     }
 
     @Override
-    public void onResume(){
-        if(itunesItemList.isEmpty())
+    public void onResume() {
+        if (itunesItemList.isEmpty())
             onCreate(null);
         setListShown(!itunesItemList.isEmpty());
         super.onResume();
@@ -204,6 +200,7 @@ public class ItunesItemListFragment extends ListFragment {
          * @param itemIndex
          */
         public void onItunesItemSelected(int itemIndex, int categoryIndex);
+
         public void networkError();
     }
 }

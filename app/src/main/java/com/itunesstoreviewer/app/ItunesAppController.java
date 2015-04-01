@@ -11,15 +11,15 @@ import java.util.*;
 public class ItunesAppController extends AppController {
 
     public static final int LOAD = 199;
-    private static final String[] allCategories = new String[]{"Top Grossing Apps"
-            ,"Top Grossing Mac Apps"
-            ,"Top Songs"
-            ,"Top Albums"
-            ,"Top Movies"
-            ,"Top TV Episodes"
-            ,"Top Books"
-            ,"Top Podcasts"};
     public static final int NUM_CATEGORIES = allCategories.length;
+    private static final String[] allCategories = new String[]{"Top Grossing Apps"
+            , "Top Grossing Mac Apps"
+            , "Top Songs"
+            , "Top Albums"
+            , "Top Movies"
+            , "Top TV Episodes"
+            , "Top Books"
+            , "Top Podcasts"};
     public static List<Entry> userFavorites;
     public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryList;
