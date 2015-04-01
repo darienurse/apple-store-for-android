@@ -11,16 +11,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="No Network Connection"
+        android:text="@string/network_error_prompt"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:textColor="@android:color/black"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Retry"
+        android:text="@string/retry_button"
         android:id="@+id/button"
         android:layout_gravity="center_horizontal"
         android:layout_margin="8dp"

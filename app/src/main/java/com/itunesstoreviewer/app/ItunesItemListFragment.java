@@ -30,9 +30,16 @@ public class ItunesItemListFragment extends ListFragment {
     public static final String ARG_CAT_INDEX = "category_index";
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String TAG = ItunesItemListFragment.class.getSimpleName();
+
+    //TODO remove callback
     private static Callbacks sItunesCallbacks = new Callbacks() {
         @Override
         public void onItunesItemSelected(int itemIndex, int categoryIndex) {
+        }
+
+        @Override
+        public void networkError() {
+
         }
     };
     /**
@@ -74,10 +81,14 @@ public class ItunesItemListFragment extends ListFragment {
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 
-
         if (catAttr != null && itunesItemList.isEmpty()) {
             // Creating volley request obj if the savedInstanceState bundle is empty
             JsonObjectRequest jsonObjReq = getJsonObjectRequest();
+            //try three times before error
+            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                    DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                    3,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             // Adding request to request queue
             ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
         }
@@ -92,7 +103,8 @@ public class ItunesItemListFragment extends ListFragment {
                                 rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
                                 itunesItemList.clear();
                                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                                setListShown(!itunesItemList.isEmpty());
+                                if(isAdded())
+                                    setListShown(!itunesItemList.isEmpty());
                                 catAttr.setRssResponse(rssResponse);
                                 // notifying list adapter about data changes
                                 // so that it renders the list view with updated data
@@ -106,9 +118,7 @@ public class ItunesItemListFragment extends ListFragment {
 
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                             Log.d(TAG, "Timeout or NoConnection");
-                            buildNetworkPromptDialog();
-                            //ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
-                            //viewPager.setAdapter(null);
+                            mCallbacks.networkError();
                         } else if (error instanceof AuthFailureError) {
                             Log.d(TAG, "Auth");
                             //TODO
@@ -130,25 +140,8 @@ public class ItunesItemListFragment extends ListFragment {
     public void onResume(){
         if(itunesItemList.isEmpty())
             onCreate(null);
+        setListShown(!itunesItemList.isEmpty());
         super.onResume();
-    }
-
-    private void buildNetworkPromptDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Connect to wifi or quit")
-                .setCancelable(false)
-                .setPositiveButton("Connect to WIFI", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-                    }
-                })
-                .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getActivity().finish();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
     @Override
@@ -236,5 +229,6 @@ public class ItunesItemListFragment extends ListFragment {
          * @param itemIndex
          */
         public void onItunesItemSelected(int itemIndex, int categoryIndex);
+        public void networkError();
     }
 }

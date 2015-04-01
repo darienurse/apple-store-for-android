@@ -104,7 +104,25 @@ public class ItunesItemDetailFragment extends Fragment {
         summary.append(getCategorySafely(itunesItem));
         summary.append(getReleaseDateSafely(itunesItem));
         summary.append(getRightsSafely(itunesItem));
+        summary.append(getPublisherSafely(itunesItem));
+        summary.append(getVendorSafely(itunesItem));
         return summary.toString().trim();
+    }
+
+    private String getVendorSafely(Entry itunesItem) {
+        try {
+            return "Seller: " + itunesItem.getImVendorName().getLabel() + "\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getPublisherSafely(Entry itunesItem) {
+        try {
+            return "Publisher: " + itunesItem.getImPublisher().getLabel() + "\n";
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
     private String getSummarySafely(Entry itunesItem) {
@@ -119,7 +137,7 @@ public class ItunesItemDetailFragment extends Fragment {
 
     private String getRightsSafely(Entry itunesItem) {
         try {
-            return itunesItem.getRights().getLabel().trim() + "\n";
+            return itunesItem.getRights().getLabel() + "\n";
         } catch (NullPointerException e) {
             return "";
         }

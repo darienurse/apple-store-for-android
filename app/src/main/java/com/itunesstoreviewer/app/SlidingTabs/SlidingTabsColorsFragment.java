@@ -200,6 +200,7 @@ public class SlidingTabsColorsFragment extends Fragment {
      * The important section of this class is the {@link #getPageTitle(int)} method which controls
      * what is displayed in the {@link SlidingTabLayout}.
      */
+
     class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
         SampleFragmentPagerAdapter(FragmentManager fm) {

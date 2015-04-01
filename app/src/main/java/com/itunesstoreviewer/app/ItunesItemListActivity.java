@@ -1,6 +1,9 @@
 package com.itunesstoreviewer.app;
 
 import android.app.ActionBar;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +13,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -64,13 +69,14 @@ public class ItunesItemListActivity extends FragmentActivity
     private Entry itunesItem;
     private ActionBarDrawerToggle mDrawerToggle;
     private Gson gson;
-    private SlidingTabsColorsFragment slidingTabsColorsFragment;
+    private ConnectivityManager connectivityManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itunesitem_list);
         actionBar = getActionBar();
+        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         gson = LinkDeserializer.buildGson();
         mTwoPane = getResources().getBoolean(R.bool.has_two_panes);
         mAppName = getResources().getString(R.string.app_name);
@@ -94,12 +100,23 @@ public class ItunesItemListActivity extends FragmentActivity
         setUpNavigationDrawer();
 
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            slidingTabsColorsFragment = new SlidingTabsColorsFragment();
-            transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
-            transaction.commit();
+            if(hasNetworkConnection()) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                SlidingTabsColorsFragment slidingTabsColorsFragment = new SlidingTabsColorsFragment();
+                transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
+                transaction.commit();
+            }
+            else{
+                networkError();
+            }
         }
         Log.d("NURSE", "TwoPane enabled: " + mTwoPane);
+    }
+
+    private boolean hasNetworkConnection() {
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 
     @Override
@@ -177,6 +194,13 @@ public class ItunesItemListActivity extends FragmentActivity
             detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, item);
             startActivity(detailIntent);
         }
+    }
+
+    @Override
+    public void networkError() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.itunesitem_list, new ErrorFragment());
+        transaction.commit();
     }
 
     @Override
@@ -291,12 +315,14 @@ public class ItunesItemListActivity extends FragmentActivity
     }
 
     public void retryButtonClick(View v){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        //SlidingTabsColorsFragment fragment = new SlidingTabsColorsFragment();
-        //transaction.replace(R.id.itunesitem_list, fragment);
-        //transaction.commit();
-        transaction.detach(slidingTabsColorsFragment);
-        transaction.attach(slidingTabsColorsFragment);
-        transaction.commit();
+        if(hasNetworkConnection()){
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            SlidingTabsColorsFragment slidingTabsColorsFragment = new SlidingTabsColorsFragment();
+            transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
+            transaction.commit();
+        }
+        else{
+            networkError();
+        }
     }
 }
