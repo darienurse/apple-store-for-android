@@ -54,7 +54,7 @@ public class SlidingTabsColorsFragment extends Fragment {
     /**
      * List of {@link SamplePagerItem} which represent this sample's tabs.
      */
-    private List<SamplePagerItem> mTabs = new ArrayList<SamplePagerItem>(ItunesAppController.NUM_CATEGORIES);
+    private List<SamplePagerItem> mTabs = new ArrayList<SamplePagerItem>(ItunesAppController.getNumCategories());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          * Populate our tab list with tabs. Each item contains a title, indicator color and divider
          * color, which are used by {@link SlidingTabLayout}.
          */
-        for (int tabIndex = 0; tabIndex < ItunesAppController.NUM_CATEGORIES; tabIndex++) {
+        for (int tabIndex = 0; tabIndex < ItunesAppController.getNumCategories(); tabIndex++) {
             CategoryAttribute catAttr = ItunesAppController.getCategoryList().get(tabIndex);
             mTabs.add(new SamplePagerItem(
                     catAttr.getTitle(), // Title
