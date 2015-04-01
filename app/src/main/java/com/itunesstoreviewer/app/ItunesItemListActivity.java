@@ -48,7 +48,6 @@ import java.util.Set;
 public class ItunesItemListActivity extends FragmentActivity
         implements ItunesItemListFragment.Callbacks {
 
-    public static final String ARG_ITEM_INDEX = "item_index";
     private final String mDrawerTitle = "Favorites";
     private final String USER_PREFS_FAV = "favorites";
     private final String SAVED_ITEM = "saved_item";
@@ -65,6 +64,7 @@ public class ItunesItemListActivity extends FragmentActivity
     private Entry itunesItem;
     private ActionBarDrawerToggle mDrawerToggle;
     private Gson gson;
+    private SlidingTabsColorsFragment slidingTabsColorsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +95,8 @@ public class ItunesItemListActivity extends FragmentActivity
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            SlidingTabsColorsFragment fragment = new SlidingTabsColorsFragment();
-            transaction.replace(R.id.itunesitem_list, fragment);
+            slidingTabsColorsFragment = new SlidingTabsColorsFragment();
+            transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
             transaction.commit();
         }
         Log.d("NURSE", "TwoPane enabled: " + mTwoPane);
@@ -288,5 +288,15 @@ public class ItunesItemListActivity extends FragmentActivity
             onItunesItemSelected(position, ItunesAppController.getCategoryList().size() - 1);
             mDrawerLayout.closeDrawers();
         }
+    }
+
+    public void retryButtonClick(View v){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        //SlidingTabsColorsFragment fragment = new SlidingTabsColorsFragment();
+        //transaction.replace(R.id.itunesitem_list, fragment);
+        //transaction.commit();
+        transaction.detach(slidingTabsColorsFragment);
+        transaction.attach(slidingTabsColorsFragment);
+        transaction.commit();
     }
 }

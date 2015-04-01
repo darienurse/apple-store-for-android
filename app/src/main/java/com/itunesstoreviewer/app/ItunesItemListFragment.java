@@ -6,12 +6,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
+import android.widget.ViewSwitcher;
+import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.itunesstoreviewer.app.ItunesItemClasses.Entry;
@@ -75,6 +76,7 @@ public class ItunesItemListFragment extends ListFragment {
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 
+
         if (catAttr != null && itunesItemList.isEmpty()) {
             pDialog = new ProgressDialog(this.getActivity(), R.style.Theme_MyDialog);
             // Showing progress dialog before making http request
@@ -89,38 +91,66 @@ public class ItunesItemListFragment extends ListFragment {
             }, 3000);
 
             // Creating volley request obj if the savedInstanceState bundle is empty
-            JsonObjectRequest jsonObjReq = new JsonObjectRequest(catAttr.getUrl(), null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d(TAG, response.toString());
-                            Gson gson = LinkDeserializer.buildGson();
-                            rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
-                            Log.d(TAG, rssResponse.getFeed().getAuthor().getName().getLabel());
-                            itunesItemList.clear();
-                            itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                            catAttr.setRssResponse(rssResponse);
-                            Log.d(TAG, "" + adapter.getCount());
-                            hidePDialog();
-
-                            // notifying list adapter about data changes
-                            // so that it renders the list view with updated data
-                            adapter.notifyDataSetChanged();
-                            Log.d(TAG, "" + adapter.getCount());
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.v(TAG, "Error: " + error.getMessage());
-                    Log.d(TAG, "Error: " + error.getMessage());
-                    hidePDialog();
-                    onCreate(savedInstanceState);
-                }
-            });
+            JsonObjectRequest jsonObjReq = getJsonObjectRequest();
 
             // Adding request to request queue
             ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
         }
+    }
+
+    private JsonObjectRequest getJsonObjectRequest() {
+        return new JsonObjectRequest(catAttr.getUrl(), null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                //Log.d(TAG, response.toString());
+                                Gson gson = LinkDeserializer.buildGson();
+                                rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
+                                itunesItemList.clear();
+                                itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                                catAttr.setRssResponse(rssResponse);
+                                hidePDialog();
+                                // notifying list adapter about data changes
+                                // so that it renders the list view with updated data
+                                adapter.notifyDataSetChanged();
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.v(TAG, "Error: " + error.getMessage());
+                        Log.d(TAG, "Error: " + error.getMessage());
+                        hidePDialog();
+
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Log.d(TAG, "Timeout or NoConnection");
+                            //ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
+                            //viewPager.setAdapter(null);
+                        } else if (error instanceof AuthFailureError) {
+                            Log.d(TAG, "Auth");
+                            //TODO
+                        } else if (error instanceof ServerError) {
+                            Log.d(TAG, "Server");
+
+                            //TODO
+                        } else if (error instanceof NetworkError) {
+                            Log.d(TAG, "Network");
+
+                            //TODO
+                        } else if (error instanceof ParseError) {
+                            Log.d(TAG, "Parse");
+
+                            //TODO
+                        }
+                        //onCreate(savedInstanceState);
+                    }
+                });
+    }
+
+    @Override
+    public void onResume(){
+        if(itunesItemList.isEmpty())
+            onCreate(null);
+        super.onResume();
     }
 
 
