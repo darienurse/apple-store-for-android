@@ -1,17 +1,16 @@
 package com.itunesstoreviewer.app;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
+import android.provider.Settings;
 import android.support.v4.app.ListFragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.ViewSwitcher;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
@@ -46,7 +45,6 @@ public class ItunesItemListFragment extends ListFragment {
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
     private List<Entry> itunesItemList = new ArrayList<Entry>(LOAD);
-    private ProgressDialog pDialog;
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
     private CategoryAttribute catAttr;
@@ -78,21 +76,8 @@ public class ItunesItemListFragment extends ListFragment {
 
 
         if (catAttr != null && itunesItemList.isEmpty()) {
-            pDialog = new ProgressDialog(this.getActivity(), R.style.Theme_MyDialog);
-            // Showing progress dialog before making http request
-            pDialog.setMessage("Loading... " + catAttr.getTitle());
-
-            // 1 second delay before showing the loading screen. If the network is strong, the loading wont show.
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    if (pDialog != null) pDialog.show();
-                }
-            }, 3000);
-
             // Creating volley request obj if the savedInstanceState bundle is empty
             JsonObjectRequest jsonObjReq = getJsonObjectRequest();
-
             // Adding request to request queue
             ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
         }
@@ -103,13 +88,12 @@ public class ItunesItemListFragment extends ListFragment {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                //Log.d(TAG, response.toString());
                                 Gson gson = LinkDeserializer.buildGson();
                                 rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
                                 itunesItemList.clear();
                                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                                setListShown(!itunesItemList.isEmpty());
                                 catAttr.setRssResponse(rssResponse);
-                                hidePDialog();
                                 // notifying list adapter about data changes
                                 // so that it renders the list view with updated data
                                 adapter.notifyDataSetChanged();
@@ -119,10 +103,10 @@ public class ItunesItemListFragment extends ListFragment {
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.v(TAG, "Error: " + error.getMessage());
                         Log.d(TAG, "Error: " + error.getMessage());
-                        hidePDialog();
 
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                             Log.d(TAG, "Timeout or NoConnection");
+                            buildNetworkPromptDialog();
                             //ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
                             //viewPager.setAdapter(null);
                         } else if (error instanceof AuthFailureError) {
@@ -130,18 +114,14 @@ public class ItunesItemListFragment extends ListFragment {
                             //TODO
                         } else if (error instanceof ServerError) {
                             Log.d(TAG, "Server");
-
                             //TODO
                         } else if (error instanceof NetworkError) {
                             Log.d(TAG, "Network");
-
                             //TODO
                         } else if (error instanceof ParseError) {
                             Log.d(TAG, "Parse");
-
                             //TODO
                         }
-                        //onCreate(savedInstanceState);
                     }
                 });
     }
@@ -153,23 +133,28 @@ public class ItunesItemListFragment extends ListFragment {
         super.onResume();
     }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        hidePDialog();
-    }
-
-    private void hidePDialog() {
-        if (pDialog != null) {
-            pDialog.dismiss();
-            pDialog = null;
-        }
+    private void buildNetworkPromptDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Connect to wifi or quit")
+                .setCancelable(false)
+                .setPositiveButton("Connect to WIFI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getActivity().finish();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setListShown(!itunesItemList.isEmpty());
         getListView().setDivider(new ColorDrawable(android.R.color.darker_gray));
         getListView().setDividerHeight(16);
         setActivateOnItemClick(true);
