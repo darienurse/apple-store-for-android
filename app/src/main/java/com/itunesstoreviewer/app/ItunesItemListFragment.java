@@ -30,23 +30,11 @@ public class ItunesItemListFragment extends ListFragment {
     public static final String ARG_CAT_INDEX = "category_index";
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String TAG = ItunesItemListFragment.class.getSimpleName();
-
-    //TODO remove callback
-    private static Callbacks sItunesCallbacks = new Callbacks() {
-        @Override
-        public void onItunesItemSelected(int itemIndex, int categoryIndex) {
-        }
-
-        @Override
-        public void networkError() {
-
-        }
-    };
     /**
      * The fragment's current callback object, which is notified of list item
      * clicks.
      */
-    private Callbacks mCallbacks = sItunesCallbacks;
+    private Callbacks mCallbacks;
     /**
      * The current activated item position. Only used on tablets.
      */
@@ -117,20 +105,16 @@ public class ItunesItemListFragment extends ListFragment {
                         Log.d(TAG, "Error: " + error.getMessage());
 
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            Log.d(TAG, "Timeout or NoConnection");
+                            Log.d(TAG, TimeoutError.class.toString() +" or "+ NoConnectionError.class.toString());
                             mCallbacks.networkError();
                         } else if (error instanceof AuthFailureError) {
-                            Log.d(TAG, "Auth");
-                            //TODO
+                            Log.d(TAG, AuthFailureError.class.toString());
                         } else if (error instanceof ServerError) {
-                            Log.d(TAG, "Server");
-                            //TODO
+                            Log.d(TAG, ServerError.class.toString());
                         } else if (error instanceof NetworkError) {
-                            Log.d(TAG, "Network");
-                            //TODO
+                            Log.d(TAG, NetworkError.class.toString());
                         } else if (error instanceof ParseError) {
-                            Log.d(TAG, "Parse");
-                            //TODO
+                            Log.d(TAG, ParseError.class.toString());
                         }
                     }
                 });
@@ -172,18 +156,9 @@ public class ItunesItemListFragment extends ListFragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-
-        // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sItunesCallbacks;
-    }
-
-    @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
         mCallbacks.onItunesItemSelected(position, categoryIndex);
-        //TODO try finishing here
     }
 
     @Override

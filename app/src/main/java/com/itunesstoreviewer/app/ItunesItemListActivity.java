@@ -115,6 +115,7 @@ public class ItunesItemListActivity extends FragmentActivity
 
     private boolean hasNetworkConnection() {
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        invalidateOptionsMenu();
         return activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
     }
@@ -138,11 +139,10 @@ public class ItunesItemListActivity extends FragmentActivity
                 }
             }
 
-            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-            menu.findItem(R.id.menu_item_share).setVisible(!drawerOpen);
-            menu.findItem(R.id.fav_button).setVisible(!drawerOpen);
-            menu.findItem(R.id.play_store_button).setVisible(!drawerOpen);
-
+            boolean showMenuItems = !mDrawerLayout.isDrawerOpen(mDrawerList) && hasNetworkConnection();
+            menu.findItem(R.id.menu_item_share).setVisible(showMenuItems);
+            menu.findItem(R.id.fav_button).setVisible(showMenuItems);
+            menu.findItem(R.id.play_store_button).setVisible(showMenuItems);
             return true;
         } else
             return super.onCreateOptionsMenu(menu);

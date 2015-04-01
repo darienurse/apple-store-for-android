@@ -11,7 +11,15 @@ import java.util.*;
 public class ItunesAppController extends AppController {
 
     public static final int LOAD = 199;
-    public static final int NUM_CATEGORIES = 7;
+    private static final String[] allCategories = new String[]{"Top Grossing Apps"
+            ,"Top Grossing Mac Apps"
+            ,"Top Songs"
+            ,"Top Albums"
+            ,"Top Movies"
+            ,"Top TV Episodes"
+            ,"Top Books"
+            ,"Top Podcasts"};
+    public static final int NUM_CATEGORIES = allCategories.length;
     public static List<Entry> userFavorites;
     public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryList;
@@ -51,21 +59,21 @@ public class ItunesAppController extends AppController {
         userFavorites = new ArrayList<Entry>();
         globalColorController = new ColorDrawable();
         mInstance = this;
-        categoryList.add(new CategoryAttribute("Top Grossing Apps", getResources().getColor(R.color.green)
+        categoryList.add(new CategoryAttribute(allCategories[0], getResources().getColor(R.color.green)
                 , "https://itunes.apple.com/us/rss/topgrossingapplications/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Top Grossing Mac Apps", getResources().getColor(R.color.yellow)
+        categoryList.add(new CategoryAttribute(allCategories[1], getResources().getColor(R.color.yellow)
                 , "https://itunes.apple.com/us/rss/topgrossingmacapps/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Top Songs", getResources().getColor(R.color.pink)
+        categoryList.add(new CategoryAttribute(allCategories[2], getResources().getColor(R.color.pink)
                 , "https://itunes.apple.com/us/rss/topsongs/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Top Albums", getResources().getColor(R.color.orange)
+        categoryList.add(new CategoryAttribute(allCategories[3], getResources().getColor(R.color.orange)
                 , "https://itunes.apple.com/us/rss/topalbums/limit=" + LOAD + "/explicit=true/json"));
-        categoryList.add(new CategoryAttribute("Top Movies", getResources().getColor(R.color.indigo)
+        categoryList.add(new CategoryAttribute(allCategories[4], getResources().getColor(R.color.indigo)
                 , "https://itunes.apple.com/us/rss/topmovies/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Top TV Episodes", getResources().getColor(R.color.red)
+        categoryList.add(new CategoryAttribute(allCategories[5], getResources().getColor(R.color.red)
                 , "https://itunes.apple.com/us/rss/toptvepisodes/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Top Books", getResources().getColor(R.color.light_blue)
+        categoryList.add(new CategoryAttribute(allCategories[6], getResources().getColor(R.color.light_blue)
                 , "https://itunes.apple.com/us/rss/toppaidebooks/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Top Podcasts", getResources().getColor(R.color.purple)
+        categoryList.add(new CategoryAttribute(allCategories[7], getResources().getColor(R.color.purple)
                 , "https://itunes.apple.com/us/rss/toppodcasts/limit=" + LOAD + "/json"));
         categoryList.add(new CategoryAttribute("Favorites", Color.BLACK, "", userFavorites));
         appleToPlayStoreMap.put("Application", "apps");
