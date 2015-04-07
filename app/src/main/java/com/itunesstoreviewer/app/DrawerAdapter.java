@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.itunesstoreviewer.app.ItunesItemClasses.Entry;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 
 import java.util.List;
 

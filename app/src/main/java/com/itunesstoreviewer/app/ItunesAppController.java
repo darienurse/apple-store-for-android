@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import com.itunesstoreviewer.app.BaseClasses.AppController;
-import com.itunesstoreviewer.app.ItunesItemClasses.Entry;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 
 import java.util.*;
 
 public class ItunesAppController extends AppController {
 
     public static final int LOAD = 199;
-    public static final int NUM_CATEGORIES = allCategories.length;
     private static final String[] allCategories = new String[]{"Top Grossing Apps"
             , "Top Grossing Mac Apps"
             , "Top Songs"
@@ -20,6 +19,8 @@ public class ItunesAppController extends AppController {
             , "Top TV Episodes"
             , "Top Books"
             , "Top Podcasts"};
+
+    private static final int NUM_CATEGORIES = allCategories.length;
     public static List<Entry> userFavorites;
     public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryList;
@@ -83,5 +84,9 @@ public class ItunesAppController extends AppController {
         appleToPlayStoreMap.put("TV Show", "tv");
         appleToPlayStoreMap.put("Track", "music");
         appleToPlayStoreMap.put("Movie", "movies");
+    }
+
+    public static int getNumCategories() {
+        return NUM_CATEGORIES;
     }
 }

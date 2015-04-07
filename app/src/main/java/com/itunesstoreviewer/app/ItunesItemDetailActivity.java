@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
-import com.itunesstoreviewer.app.ItunesItemClasses.Entry;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 
 /**
  * An activity representing a single ItunesItem detail screen. This

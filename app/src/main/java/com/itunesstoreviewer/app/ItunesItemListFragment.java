@@ -10,9 +10,9 @@ import android.widget.ListView;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.itunesstoreviewer.app.ItunesItemClasses.Entry;
-import com.itunesstoreviewer.app.ItunesItemClasses.ItunesRSSResponse;
-import com.itunesstoreviewer.app.ItunesItemClasses.LinkDeserializer;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.ItunesRSSResponse;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -24,12 +24,11 @@ import static com.itunesstoreviewer.app.ItunesAppController.LOAD;
 public class ItunesItemListFragment extends ListFragment {
 
     public static final String ARG_CAT_INDEX = "category_index";
+    public static ListMode MODE;
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String TAG = ItunesItemListFragment.class.getSimpleName();
-    /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
+    public enum ListMode {
+        RSS, SEARCH};
     private Callbacks mCallbacks;
     /**
      * The current activated item position. Only used on tablets.
@@ -41,12 +40,12 @@ public class ItunesItemListFragment extends ListFragment {
     private CategoryAttribute catAttr;
     private int categoryIndex;
 
-    public ItunesItemListFragment() {
-    }
+    public ItunesItemListFragment() {}
 
-    public static ItunesItemListFragment newInstance(int categoryIndex) {
+    public static ItunesItemListFragment newInstance(int categoryIndex, ListMode listMode) {
         Bundle arguments = new Bundle();
         arguments.putInt(ARG_CAT_INDEX, categoryIndex);
+        arguments.putSerializable(ListMode.class.getSimpleName(), listMode);
         ItunesItemListFragment fragment = new ItunesItemListFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -55,11 +54,28 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null && getArguments().containsKey(ARG_CAT_INDEX)) {
-            categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
-            catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
-            rssResponse = catAttr.getRssResponse();
-            itunesItemList.addAll(catAttr.getiTunesItems());
+        if (getArguments() != null
+                && getArguments().containsKey(ARG_CAT_INDEX)
+                && getArguments().containsKey(ListMode.class.getSimpleName())) {
+            ListMode listMode = (ListMode) getArguments().getSerializable(ListMode.class.getSimpleName());
+            switch (listMode){
+                case RSS:
+                    categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
+                    catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
+                    rssResponse = catAttr.getRssResponse();
+                    itunesItemList.addAll(catAttr.getiTunesItems());
+                    break;
+                case SEARCH:
+                    categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
+                    catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
+                    //TODO Use search response
+                    rssResponse = catAttr.getRssResponse();
+                    itunesItemList.addAll(catAttr.getiTunesItems());
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
@@ -154,7 +170,7 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItunesItemSelected(position, categoryIndex);
+        mCallbacks.onItunesItemSelected(ItunesAppController.getCategoryList().get(categoryIndex).getiTunesItems().get(position));
     }
 
     @Override
@@ -197,9 +213,9 @@ public class ItunesItemListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          *
-         * @param itemIndex
+         * @param entry
          */
-        public void onItunesItemSelected(int itemIndex, int categoryIndex);
+        public void onItunesItemSelected(Entry entry);
 
         public void networkError();
     }

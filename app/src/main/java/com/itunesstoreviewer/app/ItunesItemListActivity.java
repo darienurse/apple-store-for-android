@@ -22,8 +22,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
 import com.google.gson.Gson;
-import com.itunesstoreviewer.app.ItunesItemClasses.Entry;
-import com.itunesstoreviewer.app.ItunesItemClasses.LinkDeserializer;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
 
 import java.util.LinkedHashSet;
@@ -171,8 +171,7 @@ public class ItunesItemListActivity extends FragmentActivity
 
 
     @Override
-    public void onItunesItemSelected(int itemIndex, int categoryIndex) {
-        Entry item = ItunesAppController.getCategoryList().get(categoryIndex).getiTunesItems().get(itemIndex);
+    public void onItunesItemSelected(Entry item) {
         if (mTwoPane) {
             mTitle = item.getImName().getLabel();
             actionBar.setTitle(mTitle);
@@ -316,7 +315,7 @@ public class ItunesItemListActivity extends FragmentActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            onItunesItemSelected(position, ItunesAppController.getCategoryList().size() - 1);
+            onItunesItemSelected((Entry)mDrawerList.getAdapter().getItem(position));
             mDrawerLayout.closeDrawers();
         }
     }
