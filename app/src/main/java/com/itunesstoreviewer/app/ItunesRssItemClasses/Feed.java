@@ -1,6 +1,7 @@
 package com.itunesstoreviewer.app.ItunesRssItemClasses;
 
 import com.google.gson.annotations.Expose;
+import com.itunesstoreviewer.app.ItunesItem;
 
 import javax.annotation.Generated;
 import java.io.Serializable;

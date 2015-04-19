@@ -63,7 +63,7 @@ public class ItunesItemListActivity extends FragmentActivity
     private ShareActionProvider mShareActionProvider;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private Entry itunesItem;
+    private ItunesItem itunesItem;
     private ActionBarDrawerToggle mDrawerToggle;
     private Gson gson;
     private ConnectivityManager connectivityManager;
@@ -81,15 +81,15 @@ public class ItunesItemListActivity extends FragmentActivity
         favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
         unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
         if (savedInstanceState != null && savedInstanceState.containsKey(SAVED_ITEM)) {
-            itunesItem = (Entry) savedInstanceState.getSerializable(SAVED_ITEM);
-            mTitle = itunesItem.getImName().getLabel();
+            itunesItem = (ItunesItem) savedInstanceState.getSerializable(SAVED_ITEM);
+            mTitle = itunesItem.getTrackName();
         }
 
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         Set<String> restoredFav = prefs.getStringSet(USER_PREFS_FAV, null);
         if (restoredFav != null) {
             for (String s : restoredFav) {
-                Entry itunesE = gson.fromJson(s, Entry.class);
+                ItunesItem itunesE = gson.fromJson(s, ItunesItem.class);
                 if (!ItunesAppController.userFavorites.contains(itunesE))
                     ItunesAppController.userFavorites.add(itunesE);
             }
@@ -171,9 +171,9 @@ public class ItunesItemListActivity extends FragmentActivity
 
 
     @Override
-    public void onItunesItemSelected(Entry item) {
+    public void onItunesItemSelected(ItunesItem item) {
         if (mTwoPane) {
-            mTitle = item.getImName().getLabel();
+            mTitle = item.getTrackName();
             actionBar.setTitle(mTitle);
             if (itunesItem == null) toggleFavorite(item);
             else toggleFavorite(itunesItem, item);
@@ -201,7 +201,7 @@ public class ItunesItemListActivity extends FragmentActivity
     @Override
     protected void onDestroy() {
         Set<String> favSet = new LinkedHashSet<String>();
-        for (Entry e : ItunesAppController.userFavorites)
+        for (ItunesItem e : ItunesAppController.userFavorites)
             favSet.add(gson.toJson(e));
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
@@ -270,14 +270,14 @@ public class ItunesItemListActivity extends FragmentActivity
         ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
     }
 
-    private void toggleFavorite(Entry e1, Entry e2) {
-        List<Entry> userFavorites = ItunesAppController.userFavorites;
+    private void toggleFavorite(ItunesItem e1, ItunesItem e2) {
+        List<ItunesItem> userFavorites = ItunesAppController.userFavorites;
         if (userFavorites.contains(e1) != userFavorites.contains(e2)) {
             toggleFavorite(e2);
         }
     }
 
-    private void toggleFavorite(Entry e1) {
+    private void toggleFavorite(ItunesItem e1) {
         if (ItunesAppController.userFavorites.contains(e1)) {
             mFavButton.setIcon(favorite);
         } else {
@@ -295,8 +295,8 @@ public class ItunesItemListActivity extends FragmentActivity
     }
 
     private void launchPlayStoreSearch() {
-        String formattedName = itunesItem.getImName().getLabel();
-        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel());
+        String formattedName = itunesItem.getTrackName();
+        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getKind());
         startActivity(new Intent(Intent.ACTION_VIEW
                 , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
     }
@@ -315,7 +315,7 @@ public class ItunesItemListActivity extends FragmentActivity
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            onItunesItemSelected((Entry)mDrawerList.getAdapter().getItem(position));
+            onItunesItemSelected((ItunesItem)mDrawerList.getAdapter().getItem(position));
             mDrawerLayout.closeDrawers();
         }
     }

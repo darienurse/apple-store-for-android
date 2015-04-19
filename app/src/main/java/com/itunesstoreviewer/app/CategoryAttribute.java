@@ -14,17 +14,17 @@ public class CategoryAttribute {
     private final Integer color;
     private final String url;
     private ItunesRSSResponse rssResponse;
-    private List<Entry> iTunesItems;
+    private List<? extends ItunesItem> iTunesItems;
 
     public CategoryAttribute(String title, Integer c, String url) {
         this.title = title;
         this.color = c;
         this.url = url;
         this.rssResponse = null;
-        this.iTunesItems = new ArrayList<Entry>();
+        this.iTunesItems = new ArrayList<ItunesItem>();
     }
 
-    public CategoryAttribute(String title, Integer c, String url, List<Entry> eList) {
+    public CategoryAttribute(String title, Integer c, String url, List<ItunesItem> eList) {
         this.title = title;
         this.color = c;
         this.url = url;
@@ -53,7 +53,7 @@ public class CategoryAttribute {
         this.iTunesItems = rssResponse.getFeed().getEntry();
     }
 
-    public List<Entry> getiTunesItems() {
+    public List<? extends ItunesItem> getItunesItems() {
         return iTunesItems;
     }
 }

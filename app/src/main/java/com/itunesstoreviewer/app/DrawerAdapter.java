@@ -19,9 +19,9 @@ public class DrawerAdapter extends BaseAdapter {
     ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
     private Context context;
     private LayoutInflater inflater;
-    private List<Entry> itunesItems;
+    private List<ItunesItem> itunesItems;
 
-    public DrawerAdapter(Context context, List<Entry> itunesItems) {
+    public DrawerAdapter(Context context, List<ItunesItem> itunesItems) {
         this.context = context;
         this.itunesItems = itunesItems;
     }
@@ -58,16 +58,16 @@ public class DrawerAdapter extends BaseAdapter {
         TextView artist = (TextView) convertView.findViewById(R.id.artist);
 
         // getting app data for the row
-        Entry itunesItem = itunesItems.get(position);
+        ItunesItem itunesItem = itunesItems.get(position);
 
         // thumbnail image
-        thumbNail.setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
+        thumbNail.setImageUrl(itunesItem.getArtworkUrl(), imageLoader);
 
         // name
-        name.setText(itunesItem.getImName().getLabel());
+        name.setText(itunesItem.getTrackName());
 
         // artist
-        artist.setText(itunesItem.getImArtist().getLabel());
+        artist.setText(itunesItem.getArtistName());
 
         return convertView;
     }

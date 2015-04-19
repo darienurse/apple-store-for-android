@@ -21,14 +21,14 @@ public class ItunesAdapter extends BaseAdapter {
     ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
     private Context context;
     private LayoutInflater inflater;
-    private List<Entry> itunesItems;
+    private List<ItunesItem> itunesItems;
     private String mName;
     private String mUrl;
     private String mCategory;
     private String mPrice;
     private String mArtist;
 
-    public ItunesAdapter(Context context, List<Entry> itunesItems) {
+    public ItunesAdapter(Context context, List<ItunesItem> itunesItems) {
         this.context = context;
         this.itunesItems = itunesItems;
     }
@@ -66,13 +66,13 @@ public class ItunesAdapter extends BaseAdapter {
         TextView price = (TextView) convertView.findViewById(R.id.price);
 
         // getting app data for the row
-        Entry itunesItem = itunesItems.get(position);
+        ItunesItem itunesItem = itunesItems.get(position);
         try {
-            mUrl = itunesItem.getImImage().get(2).getLabel();
-            mName = itunesItem.getImName().getLabel();
-            mArtist = itunesItem.getImArtist().getLabel();
-            mCategory = itunesItem.getCategory().getAttributes().getTerm();
-            mPrice = itunesItem.getImPrice().getLabel().replaceFirst("-", "");
+            mUrl = itunesItem.getArtworkUrl();
+            mName = itunesItem.getTrackName();
+            mArtist = itunesItem.getArtistName();
+            mCategory = itunesItem.getPrimaryGenreName();
+            mPrice = itunesItem.getItemPrice();
             mPrice = (mPrice.equals("Get")) ? "Free" : mPrice;
         } catch (NullPointerException e) {
             Log.e(ItunesAdapter.class.getName(), e.toString() +

@@ -2,13 +2,14 @@
 package com.itunesstoreviewer.app.ItunesSearchItemClasses;
 
 import com.google.gson.annotations.Expose;
+import com.itunesstoreviewer.app.ItunesItem;
 
 import javax.annotation.Generated;
 import java.util.ArrayList;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
-public class Result {
+public class Result implements ItunesItem {
 
     @Expose
     private String wrapperType;
@@ -172,6 +173,7 @@ public class Result {
      * @return
      *     The kind
      */
+    @Override
     public String getKind() {
         return kind;
     }
@@ -208,8 +210,9 @@ public class Result {
      * @return
      *     The trackId
      */
-    public Integer getTrackId() {
-        return trackId;
+    @Override
+    public String getTrackId() {
+        return Integer.toString(trackId);
     }
 
     /**
@@ -226,6 +229,7 @@ public class Result {
      * @return
      *     The artistName
      */
+    @Override
     public String getArtistName() {
         return artistName;
     }
@@ -244,6 +248,7 @@ public class Result {
      * @return
      *     The collectionName
      */
+    @Override
     public String getCollectionName() {
         return collectionName;
     }
@@ -262,6 +267,7 @@ public class Result {
      * @return
      *     The trackName
      */
+    @Override
     public String getTrackName() {
         return trackName;
     }
@@ -370,8 +376,34 @@ public class Result {
      * @return
      *     The trackViewUrl
      */
+    @Override
     public String getTrackViewUrl() {
         return trackViewUrl;
+    }
+
+    @Override
+    public String getArtworkUrl() {
+        return getArtworkUrl100();
+    }
+
+    @Override
+    public String getItemPrice() {
+        return Double.toString(trackPrice);
+    }
+
+    @Override
+    public String getItemRentalPrice() {
+        return Integer.toString(trackRentalPrice);
+    }
+
+    @Override
+    public String getArtworkUrlHD(){
+        return getArtworkUrl512();
+    }
+
+    @Override
+    public String getPublisher() {
+        return null;
     }
 
     /**
@@ -568,6 +600,7 @@ public class Result {
      * @return
      *     The releaseDate
      */
+    @Override
     public String getReleaseDate() {
         return releaseDate;
     }
@@ -748,8 +781,14 @@ public class Result {
      * @return
      *     The primaryGenreName
      */
+    @Override
     public String getPrimaryGenreName() {
         return primaryGenreName;
+    }
+
+    @Override
+    public String getItemSummary() {
+        return getLongDescription();
     }
 
     /**
@@ -928,6 +967,7 @@ public class Result {
      * @return
      *     The copyright
      */
+    @Override
     public String getCopyright() {
         return copyright;
     }
@@ -1144,6 +1184,7 @@ public class Result {
      * @return
      *     The sellerName
      */
+    @Override
     public String getSellerName() {
         return sellerName;
     }
@@ -1390,5 +1431,20 @@ public class Result {
     public void setArtistIds(List<Integer> artistIds) {
         this.artistIds = artistIds;
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof ItunesItem)) {
+            return false;
+        }
+        Result result2 = (Result) obj;
+        return getTrackId()
+                .equals(result2.getTrackId());
+    }
+
+
 
 }

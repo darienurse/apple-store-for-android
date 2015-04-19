@@ -37,7 +37,7 @@ public class ItunesItemDetailFragment extends Fragment {
      */
     public static final String ARG_ITEM_ID = "item_id";
     ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
-    private Entry itunesItem;
+    private ItunesItem itunesItem;
     private View rootView;
     private TextView titleTextView;
     private TextView byLineTextView;
@@ -52,7 +52,7 @@ public class ItunesItemDetailFragment extends Fragment {
     public ItunesItemDetailFragment() {
     }
 
-    public static ItunesItemDetailFragment newInstance(Entry item) {
+    public static ItunesItemDetailFragment newInstance(ItunesItem item) {
         Bundle arguments = new Bundle();
         arguments.putSerializable(ItunesItemDetailFragment.ARG_ITEM_ID, item);
         ItunesItemDetailFragment fragment = new ItunesItemDetailFragment();
@@ -64,7 +64,7 @@ public class ItunesItemDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            itunesItem = (Entry) getArguments().getSerializable(ItunesItemDetailFragment.ARG_ITEM_ID);
+            itunesItem = (ItunesItem) getArguments().getSerializable(ItunesItemDetailFragment.ARG_ITEM_ID);
         }
     }
 
@@ -82,31 +82,50 @@ public class ItunesItemDetailFragment extends Fragment {
             imageLoader = ItunesAppController.getInstance().getImageLoader();
         }
 
-        // Show the dummy content as text in a TextView.
         if (itunesItem != null) {
-            titleTextView.setText(itunesItem.getImName().getLabel());
-            byLineTextView.setText(itunesItem.getImArtist().getLabel());
+            titleTextView.setText(itunesItem.getTrackName());
+            byLineTextView.setText(itunesItem.getArtistName());
             String summary = generateSummary(itunesItem);
-            //bodyTextView.setText(itunesItem.getSummary().getLabel());
+            //bodyTextView.setText(itunesItem.getItemSummary().getLabel());
             bodyTextView.setText(summary);
-            networkImageView.setImageUrl(itunesItem.getImImage().get(2).getLabel(), imageLoader);
-            new ImageExtractor().execute(itunesItem.getLink().get(0).getAttributes().getHref());
+            networkImageView.setImageUrl(itunesItem.getArtworkUrl(), imageLoader);
+            new ImageExtractor().execute(itunesItem.getTrackViewUrl());
         }
         return rootView;
     }
 
-    private String generateSummary(Entry itunesItem) {
+    private String generateSummary(ItunesItem itunesItem) {
         StringBuilder summary = new StringBuilder();
-        summary.append(getPriceSafely(itunesItem));
-        summary.append(getRentalPriceSafely(itunesItem));
-        summary.append(getCollectionNameSafely(itunesItem));
-        summary.append(getSummarySafely(itunesItem));
-        summary.append(getCategorySafely(itunesItem));
-        summary.append(getReleaseDateSafely(itunesItem));
-        summary.append(getRightsSafely(itunesItem));
-        summary.append(getPublisherSafely(itunesItem));
-        summary.append(getVendorSafely(itunesItem));
+        summary.append(getSummaryElement("Price",
+                (itunesItem.getItemPrice().equals("Get")) ? "Free" : itunesItem.getItemPrice()));
+        summary.append(getSummaryElement("Rental Price", itunesItem.getItemRentalPrice()));
+        summary.append(getSummaryElement("Album", itunesItem.getCollectionName()));
+        summary.append(getSummaryElement("", "\n" + itunesItem.getItemSummary()));
+        summary.append("\n");
+        summary.append(getSummaryElement("Genre", itunesItem.getPrimaryGenreName()));
+        summary.append(getSummaryElement("Release Date", itunesItem.getReleaseDate()));
+        summary.append(getSummaryElement("", itunesItem.getCopyright()));
+        summary.append(getSummaryElement("Publisher", itunesItem.getPublisher()));
+        summary.append(getSummaryElement("Seller", itunesItem.getSellerName()));
+        //summary.append(getRentalPriceSafely(itunesItem));
+        //summary.append(getCollectionNameSafely(itunesItem));
+        //summary.append(getSummarySafely(itunesItem));
+        //summary.append(getCategorySafely(itunesItem));
+        //summary.append(getReleaseDateSafely(itunesItem));
+        //summary.append(getRightsSafely(itunesItem));
+        //summary.append(getPublisherSafely(itunesItem));
+        //summary.append(getVendorSafely(itunesItem));
         return summary.toString().trim();
+    }
+
+    private String getSummaryElement(String title, String detail) {
+        if(detail!=null && !detail.trim().equals("null")) {
+            if (title.equals("")) return detail + "\n";
+            else return title + ": " + detail + "\n";
+        }
+        else {
+            return "";
+        }
     }
 
     private String getVendorSafely(Entry itunesItem) {

@@ -2,15 +2,15 @@ package com.itunesstoreviewer.app.ItunesRssItemClasses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.itunesstoreviewer.app.ItunesItem;
 
 import javax.annotation.Generated;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
-public class Entry implements Serializable {
+public class Entry implements ItunesItem{
 
     @SerializedName("im:name")
     @Expose
@@ -317,11 +317,135 @@ public class Entry implements Serializable {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof Entry)) {
+        if (!(obj instanceof ItunesItem)) {
             return false;
         }
         Entry entry2 = (Entry) obj;
-        return this.getId().getAttributes().getImId()
-                .equals(entry2.getId().getAttributes().getImId());
+        return this.getTrackId()
+                .equals(entry2.getTrackId());
+    }
+
+    @Override
+    public String getTrackId() {
+        if(getId()!=null)
+            return getId().getAttributes().getImId();
+        else
+            return null;
+    }
+
+    @Override
+    public String getArtistName() {
+        if (getImArtist() != null) {
+            return getImArtist().getLabel();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getTrackName() {
+        if (getImName() != null) {
+            return getImName().getLabel();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getTrackViewUrl() {
+        if(getLink() != null)
+            return getLink().get(0).getAttributes().getHref();
+        else return null;
+    }
+
+    @Override
+    public String getArtworkUrl() {
+        if (getImImage() != null) {
+            return getImImage().get(2).getLabel();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getItemPrice() {
+        if(getImPrice() != null)
+            return getImPrice().getLabel().replaceFirst("-", "");
+        else return null;
+    }
+
+    @Override
+    public String getItemRentalPrice() {
+        if (getImRentalPrice() != null)
+            return getImRentalPrice().getLabel();
+        else
+            return null;
+    }
+
+    @Override
+    public String getReleaseDate() {
+        if(getImReleaseDate() != null)
+            return getImReleaseDate().getAttributes().getLabel();
+        else return null;
+    }
+
+    @Override
+    public String getPrimaryGenreName() {
+        if(getCategory() != null)
+            return getCategory().getAttributes().getTerm();
+        else return null;
+    }
+
+    @Override
+    public String getItemSummary() {
+        if(getSummary() != null)
+            return getSummary().getLabel().replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
+        else return null;
+    }
+
+    @Override
+    public String getCopyright() {
+        if(getRights() != null)
+            return getRights().getLabel();
+        else return null;
+    }
+
+    @Override
+    public String getSellerName() {
+        if(getImVendorName() != null)
+            return getImVendorName().getLabel();
+        else return null;
+    }
+
+    @Override
+    public List<String> getScreenshotUrls() {
+        return null;
+    }
+
+    @Override
+    public String getArtworkUrlHD() {
+        return null;
+    }
+
+    @Override
+    public String getCollectionName() {
+        if(getImCollection() != null)
+            return getImCollection().getImName().getLabel();
+        else return null;
+    }
+
+    @Override
+    public String getKind(){
+        if (getImContentType() != null)
+            return getImContentType().getAttributes().getLabel();
+        else return null;
+    }
+
+    @Override
+    public String getPublisher(){
+        if(getImPublisher() != null)
+            return getImPublisher().getLabel();
+        else
+            return null;
     }
 }

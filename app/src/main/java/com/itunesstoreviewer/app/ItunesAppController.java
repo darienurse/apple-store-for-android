@@ -21,7 +21,7 @@ public class ItunesAppController extends AppController {
             , "Top Podcasts"};
 
     private static final int NUM_CATEGORIES = allCategories.length;
-    public static List<Entry> userFavorites;
+    public static List<ItunesItem> userFavorites;
     public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryList;
     private static Map<String, String> appleToPlayStoreMap;
@@ -39,14 +39,14 @@ public class ItunesAppController extends AppController {
         return mInstance;
     }
 
-    public static Intent generateShareIntent(Entry itunesItem, String appName) {
+    public static Intent generateShareIntent(ItunesItem itunesItem, String appName) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        String name = itunesItem.getImName().getLabel();
+        String name = itunesItem.getTrackName();
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Details on " + name);
         sendIntent.putExtra(Intent.EXTRA_TEXT,
                 "Checkout this content: " + name
-                        + "(" + itunesItem.getLink().get(0).getAttributes().getHref() + ")"
+                        + "(" + itunesItem.getTrackViewUrl() + ")"
                         + "\n provided by " + appName + " created by @darienurse");
         sendIntent.setType("text/plain");
         return sendIntent;
@@ -57,7 +57,7 @@ public class ItunesAppController extends AppController {
         super.onCreate();
         categoryList = new ArrayList<CategoryAttribute>(NUM_CATEGORIES);
         appleToPlayStoreMap = new HashMap<String, String>();
-        userFavorites = new ArrayList<Entry>();
+        userFavorites = new ArrayList<ItunesItem>();
         globalColorController = new ColorDrawable();
         mInstance = this;
         categoryList.add(new CategoryAttribute(allCategories[0], getResources().getColor(R.color.green)

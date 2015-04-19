@@ -25,7 +25,7 @@ import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 public class ItunesItemDetailActivity extends FragmentActivity {
 
     private ShareActionProvider mShareActionProvider;
-    private Entry itunesItem;
+    private ItunesItem itunesItem;
     private Drawable favorite;
     private Drawable unfavorite;
     private ActionBar actionBar;
@@ -37,9 +37,9 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
         favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
         if (getIntent() != null && getIntent().hasExtra(ItunesItemDetailFragment.ARG_ITEM_ID)) {
-            itunesItem = (Entry) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
+            itunesItem = (ItunesItem) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
             actionBar = getActionBar();
-            actionBar.setTitle(itunesItem.getImName().getLabel());
+            actionBar.setTitle(itunesItem.getTrackName());
             //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
         } else {
             Log.e(getLocalClassName(), "You cannot launch " +
@@ -95,8 +95,8 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     }
 
     private void launchPlayStoreSearch() {
-        String formattedName = itunesItem.getImName().getLabel();
-        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getImContentType().getAttributes().getLabel());
+        String formattedName = itunesItem.getTrackName();
+        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getKind());
         startActivity(new Intent(Intent.ACTION_VIEW
                 , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
     }

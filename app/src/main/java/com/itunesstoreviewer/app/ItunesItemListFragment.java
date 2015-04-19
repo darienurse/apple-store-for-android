@@ -34,7 +34,7 @@ public class ItunesItemListFragment extends ListFragment {
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
-    private List<Entry> itunesItemList = new ArrayList<Entry>(LOAD);
+    private List<ItunesItem> itunesItemList = new ArrayList<ItunesItem>(LOAD);
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
     private CategoryAttribute catAttr;
@@ -63,14 +63,14 @@ public class ItunesItemListFragment extends ListFragment {
                     categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
                     catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
                     rssResponse = catAttr.getRssResponse();
-                    itunesItemList.addAll(catAttr.getiTunesItems());
+                    itunesItemList.addAll(catAttr.getItunesItems());
                     break;
                 case SEARCH:
                     categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
                     catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
                     //TODO Use search response
                     rssResponse = catAttr.getRssResponse();
-                    itunesItemList.addAll(catAttr.getiTunesItems());
+                    itunesItemList.addAll(catAttr.getItunesItems());
                     break;
                 default:
                     break;
@@ -170,7 +170,8 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItunesItemSelected(ItunesAppController.getCategoryList().get(categoryIndex).getiTunesItems().get(position));
+        mCallbacks.onItunesItemSelected(ItunesAppController.getCategoryList()
+                .get(categoryIndex).getItunesItems().get(position));
     }
 
     @Override
@@ -215,7 +216,7 @@ public class ItunesItemListFragment extends ListFragment {
          *
          * @param entry
          */
-        public void onItunesItemSelected(Entry entry);
+        public void onItunesItemSelected(ItunesItem entry);
 
         public void networkError();
     }
