@@ -38,10 +38,6 @@ public class ItunesItemDetailFragment extends Fragment {
     public static final String ARG_ITEM_ID = "item_id";
     ImageLoader imageLoader = ItunesAppController.getInstance().getImageLoader();
     private ItunesItem itunesItem;
-    private View rootView;
-    private TextView titleTextView;
-    private TextView byLineTextView;
-    private TextView bodyTextView;
     private NetworkImageView networkImageView;
     private SliderLayout imageSliderView;
 
@@ -71,10 +67,10 @@ public class ItunesItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.itunesitem_detail, container, false);
-        titleTextView = (TextView) rootView.findViewById(R.id.article_title);
-        byLineTextView = (TextView) rootView.findViewById(R.id.article_byline);
-        bodyTextView = (TextView) rootView.findViewById(R.id.article_body);
+        View rootView = inflater.inflate(R.layout.itunesitem_detail, container, false);
+        TextView titleTextView = (TextView) rootView.findViewById(R.id.article_title);
+        TextView byLineTextView = (TextView) rootView.findViewById(R.id.article_byline);
+        TextView bodyTextView = (TextView) rootView.findViewById(R.id.article_body);
         networkImageView = ((NetworkImageView) rootView.findViewById(R.id.article_photo));
         imageSliderView = (SliderLayout) rootView.findViewById(R.id.slider);
 

@@ -157,7 +157,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          * @return A new {@link Fragment} to be displayed by a {@link ViewPager}
          */
         Fragment createFragment() {
-            return ItunesItemListFragment.newInstance(mIndex, ItunesItemListFragment.ListMode.RSS);
+            return ItunesItemListFragment.newInstance(mIndex);
         }
 
         /**

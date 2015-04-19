@@ -1,6 +1,7 @@
 package com.itunesstoreviewer.app;
 
 import android.app.ActionBar;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,9 +21,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.ShareActionProvider;
 import com.google.gson.Gson;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
 
@@ -118,10 +119,10 @@ public class ItunesItemListActivity extends FragmentActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         if (mTwoPane) {
             getMenuInflater().inflate(R.menu.share_menu, menu);
             getMenuInflater().inflate(R.menu.details_menu, menu);
+            getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem mItem = menu.findItem(R.id.menu_item_share);
             mFavButton = menu.findItem(R.id.fav_button);
@@ -139,9 +140,19 @@ public class ItunesItemListActivity extends FragmentActivity
             menu.findItem(R.id.menu_item_share).setVisible(showMenuItems);
             menu.findItem(R.id.fav_button).setVisible(showMenuItems);
             menu.findItem(R.id.play_store_button).setVisible(showMenuItems);
-            return true;
-        } else
-            return super.onCreateOptionsMenu(menu);
+        } else {
+            getMenuInflater().inflate(R.menu.search_menu, menu);
+        }
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        searchView.setQueryRefinementEnabled(true);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     // Call to update the share intent
