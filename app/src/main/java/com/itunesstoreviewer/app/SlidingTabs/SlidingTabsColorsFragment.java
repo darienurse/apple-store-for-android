@@ -66,7 +66,7 @@ public class SlidingTabsColorsFragment extends Fragment {
          * color, which are used by {@link SlidingTabLayout}.
          */
         for (int tabIndex = 0; tabIndex < ItunesAppController.getNumCategories(); tabIndex++) {
-            CategoryAttribute catAttr = ItunesAppController.getCategoryList().get(tabIndex);
+            CategoryAttribute catAttr = ItunesAppController.getCategoryAttributeList().get(tabIndex);
             mTabs.add(new SamplePagerItem(
                     catAttr.getTitle(), // Title
                     tabIndex, //Index

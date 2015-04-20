@@ -4,40 +4,19 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import com.itunesstoreviewer.app.BaseClasses.AppController;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 
 import java.util.*;
 
 public class ItunesAppController extends AppController {
 
     public static final int LOAD = 199;
-    private static final String[] allCategories = new String[]{"Top Grossing Apps"
-            , "Top Grossing Mac Apps"
-            , "Top Songs"
-            , "Top Albums"
-            , "Top Movies"
-            , "Top TV Episodes"
-            , "Top Books"
-            , "Top Podcasts"};
-
-    private static final int NUM_CATEGORIES = allCategories.length;
+    private static String[] categories;
     public static List<ItunesItem> userFavorites;
     public static ColorDrawable globalColorController;
-    private static List<CategoryAttribute> categoryList;
+    private static List<CategoryAttribute> categoryAttributeList;
     private static Map<String, String> appleToPlayStoreMap;
     private static ItunesAppController mInstance;
 
-    public static List<CategoryAttribute> getCategoryList() {
-        return Collections.unmodifiableList(categoryList);
-    }
-
-    public static Map<String, String> getAppleToPlayStoreMap() {
-        return Collections.unmodifiableMap(appleToPlayStoreMap);
-    }
-
-    public static synchronized ItunesAppController getInstance() {
-        return mInstance;
-    }
 
     public static Intent generateShareIntent(ItunesItem itunesItem, String appName) {
         Intent sendIntent = new Intent();
@@ -55,28 +34,31 @@ public class ItunesAppController extends AppController {
     @Override
     public void onCreate() {
         super.onCreate();
-        categoryList = new ArrayList<CategoryAttribute>(NUM_CATEGORIES);
+        //Get all the categories from the arrays resources in strings.xml. The first value, "All", is not needed here
+        categories = Arrays.copyOfRange(getResources().getStringArray(R.array.item_categories),
+                1, getResources().getStringArray(R.array.item_categories).length);
+        categoryAttributeList = new ArrayList<CategoryAttribute>(categories.length);
         appleToPlayStoreMap = new HashMap<String, String>();
         userFavorites = new ArrayList<ItunesItem>();
         globalColorController = new ColorDrawable();
         mInstance = this;
-        categoryList.add(new CategoryAttribute(allCategories[0], getResources().getColor(R.color.green)
+        categoryAttributeList.add(new CategoryAttribute("Top Grossing " + categories[0], getResources().getColor(R.color.green)
                 , "https://itunes.apple.com/us/rss/topgrossingapplications/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute(allCategories[1], getResources().getColor(R.color.yellow)
+        categoryAttributeList.add(new CategoryAttribute("Top Grossing " + categories[1], getResources().getColor(R.color.yellow)
                 , "https://itunes.apple.com/us/rss/topgrossingmacapps/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute(allCategories[2], getResources().getColor(R.color.pink)
+        categoryAttributeList.add(new CategoryAttribute("Top " + categories[2], getResources().getColor(R.color.pink)
                 , "https://itunes.apple.com/us/rss/topsongs/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute(allCategories[3], getResources().getColor(R.color.orange)
+        categoryAttributeList.add(new CategoryAttribute("Top " + categories[3], getResources().getColor(R.color.orange)
                 , "https://itunes.apple.com/us/rss/topalbums/limit=" + LOAD + "/explicit=true/json"));
-        categoryList.add(new CategoryAttribute(allCategories[4], getResources().getColor(R.color.indigo)
+        categoryAttributeList.add(new CategoryAttribute("Top " + categories[4], getResources().getColor(R.color.indigo)
                 , "https://itunes.apple.com/us/rss/topmovies/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute(allCategories[5], getResources().getColor(R.color.red)
+        categoryAttributeList.add(new CategoryAttribute("Top " + categories[5], getResources().getColor(R.color.red)
                 , "https://itunes.apple.com/us/rss/toptvepisodes/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute(allCategories[6], getResources().getColor(R.color.light_blue)
+        categoryAttributeList.add(new CategoryAttribute("Top " + categories[6], getResources().getColor(R.color.light_blue)
                 , "https://itunes.apple.com/us/rss/toppaidebooks/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute(allCategories[7], getResources().getColor(R.color.purple)
+        categoryAttributeList.add(new CategoryAttribute("Top " + categories[7], getResources().getColor(R.color.purple)
                 , "https://itunes.apple.com/us/rss/toppodcasts/limit=" + LOAD + "/json"));
-        categoryList.add(new CategoryAttribute("Favorites", Color.BLACK, "", userFavorites));
+        categoryAttributeList.add(new CategoryAttribute("Favorites", Color.BLACK, "", userFavorites));
         appleToPlayStoreMap.put("Application", "apps");
         appleToPlayStoreMap.put("Podcast", "all");
         appleToPlayStoreMap.put("Music", "music");
@@ -86,7 +68,19 @@ public class ItunesAppController extends AppController {
         appleToPlayStoreMap.put("Movie", "movies");
     }
 
+    public static List<CategoryAttribute> getCategoryAttributeList() {
+        return Collections.unmodifiableList(categoryAttributeList);
+    }
+
+    public static Map<String, String> getAppleToPlayStoreMap() {
+        return Collections.unmodifiableMap(appleToPlayStoreMap);
+    }
+
+    public static synchronized ItunesAppController getInstance() {
+        return mInstance;
+    }
+
     public static int getNumCategories() {
-        return NUM_CATEGORIES;
+        return categories.length;
     }
 }

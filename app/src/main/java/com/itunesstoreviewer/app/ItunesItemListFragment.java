@@ -7,10 +7,10 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.ItunesRSSResponse;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
 import com.itunesstoreviewer.app.ItunesSearchItemClasses.ItunesSearchResponse;
@@ -28,7 +28,7 @@ public class ItunesItemListFragment extends ListFragment {
     public static final String ARG_QUERY = "item_query";
     public static ListMode MODE;
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
-    private static final String TAG = ItunesItemListFragment.class.getSimpleName();
+    private static final String TAG = "DEBUGZ";//ItunesItemListFragment.class.getSimpleName();
     public enum ListMode {
         RSS, SEARCH};
     private Callbacks mCallbacks;
@@ -74,7 +74,7 @@ public class ItunesItemListFragment extends ListFragment {
                 case RSS:
                     if(getArguments().containsKey(ARG_CAT_INDEX)) {
                         categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
-                        catAttr = ItunesAppController.getCategoryList().get(categoryIndex);
+                        catAttr = ItunesAppController.getCategoryAttributeList().get(categoryIndex);
                         rssResponse = catAttr.getRssResponse();
                         itunesItemList.addAll(catAttr.getItunesItems());
                     }
@@ -144,9 +144,15 @@ public class ItunesItemListFragment extends ListFragment {
                 VolleyLog.v(TAG, "Error: " + error.getMessage());
                 Log.d(TAG, "Error: " + error.getMessage());
 
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Log.d(TAG, TimeoutError.class.toString() + " or " + NoConnectionError.class.toString());
+                if (error instanceof TimeoutError) {
+                    Log.d(TAG, TimeoutError.class.toString());
+                    Toast.makeText(getActivity(), "Timeout", Toast.LENGTH_LONG).show();
                     mCallbacks.networkError();
+                } else if (error instanceof NoConnectionError) {
+                    Log.d(TAG, NetworkError.class.toString());
+                    Toast.makeText(getActivity(), "No Network", Toast.LENGTH_LONG).show();
+                    mCallbacks.networkError();
+                    Log.d(TAG, AuthFailureError.class.toString());
                 } else if (error instanceof AuthFailureError) {
                     Log.d(TAG, AuthFailureError.class.toString());
                 } else if (error instanceof ServerError) {
@@ -198,7 +204,7 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItunesItemSelected(ItunesAppController.getCategoryList()
+        mCallbacks.onItunesItemSelected(ItunesAppController.getCategoryAttributeList()
                 .get(categoryIndex).getItunesItems().get(position));
     }
 
