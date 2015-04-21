@@ -37,6 +37,7 @@ public class ItunesItemListFragment extends ListFragment {
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
     private List<ItunesItem> itunesItemList = new ArrayList<ItunesItem>(LOAD);
+    private static Gson gson = LinkDeserializer.buildGson();
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
     private ItunesSearchResponse searchResponse;
@@ -116,27 +117,35 @@ public class ItunesItemListFragment extends ListFragment {
         return new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Gson gson = LinkDeserializer.buildGson();
-                        itunesItemList.clear();
-                        switch (MODE) {
-                            case RSS:
-                                rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
-                                itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                                catAttr.setRssResponse(rssResponse);
-                                break;
-                            case SEARCH:
-                                searchResponse = gson.fromJson(response.toString(), ItunesSearchResponse.class);
-                                itunesItemList.addAll(searchResponse.getResults());
-                                break;
-                            default:
-                                break;
-                        }
-                        if (isAdded())
-                            setListShown(!itunesItemList.isEmpty());
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
+                    public void onResponse(final JSONObject response) {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                itunesItemList.clear();
+                                switch (MODE) {
+                                    case RSS:
+                                        rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
+                                        itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                                        catAttr.setRssResponse(rssResponse);
+                                        break;
+                                    case SEARCH:
+                                        searchResponse = gson.fromJson(response.toString(), ItunesSearchResponse.class);
+                                        itunesItemList.addAll(searchResponse.getResults());
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                getActivity().runOnUiThread (new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (isAdded()) setListShown(true);
+                                        // notifying list adapter about data changes
+                                        // so that it renders the list view with updated data
+                                        //adapter.notifyDataSetChanged();
+                                    }
+                                    });
+                            }
+                        }.start();
                     }
                 }, new Response.ErrorListener() {
             @Override
