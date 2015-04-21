@@ -34,7 +34,7 @@ public class ItunesAppController extends AppController {
     @Override
     public void onCreate() {
         super.onCreate();
-        categories = getResources().getStringArray(R.array.item_categories);
+        categories = getResources().getStringArray(R.array.itunes_categories);
         categoryAttributeList = new ArrayList<CategoryAttribute>(categories.length);
         appleToPlayStoreMap = new HashMap<String, String>();
         userFavorites = new ArrayList<ItunesItem>();

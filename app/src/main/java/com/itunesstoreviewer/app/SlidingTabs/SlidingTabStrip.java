@@ -54,6 +54,7 @@ class SlidingTabStrip extends LinearLayout {
     private int mSelectedPosition;
     private float mSelectionOffset;
     private SlidingTabLayout.TabColorizer mCustomTabColorizer;
+    private ActionBar mActionBar;
 
     SlidingTabStrip(Context context) {
         this(context, null);
@@ -61,7 +62,7 @@ class SlidingTabStrip extends LinearLayout {
 
     SlidingTabStrip(Context context, AttributeSet attrs) {
         super(context, attrs);
-        ActionBar mActionBar = ((Activity) context).getActionBar();
+        mActionBar = ((Activity) context).getActionBar();
         mActionBar.setBackgroundDrawable(ItunesAppController.globalColorController);
         setWillNotDraw(false);
 
@@ -175,7 +176,9 @@ class SlidingTabStrip extends LinearLayout {
                         (1.0f - mSelectionOffset) * right);
             }
             ItunesAppController.globalColorController.setColor(color);
-            setBackgroundColor(color);
+            //The action bar need to be toggled (for some reason) in order to change color
+            mActionBar.setDisplayShowTitleEnabled(false);
+            mActionBar.setDisplayShowTitleEnabled(true);
             mSelectedIndicatorPaint.setColor(getContrastColor(color));
 
             canvas.drawRect(left, height - mSelectedIndicatorThickness, right,

@@ -1,5 +1,6 @@
 package com.itunesstoreviewer.app;
 
+import android.app.ActionBar;
 import android.support.v4.app.FragmentActivity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -23,27 +24,24 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
     private Spinner spinner;
     private Map<String, String> map;
     private View spinner_frame;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         map = new HashMap<String, String>();
-        String[] categories = getResources().getStringArray(R.array.item_categories);
-        map.put(categories[0], "iPadSoftware");
-        map.put(categories[1], "macSoftware");
-        map.put(categories[2], "song");
-        map.put(categories[3], "album");
-        map.put(categories[4], "movie");
-        map.put(categories[5], "tvEpisode");
-        map.put(categories[6], "ebook");
-        map.put(categories[7], "podcast");
+        String[] categories = getResources().getStringArray(R.array.itunes_categories);
+        String[] entities = getResources().getStringArray(R.array.itunes_entities);
+        for(int i = 0; i< categories.length; i++)
+            map.put(categories[i], entities[i]);
         spinner_frame = findViewById(R.id.spinner_frame);
-        //spinner_frame.setBackground(ItunesAppController.globalColorController);
-        //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
+        spinner_frame.setBackground(ItunesAppController.globalColorController);
+        mActionBar = getActionBar();
+        mActionBar.setBackgroundDrawable(ItunesAppController.globalColorController);
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.item_categories, android.R.layout.simple_spinner_item);
+                R.array.itunes_categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
@@ -110,8 +108,9 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //int color = ItunesAppController.getCategoryAttributeList().get(position).getColor();
-        //ItunesAppController.globalColorController.setColor(color);
+        int color = ItunesAppController.getCategoryAttributeList().get(position).getColor();
+        ItunesAppController.globalColorController.setColor(color);
+        spinner_frame.invalidate();
         handleIntent(getIntent());
     }
 

@@ -74,7 +74,7 @@ public class ItunesAdapter extends BaseAdapter {
             mArtist = itunesItem.getArtistName();
             mCategory = itunesItem.getPrimaryGenreName();
             mPrice = itunesItem.getItemPrice();
-            mPrice = (mPrice.equals("Get") || mPrice.equals("0.0")) ? "Free" : mPrice;
+            mPrice = (mPrice.equals("Get") || mPrice.equals("$0.0")) ? "Free" : mPrice;
         } catch (NullPointerException e) {
             Log.e(ItunesAdapter.class.getName(), e.toString() +
                     "\nCaused by dereferencing " + mName + " at index " + position);
