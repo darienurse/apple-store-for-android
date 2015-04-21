@@ -4,17 +4,25 @@
     android:layout_height="match_parent"
     tools:context="com.itunesstoreviewer.app.SearchableActivity">
 
-    <Spinner
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        />
+        android:background="@color/green"
+        android:id="@+id/spinner_frame">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            />
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/itunesitem_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        android:layout_below="@+id/spinner"/>
+        android:layout_below="@+id/spinner_frame"
+        android:layout_alignParentStart="false"/>
 
 </RelativeLayout>

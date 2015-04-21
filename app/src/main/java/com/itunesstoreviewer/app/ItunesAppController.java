@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ItunesAppController extends AppController {
 
-    public static final int LOAD = 200;
+    public static final int LOAD = 199;
     private static String[] categories;
     public static List<ItunesItem> userFavorites;
     public static ColorDrawable globalColorController;

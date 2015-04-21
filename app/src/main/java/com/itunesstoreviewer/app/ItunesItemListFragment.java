@@ -104,11 +104,10 @@ public class ItunesItemListFragment extends ListFragment {
             else{
                 jsonObjReq = getJsonObjectRequest(catAttr.getUrl());
             }
-            //try three times before error
-            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+            /*jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                     DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                    3,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
             // Adding request to request queue
             ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
         }
@@ -129,13 +128,14 @@ public class ItunesItemListFragment extends ListFragment {
 
                 if (error instanceof TimeoutError) {
                     Log.d(TAG, TimeoutError.class.toString());
-                    //Toast.makeText(getActivity(), "Timeout", Toast.LENGTH_LONG).show();
+                    if(getActivity()!=null)
+                        Toast.makeText(getActivity(), "Timeout", Toast.LENGTH_LONG).show();
                     mCallbacks.networkError();
                 } else if (error instanceof NoConnectionError) {
                     Log.d(TAG, NetworkError.class.toString());
-                    //Toast.makeText(getActivity(), "No Network", Toast.LENGTH_LONG).show();
-                    mCallbacks.networkError();
-                    Log.d(TAG, AuthFailureError.class.toString());
+                    if(getActivity()!=null)
+                        Toast.makeText(getActivity(), "No Network", Toast.LENGTH_LONG).show();
+                    //mCallbacks.networkError();
                 } else if (error instanceof AuthFailureError) {
                     Log.d(TAG, AuthFailureError.class.toString());
                 } else if (error instanceof ServerError) {
@@ -144,6 +144,7 @@ public class ItunesItemListFragment extends ListFragment {
                     Log.d(TAG, NetworkError.class.toString());
                 } else if (error instanceof ParseError) {
                     Log.d(TAG, ParseError.class.toString());
+                    onCreate(getArguments());
                 }
             }
         });

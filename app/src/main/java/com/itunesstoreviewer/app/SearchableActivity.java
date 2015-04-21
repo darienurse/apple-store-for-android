@@ -21,22 +21,26 @@ import java.util.Map;
 public class SearchableActivity extends FragmentActivity implements ItunesItemListFragment.Callbacks, AdapterView.OnItemSelectedListener {
 
     private Spinner spinner;
-    private static final Map<String, String> map = new HashMap<String, String>();
-    static{
-            map.put("Apps", "iPadSoftware");
-            map.put("Mac Apps", "macSoftware");
-            map.put("Songs", "song");
-            map.put("Albums", "album");
-            map.put("Movies", "movie");
-            map.put("TV Episodes", "tvEpisode");
-            map.put("Books", "ebook");
-            map.put("Podcasts", "podcast");
-    }
+    private Map<String, String> map;
+    private View spinner_frame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        map = new HashMap<String, String>();
+        String[] categories = getResources().getStringArray(R.array.item_categories);
+        map.put(categories[0], "iPadSoftware");
+        map.put(categories[1], "macSoftware");
+        map.put(categories[2], "song");
+        map.put(categories[3], "album");
+        map.put(categories[4], "movie");
+        map.put(categories[5], "tvEpisode");
+        map.put(categories[6], "ebook");
+        map.put(categories[7], "podcast");
+        spinner_frame = findViewById(R.id.spinner_frame);
+        //spinner_frame.setBackground(ItunesAppController.globalColorController);
+        //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.item_categories, android.R.layout.simple_spinner_item);
@@ -77,6 +81,7 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            getActionBar().setTitle("Search: "+ query);
             try {
                 query = URLEncoder.encode(query, "UTF-8");
             } catch (UnsupportedEncodingException e) {
@@ -84,7 +89,7 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
                 finish();
             }
             String queryURL = "https://itunes.apple.com/search?term=" + query +
-                    "&entity=" + map.get(spinner.getSelectedItem().toString());
+                    "&entity=" + map.get(spinner.getSelectedItem().toString())+"&limit=49";
             //use the query to search_menu your data somehow
             ItunesItemListFragment fragment = ItunesItemListFragment.newInstance(queryURL);
             getSupportFragmentManager().beginTransaction()
@@ -105,6 +110,8 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        //int color = ItunesAppController.getCategoryAttributeList().get(position).getColor();
+        //ItunesAppController.globalColorController.setColor(color);
         handleIntent(getIntent());
     }
 
