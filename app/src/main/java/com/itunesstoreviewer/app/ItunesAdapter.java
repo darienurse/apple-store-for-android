@@ -70,13 +70,14 @@ public class ItunesAdapter extends BaseAdapter {
         try {
             mUrl = itunesItem.getArtworkUrl();
             mName = itunesItem.getTrackName();
+            if(mName==null) mName = itunesItem.getCollectionName();
             mArtist = itunesItem.getArtistName();
             mCategory = itunesItem.getPrimaryGenreName();
             mPrice = itunesItem.getItemPrice();
-            mPrice = (mPrice.equals("Get")) ? "Free" : mPrice;
+            mPrice = (mPrice.equals("Get") || mPrice.equals("0.0")) ? "Free" : mPrice;
         } catch (NullPointerException e) {
             Log.e(ItunesAdapter.class.getName(), e.toString() +
-                    "\nCaused by dereferencing " + mName + "at index " + position);
+                    "\nCaused by dereferencing " + mName + " at index " + position);
         }
 
         // thumbnail image

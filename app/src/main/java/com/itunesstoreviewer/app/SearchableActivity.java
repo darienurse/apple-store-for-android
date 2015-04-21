@@ -5,7 +5,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,21 +14,36 @@ import android.widget.Spinner;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SearchableActivity extends FragmentActivity implements ItunesItemListFragment.Callbacks, AdapterView.OnItemSelectedListener {
+
+    private Spinner spinner;
+    private static final Map<String, String> map = new HashMap<String, String>();
+    static{
+            map.put("Apps", "iPadSoftware");
+            map.put("Mac Apps", "macSoftware");
+            map.put("Songs", "song");
+            map.put("Albums", "album");
+            map.put("Movies", "movie");
+            map.put("TV Episodes", "tvEpisode");
+            map.put("Books", "ebook");
+            map.put("Podcasts", "podcast");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        handleIntent(getIntent());
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.item_categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+        handleIntent(getIntent());
     }
 
     @Override
@@ -40,7 +54,6 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //Log.d("YOYOYO", "search activity triggered");
         return true;
     }
 
@@ -50,13 +63,13 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        /*switch (item.getItemId()) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpTo(this, new Intent(this, ItunesItemListActivity.class));
                 break;
             default:
                 break;
-        }*/
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -70,11 +83,12 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
                 e.printStackTrace();
                 finish();
             }
-            String queryURL = "https://itunes.apple.com/search?term=" + query;
+            String queryURL = "https://itunes.apple.com/search?term=" + query +
+                    "&entity=" + map.get(spinner.getSelectedItem().toString());
             //use the query to search_menu your data somehow
             ItunesItemListFragment fragment = ItunesItemListFragment.newInstance(queryURL);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.itunesitem_list, fragment)
+                    .replace(R.id.itunesitem_list, fragment)
                     .commit();
         }
     }
@@ -91,7 +105,7 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        handleIntent(getIntent());
     }
 
     @Override

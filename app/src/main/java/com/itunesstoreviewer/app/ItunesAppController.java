@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ItunesAppController extends AppController {
 
-    public static final int LOAD = 199;
+    public static final int LOAD = 200;
     private static String[] categories;
     public static List<ItunesItem> userFavorites;
     public static ColorDrawable globalColorController;
@@ -34,9 +34,7 @@ public class ItunesAppController extends AppController {
     @Override
     public void onCreate() {
         super.onCreate();
-        //Get all the categories from the arrays resources in strings.xml. The first value, "All", is not needed here
-        categories = Arrays.copyOfRange(getResources().getStringArray(R.array.item_categories),
-                1, getResources().getStringArray(R.array.item_categories).length);
+        categories = getResources().getStringArray(R.array.item_categories);
         categoryAttributeList = new ArrayList<CategoryAttribute>(categories.length);
         appleToPlayStoreMap = new HashMap<String, String>();
         userFavorites = new ArrayList<ItunesItem>();

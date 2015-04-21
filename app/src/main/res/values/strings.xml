@@ -18,6 +18,16 @@
     <string name="search_hint">Search iTunes Store</string>
     <string name="search">Search</string>
     <string-array name="item_categories">
+        <item>Apps</item>
+        <item>Mac Apps</item>
+        <item>Songs</item>
+        <item>Albums</item>
+        <item>Movies</item>
+        <item>TV Episodes</item>
+        <item>Books</item>
+        <item>Podcasts</item>
+    </string-array>
+    <string-array name="item_categories_all">
         <item>All</item>
         <item>Apps</item>
         <item>Mac Apps</item>

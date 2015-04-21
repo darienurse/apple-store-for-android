@@ -103,14 +103,6 @@ public class ItunesItemDetailFragment extends Fragment {
         summary.append(getSummaryElement("", itunesItem.getCopyright()));
         summary.append(getSummaryElement("Publisher", itunesItem.getPublisher()));
         summary.append(getSummaryElement("Seller", itunesItem.getSellerName()));
-        //summary.append(getRentalPriceSafely(itunesItem));
-        //summary.append(getCollectionNameSafely(itunesItem));
-        //summary.append(getSummarySafely(itunesItem));
-        //summary.append(getCategorySafely(itunesItem));
-        //summary.append(getReleaseDateSafely(itunesItem));
-        //summary.append(getRightsSafely(itunesItem));
-        //summary.append(getPublisherSafely(itunesItem));
-        //summary.append(getVendorSafely(itunesItem));
         return summary.toString().trim();
     }
 
@@ -120,82 +112,6 @@ public class ItunesItemDetailFragment extends Fragment {
             else return title + ": " + detail + "\n";
         }
         else {
-            return "";
-        }
-    }
-
-    private String getVendorSafely(Entry itunesItem) {
-        try {
-            return "Seller: " + itunesItem.getImVendorName().getLabel() + "\n";
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
-
-    private String getPublisherSafely(Entry itunesItem) {
-        try {
-            return "Publisher: " + itunesItem.getImPublisher().getLabel() + "\n";
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
-
-    private String getSummarySafely(Entry itunesItem) {
-        try {
-            String summary = itunesItem.getSummary().getLabel();
-            summary = summary.replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
-            return "\n" + summary + "\n\n";
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
-
-    private String getRightsSafely(Entry itunesItem) {
-        try {
-            return itunesItem.getRights().getLabel() + "\n";
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
-
-    private String getReleaseDateSafely(Entry itunesItem) {
-        try {
-            return "Release Date: " + itunesItem.getImReleaseDate().getAttributes().getLabel() + "\n";
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
-
-    private String getCategorySafely(Entry itunesItem) {
-        try {
-            return "Genre: " + itunesItem.getCategory().getAttributes().getLabel() + "\n";
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
-
-    private String getCollectionNameSafely(Entry itunesItem) {
-        try {
-            return "Album: " + itunesItem.getImCollection().getImName().getLabel() + "\n";
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
-
-    private String getRentalPriceSafely(Entry itunesItem) {
-        try {
-            return "Rental Price: " + itunesItem.getImRentalPrice().getLabel() + "\n";
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
-
-    private String getPriceSafely(Entry itunesItem) {
-        try {
-            String mPrice = itunesItem.getImPrice().getLabel().replaceFirst("-", "");
-            mPrice = (mPrice.equals("Get")) ? "Free" : mPrice;
-            return "Price: " + mPrice + "\n";
-        } catch (NullPointerException e) {
             return "";
         }
     }

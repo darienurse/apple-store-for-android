@@ -50,13 +50,13 @@ public class Result implements ItunesItem {
     @Expose
     private Double trackPrice;
     @Expose
-    private Integer trackRentalPrice;
+    private Double trackRentalPrice;
     @Expose
     private Double collectionHdPrice;
     @Expose
     private Double trackHdPrice;
     @Expose
-    private Integer trackHdRentalPrice;
+    private Double trackHdRentalPrice;
     @Expose
     private String releaseDate;
     @Expose
@@ -388,12 +388,19 @@ public class Result implements ItunesItem {
 
     @Override
     public String getItemPrice() {
-        return Double.toString(trackPrice);
+        if(formattedPrice!=null) return formattedPrice;
+        else if(trackPrice!=null) return "$"+Double.toString(trackPrice);
+        else{
+            if(collectionPrice<0.0)
+                return "Album Only";
+            else
+                return "$"+Double.toString(collectionPrice);
+        }
     }
 
     @Override
     public String getItemRentalPrice() {
-        return Integer.toString(trackRentalPrice);
+        return Double.toString(trackRentalPrice);
     }
 
     @Override
@@ -528,7 +535,7 @@ public class Result implements ItunesItem {
      * @return
      *     The trackRentalPrice
      */
-    public Integer getTrackRentalPrice() {
+    public Double getTrackRentalPrice() {
         return trackRentalPrice;
     }
 
@@ -537,7 +544,7 @@ public class Result implements ItunesItem {
      * @param trackRentalPrice
      *     The trackRentalPrice
      */
-    public void setTrackRentalPrice(Integer trackRentalPrice) {
+    public void setTrackRentalPrice(Double trackRentalPrice) {
         this.trackRentalPrice = trackRentalPrice;
     }
 
@@ -582,7 +589,7 @@ public class Result implements ItunesItem {
      * @return
      *     The trackHdRentalPrice
      */
-    public Integer getTrackHdRentalPrice() {
+    public Double getTrackHdRentalPrice() {
         return trackHdRentalPrice;
     }
 
@@ -591,7 +598,7 @@ public class Result implements ItunesItem {
      * @param trackHdRentalPrice
      *     The trackHdRentalPrice
      */
-    public void setTrackHdRentalPrice(Integer trackHdRentalPrice) {
+    public void setTrackHdRentalPrice(Double trackHdRentalPrice) {
         this.trackHdRentalPrice = trackHdRentalPrice;
     }
 

@@ -2,6 +2,7 @@ package com.itunesstoreviewer.app;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -117,35 +118,8 @@ public class ItunesItemListFragment extends ListFragment {
         return new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(final JSONObject response) {
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                itunesItemList.clear();
-                                switch (MODE) {
-                                    case RSS:
-                                        rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
-                                        itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                                        catAttr.setRssResponse(rssResponse);
-                                        break;
-                                    case SEARCH:
-                                        searchResponse = gson.fromJson(response.toString(), ItunesSearchResponse.class);
-                                        itunesItemList.addAll(searchResponse.getResults());
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                getActivity().runOnUiThread (new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (isAdded()) setListShown(true);
-                                        // notifying list adapter about data changes
-                                        // so that it renders the list view with updated data
-                                        //adapter.notifyDataSetChanged();
-                                    }
-                                    });
-                            }
-                        }.start();
+                    public void onResponse(JSONObject response) {
+                        new PopulateListViewTask().execute(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -155,11 +129,11 @@ public class ItunesItemListFragment extends ListFragment {
 
                 if (error instanceof TimeoutError) {
                     Log.d(TAG, TimeoutError.class.toString());
-                    Toast.makeText(getActivity(), "Timeout", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), "Timeout", Toast.LENGTH_LONG).show();
                     mCallbacks.networkError();
                 } else if (error instanceof NoConnectionError) {
                     Log.d(TAG, NetworkError.class.toString());
-                    Toast.makeText(getActivity(), "No Network", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), "No Network", Toast.LENGTH_LONG).show();
                     mCallbacks.networkError();
                     Log.d(TAG, AuthFailureError.class.toString());
                 } else if (error instanceof AuthFailureError) {
@@ -246,6 +220,34 @@ public class ItunesItemListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+
+    private class PopulateListViewTask extends AsyncTask<JSONObject, Void, Void> {
+        protected Void doInBackground(JSONObject... params) {
+            JSONObject response = params[0];
+
+            itunesItemList.clear();
+            switch (MODE) {
+                case RSS:
+                    rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
+                    itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                    catAttr.setRssResponse(rssResponse);
+                    break;
+                case SEARCH:
+                    searchResponse = gson.fromJson(response.toString(), ItunesSearchResponse.class);
+                    itunesItemList.addAll(searchResponse.getResults());
+                    break;
+                default:
+                    break;
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+            adapter.notifyDataSetChanged();
+            if (isAdded()) setListShown(!itunesItemList.isEmpty());
+        }
     }
 
     /**
