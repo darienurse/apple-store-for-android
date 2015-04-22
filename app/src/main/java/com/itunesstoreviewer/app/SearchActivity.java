@@ -2,6 +2,7 @@ package com.itunesstoreviewer.app;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentActivity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -27,21 +28,24 @@ public class SearchActivity extends FragmentActivity implements ItunesItemListFr
     private Map<String, String> map;
     private View spinner_frame;
     private ActionBar mActionBar;
+    private ColorDrawable colorDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        colorDrawable = new ColorDrawable();
+        colorDrawable.setColor(ItunesAppController.getCategoryAttributeList().get(0).getColor());
         mActionBar = getActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
-        mActionBar.setBackgroundDrawable(ItunesAppController.globalColorController);
+        mActionBar.setBackgroundDrawable(colorDrawable);
         map = new HashMap<String, String>();
         String[] categories = getResources().getStringArray(R.array.itunes_categories);
         String[] entities = getResources().getStringArray(R.array.itunes_entities);
         for(int i = 0; i< categories.length; i++)
             map.put(categories[i], entities[i]);
         spinner_frame = findViewById(R.id.spinner_frame);
-        spinner_frame.setBackground(ItunesAppController.globalColorController);
+        spinner_frame.setBackground(colorDrawable);
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.itunes_categories, android.R.layout.simple_spinner_item);
@@ -119,13 +123,11 @@ public class SearchActivity extends FragmentActivity implements ItunesItemListFr
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         int color = ItunesAppController.getCategoryAttributeList().get(position).getColor();
-        ItunesAppController.globalColorController.setColor(color);
+        colorDrawable.setColor(color);
         spinner_frame.invalidate();
         handleIntent(getIntent());
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 }

@@ -12,13 +12,12 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -340,6 +339,13 @@ public class ItunesItemListActivity extends FragmentActivity
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             onItunesItemSelected((ItunesItem)mDrawerList.getAdapter().getItem(position));
             mDrawerLayout.closeDrawers();
+        }
+    }
+
+    static public class ErrorFragment extends Fragment {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.error_layout, container, false);
         }
     }
 }
