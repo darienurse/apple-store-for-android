@@ -1,6 +1,7 @@
 package com.itunesstoreviewer.app;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Spinner;
 
 import java.io.UnsupportedEncodingException;
@@ -19,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SearchableActivity extends FragmentActivity implements ItunesItemListFragment.Callbacks, AdapterView.OnItemSelectedListener {
+public class SearchActivity extends FragmentActivity implements ItunesItemListFragment.Callbacks, AdapterView.OnItemSelectedListener {
 
     private Spinner spinner;
     private Map<String, String> map;
@@ -30,6 +32,9 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        mActionBar = getActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setBackgroundDrawable(ItunesAppController.globalColorController);
         map = new HashMap<String, String>();
         String[] categories = getResources().getStringArray(R.array.itunes_categories);
         String[] entities = getResources().getStringArray(R.array.itunes_entities);
@@ -37,8 +42,6 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
             map.put(categories[i], entities[i]);
         spinner_frame = findViewById(R.id.spinner_frame);
         spinner_frame.setBackground(ItunesAppController.globalColorController);
-        mActionBar = getActionBar();
-        mActionBar.setBackgroundDrawable(ItunesAppController.globalColorController);
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.itunes_categories, android.R.layout.simple_spinner_item);
@@ -55,7 +58,14 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        searchView.setQueryRefinementEnabled(true);
         return true;
     }
 
@@ -79,7 +89,7 @@ public class SearchableActivity extends FragmentActivity implements ItunesItemLi
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            getActionBar().setTitle("Search: "+ query);
+            mActionBar.setTitle(getResources().getString(R.string.title_activity_searchable)+ " " + query);
             try {
                 query = URLEncoder.encode(query, "UTF-8");
             } catch (UnsupportedEncodingException e) {

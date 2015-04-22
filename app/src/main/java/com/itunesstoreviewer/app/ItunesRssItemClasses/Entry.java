@@ -320,7 +320,7 @@ public class Entry implements ItunesItem{
         if (!(obj instanceof ItunesItem)) {
             return false;
         }
-        Entry entry2 = (Entry) obj;
+        ItunesItem entry2 = (ItunesItem) obj;
         return this.getTrackId()
                 .equals(entry2.getTrackId());
     }

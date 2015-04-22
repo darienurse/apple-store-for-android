@@ -26,7 +26,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".SearchableActivity" />
+                android:value=".SearchActivity" />
         </activity>
         <activity
             android:name=".ItunesItemDetailActivity"
@@ -43,7 +43,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".SearchableActivity"
+            android:name=".SearchActivity"
             android:label="@string/title_activity_searchable">
         <intent-filter>
             <action android:name="android.intent.action.SEARCH" />

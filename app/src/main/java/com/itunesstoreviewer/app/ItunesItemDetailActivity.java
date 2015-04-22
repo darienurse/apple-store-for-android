@@ -39,7 +39,9 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         if (getIntent() != null && getIntent().hasExtra(ItunesItemDetailFragment.ARG_ITEM_ID)) {
             itunesItem = (ItunesItem) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
             actionBar = getActionBar();
-            actionBar.setTitle(itunesItem.getTrackName());
+            if (actionBar != null) {
+                actionBar.setTitle(itunesItem.getTrackName());
+            }
             //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
         } else {
             Log.e(getLocalClassName(), "You cannot launch " +

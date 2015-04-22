@@ -118,6 +118,7 @@ public class ItunesItemListFragment extends ListFragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        itunesItemList.clear();
                         new PopulateListViewTask().execute(response);
                     }
                 }, new Response.ErrorListener() {
@@ -227,17 +228,12 @@ public class ItunesItemListFragment extends ListFragment {
     private class PopulateListViewTask extends AsyncTask<JSONObject, Void, Void> {
         protected Void doInBackground(JSONObject... params) {
             JSONObject response = params[0];
-
-            itunesItemList.clear();
             switch (MODE) {
                 case RSS:
                     rssResponse = gson.fromJson(response.toString(), ItunesRSSResponse.class);
-                    itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                    catAttr.setRssResponse(rssResponse);
                     break;
                 case SEARCH:
                     searchResponse = gson.fromJson(response.toString(), ItunesSearchResponse.class);
-                    itunesItemList.addAll(searchResponse.getResults());
                     break;
                 default:
                     break;
@@ -246,6 +242,12 @@ public class ItunesItemListFragment extends ListFragment {
         }
 
         protected void onPostExecute(Void v) {
+            if(rssResponse!=null){
+                itunesItemList.addAll(rssResponse.getFeed().getEntry());
+                catAttr.setRssResponse(rssResponse);
+            }else{
+                itunesItemList.addAll(searchResponse.getResults());
+            }
             adapter.notifyDataSetChanged();
             if (isAdded()) setListShown(!itunesItemList.isEmpty());
         }

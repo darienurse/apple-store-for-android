@@ -1447,7 +1447,7 @@ public class Result implements ItunesItem {
         if (!(obj instanceof ItunesItem)) {
             return false;
         }
-        Result result2 = (Result) obj;
+        ItunesItem result2 = (ItunesItem) obj;
         return getTrackId()
                 .equals(result2.getTrackId());
     }

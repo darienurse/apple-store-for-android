@@ -24,7 +24,9 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.ShareActionProvider;
 import com.google.gson.Gson;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
+import com.itunesstoreviewer.app.ItunesSearchItemClasses.Result;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
 
 import java.util.LinkedHashSet;
@@ -90,7 +92,9 @@ public class ItunesItemListActivity extends FragmentActivity
         Set<String> restoredFav = prefs.getStringSet(USER_PREFS_FAV, null);
         if (restoredFav != null) {
             for (String s : restoredFav) {
-                ItunesItem itunesE = gson.fromJson(s, ItunesItem.class);
+                ItunesItem itunesE = gson.fromJson(s, Entry.class);
+                if(itunesE.getTrackId()==null)
+                    itunesE = gson.fromJson(s, Result.class);
                 if (!ItunesAppController.userFavorites.contains(itunesE))
                     ItunesAppController.userFavorites.add(itunesE);
             }
@@ -153,6 +157,13 @@ public class ItunesItemListActivity extends FragmentActivity
         searchView.setQueryRefinementEnabled(true);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setQuery("", false);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     // Call to update the share intent
@@ -237,6 +248,7 @@ public class ItunesItemListActivity extends FragmentActivity
     @Override
     public void onResume() {
         ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
+        invalidateOptionsMenu();
         super.onResume();
     }
 
