@@ -6,8 +6,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -30,8 +34,10 @@ public class ItunesItemListFragment extends ListFragment {
     public static ListMode MODE;
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String TAG = "DEBUGZ";//ItunesItemListFragment.class.getSimpleName();
-    public enum ListMode {
-        RSS, SEARCH};
+    private ProgressBar mLoadingView;
+    private LinearLayout mListContainer;
+
+    public enum ListMode {RSS, SEARCH};
     private Callbacks mCallbacks;
     /**
      * The current activated item position. Only used on tablets.
@@ -104,11 +110,6 @@ public class ItunesItemListFragment extends ListFragment {
             else{
                 jsonObjReq = getJsonObjectRequest(catAttr.getUrl());
             }
-            /*jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
-                    DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
-            // Adding request to request queue
             ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
         }
     }
@@ -125,26 +126,8 @@ public class ItunesItemListFragment extends ListFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.v(TAG, "Error: " + error.getMessage());
-                Log.d(TAG, "Error: " + error.getMessage());
-
-                if (error instanceof TimeoutError) {
-                    Log.d(TAG, TimeoutError.class.toString());
-                    if(getActivity()!=null)
-                        Toast.makeText(getActivity(), "Timeout", Toast.LENGTH_LONG).show();
-                    mCallbacks.networkError();
-                } else if (error instanceof NoConnectionError) {
-                    Log.d(TAG, NetworkError.class.toString());
-                    if(getActivity()!=null)
-                        Toast.makeText(getActivity(), "No Network", Toast.LENGTH_LONG).show();
-                    //mCallbacks.networkError();
-                } else if (error instanceof AuthFailureError) {
-                    Log.d(TAG, AuthFailureError.class.toString());
-                } else if (error instanceof ServerError) {
-                    Log.d(TAG, ServerError.class.toString());
-                } else if (error instanceof NetworkError) {
-                    Log.d(TAG, NetworkError.class.toString());
-                } else if (error instanceof ParseError) {
-                    Log.d(TAG, ParseError.class.toString());
+                if (error instanceof ParseError) {
+                    //try again on parseError
                     onCreate(getArguments());
                 }
             }
@@ -155,14 +138,24 @@ public class ItunesItemListFragment extends ListFragment {
     public void onResume() {
         if (itunesItemList.isEmpty())
             onCreate(null);
-        setListShown(!itunesItemList.isEmpty());
+        //setListShown(!itunesItemList.isEmpty());
+        setLoadingViewVisible(itunesItemList.isEmpty());
         super.onResume();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_list, null);
+        mLoadingView = (ProgressBar)v.findViewById(R.id.loading);
+        mListContainer = (LinearLayout)v.findViewById(R.id.listcontainer);
+        return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setListShown(!itunesItemList.isEmpty());
+        setLoadingViewVisible(itunesItemList.isEmpty());
         getListView().setDivider(new ColorDrawable(android.R.color.darker_gray));
         getListView().setDividerHeight(16);
         setActivateOnItemClick(true);
@@ -224,6 +217,13 @@ public class ItunesItemListFragment extends ListFragment {
         mActivatedPosition = position;
     }
 
+    private void setLoadingViewVisible(boolean visible){
+        if(null != mLoadingView && null != mListContainer){
+            mListContainer.setVisibility(visible ? View.GONE : View.VISIBLE);
+            mLoadingView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
+
 
     private class PopulateListViewTask extends AsyncTask<JSONObject, Void, Void> {
         protected Void doInBackground(JSONObject... params) {
@@ -245,11 +245,11 @@ public class ItunesItemListFragment extends ListFragment {
             if(rssResponse!=null){
                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
                 catAttr.setRssResponse(rssResponse);
-            }else{
+            }else if(searchResponse!=null){
                 itunesItemList.addAll(searchResponse.getResults());
             }
             adapter.notifyDataSetChanged();
-            if (isAdded()) setListShown(!itunesItemList.isEmpty());
+            setLoadingViewVisible(false);
         }
     }
 

@@ -11,6 +11,7 @@
     <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="banner_ad_unit_id">ca-app-pub-6177948507262051/5192950128</string>
     <string name="network_error_prompt">Check your network connection and try again</string>
+    <string name="no_results">No results</string>
     <string name="retry_button">Retry</string>
     <string name="title_activity_searchable">Search:</string>
     <string name="hello_world">Hello world!</string>
@@ -28,7 +29,7 @@
         <item>Podcasts</item>
     </string-array>
     <string-array name="itunes_entities">
-        <item>iPadSoftware</item>
+        <item>software</item>
         <item>macSoftware</item>
         <item>song</item>
         <item>album</item>
