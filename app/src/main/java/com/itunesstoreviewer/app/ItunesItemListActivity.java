@@ -55,9 +55,9 @@ public class ItunesItemListActivity extends FragmentActivity
     private final String mDrawerTitle = "Favorites";
     private final String USER_PREFS_FAV = "favorites";
     private final String SAVED_ITEM = "saved_item";
-    Drawable unfavorite;
-    Drawable favorite;
-    MenuItem mFavButton;
+    private Drawable unfavorite;
+    private Drawable favorite;
+    private MenuItem mFavButton;
     private ActionBar actionBar;
     private String mAppName;
     private String mTitle;

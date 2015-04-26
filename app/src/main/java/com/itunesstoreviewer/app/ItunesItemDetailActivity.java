@@ -81,6 +81,9 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
             case R.id.play_store_button:
                 launchPlayStoreSearch();
                 break;
