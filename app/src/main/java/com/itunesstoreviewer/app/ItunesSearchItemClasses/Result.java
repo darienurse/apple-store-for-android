@@ -5,14 +5,19 @@ import com.google.gson.annotations.Expose;
 import com.itunesstoreviewer.app.ItunesItem;
 
 import javax.annotation.Generated;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
 public class Result implements ItunesItem {
 
+    final private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
     @Expose
     private String wrapperType;
+    @Expose
+    private String collectionType;
     @Expose
     private String kind;
     @Expose
@@ -169,11 +174,28 @@ public class Result implements ItunesItem {
     }
 
     /**
+     *
+     * @return
+     *     The collectionType
+     */
+    public String getCollectionType() {
+        return collectionType;
+    }
+
+    /**
+     *
+     * @param collectionType
+     *     The collectionType
+     */
+    public void seCollectionType(String collectionType) {
+        this.collectionType = collectionType;
+    }
+
+    /**
      * 
      * @return
      *     The kind
      */
-    @Override
     public String getKind() {
         return kind;
     }
@@ -210,9 +232,8 @@ public class Result implements ItunesItem {
      * @return
      *     The trackId
      */
-    @Override
-    public String getTrackId() {
-        return Integer.toString(trackId);
+    public Integer getTrackId() {
+        return trackId;
     }
 
     /**
@@ -379,38 +400,6 @@ public class Result implements ItunesItem {
     @Override
     public String getTrackViewUrl() {
         return trackViewUrl;
-    }
-
-    @Override
-    public String getArtworkUrl() {
-        return getArtworkUrl100();
-    }
-
-    @Override
-    public String getItemPrice() {
-        if(formattedPrice!=null) return formattedPrice;
-        else if(trackPrice!=null) return "$"+Double.toString(trackPrice);
-        else{
-            if(collectionPrice<0.0)
-                return "Album Only";
-            else
-                return "$"+Double.toString(collectionPrice);
-        }
-    }
-
-    @Override
-    public String getItemRentalPrice() {
-        return Double.toString(trackRentalPrice);
-    }
-
-    @Override
-    public String getArtworkUrlHD(){
-        return getArtworkUrl512();
-    }
-
-    @Override
-    public String getPublisher() {
-        return null;
     }
 
     /**
@@ -788,14 +777,8 @@ public class Result implements ItunesItem {
      * @return
      *     The primaryGenreName
      */
-    @Override
     public String getPrimaryGenreName() {
         return primaryGenreName;
-    }
-
-    @Override
-    public String getItemSummary() {
-        return getLongDescription();
     }
 
     /**
@@ -1448,10 +1431,71 @@ public class Result implements ItunesItem {
             return false;
         }
         ItunesItem result2 = (ItunesItem) obj;
-        return getTrackId()
-                .equals(result2.getTrackId());
+        return getItemId()
+                .equals(result2.getItemId());
     }
 
+    @Override
+    public String getArtworkUrl() {
+        return getArtworkUrl100();
+    }
 
+    @Override
+    public String getItemPrice() {
+        if(formattedPrice!=null) return formattedPrice;
+        Double price = trackPrice!=null?trackPrice:collectionPrice;
+        if(price ==null) return null;
+        else if(price<0) return wrapperType.equals("track")?"Album Only":"Partial Album";
+        else return price==0.0?"Free":"$"+Double.toString(price);
+    }
 
+    @Override
+    public String getItemRentalPrice() {
+        if(trackRentalPrice!=null)
+            return trackRentalPrice==0.0?"Free":"$"+Double.toString(trackRentalPrice);
+        else return null;
+    }
+
+    @Override
+    public String getArtworkUrlHD(){
+        return getArtworkUrl512();
+    }
+
+    @Override
+    public String getPublisher() {
+        return null;
+    }
+
+    @Override
+    public String getItemSummary() {
+        if(longDescription!=null)
+            return longDescription.replaceAll("\\<[^>]*>","").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
+        else if(description!=null) return description.replaceAll("\\<[^>]*>","").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
+        else return null;
+    }
+
+    @Override
+    public String getItemId() {
+        if(trackId != null)
+            return Integer.toString(trackId);
+        else
+            return Integer.toString(collectionId);
+    }
+
+    @Override
+    public String getContentType(){
+        return getKind()!=null?getKind():getCollectionType();
+    }
+
+    @Override
+    public SimpleDateFormat getDateFormat() {
+        return simpleDateFormat;
+    }
+
+    @Override
+    public String getItemGenre() {
+        if(primaryGenreName!=null || !genres.isEmpty())
+            return primaryGenreName!=null?primaryGenreName:genres.get(0);
+        else return null;
+    }
 }

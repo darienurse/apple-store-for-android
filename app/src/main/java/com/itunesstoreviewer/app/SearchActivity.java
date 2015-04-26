@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SearchActivity extends FragmentActivity implements ItunesItemListFragment.Callbacks, AdapterView.OnItemSelectedListener {
+public class SearchActivity extends ItunesItemListActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner spinner;
     private Map<String, String> map;
@@ -38,7 +38,6 @@ public class SearchActivity extends FragmentActivity implements ItunesItemListFr
         colorDrawable.setColor(ItunesAppController.getCategoryAttributeList().get(0).getColor());
         mActionBar = getActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
-        mActionBar.setBackgroundDrawable(colorDrawable);
         map = new HashMap<String, String>();
         String[] categories = getResources().getStringArray(R.array.itunes_categories);
         String[] entities = getResources().getStringArray(R.array.itunes_entities);
@@ -74,21 +73,6 @@ public class SearchActivity extends FragmentActivity implements ItunesItemListFr
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpTo(this, new Intent(this, ItunesItemListActivity.class));
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void handleIntent(Intent intent) {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -110,24 +94,18 @@ public class SearchActivity extends FragmentActivity implements ItunesItemListFr
         }
     }
 
-    @Override
-    public void onItunesItemSelected(ItunesItem entry) {
 
-    }
-
-    @Override
-    public void networkError() {
-
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         int color = ItunesAppController.getCategoryAttributeList().get(position).getColor();
         colorDrawable.setColor(color);
+        mActionBar.setBackgroundDrawable(colorDrawable);
         spinner_frame.invalidate();
         handleIntent(getIntent());
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
+
 }

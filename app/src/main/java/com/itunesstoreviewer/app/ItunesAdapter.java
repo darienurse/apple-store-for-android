@@ -5,7 +5,6 @@ package com.itunesstoreviewer.app;
  */
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 
 import java.util.List;
 
@@ -67,18 +65,12 @@ public class ItunesAdapter extends BaseAdapter {
 
         // getting app data for the row
         ItunesItem itunesItem = itunesItems.get(position);
-        try {
-            mUrl = itunesItem.getArtworkUrl();
-            mName = itunesItem.getTrackName();
-            if(mName==null) mName = itunesItem.getCollectionName();
-            mArtist = itunesItem.getArtistName();
-            mCategory = itunesItem.getPrimaryGenreName();
-            mPrice = itunesItem.getItemPrice();
-            mPrice = (mPrice.equals("Get") || mPrice.equals("$0.0")) ? "Free" : mPrice;
-        } catch (NullPointerException e) {
-            Log.e(ItunesAdapter.class.getName(), e.toString() +
-                    "\nCaused by dereferencing " + mName + " at index " + position);
-        }
+        mUrl = itunesItem.getArtworkUrl();
+        mName = itunesItem.getTrackName();
+        if(mName==null) mName = itunesItem.getCollectionName();
+        mArtist = itunesItem.getArtistName();
+        mCategory = itunesItem.getItemGenre();
+        mPrice = itunesItem.getItemPrice();
 
         // thumbnail image
         thumbNail.setImageUrl(mUrl, imageLoader);

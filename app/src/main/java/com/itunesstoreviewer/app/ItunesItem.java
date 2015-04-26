@@ -1,6 +1,7 @@
 package com.itunesstoreviewer.app;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  */
 public interface ItunesItem extends Serializable {
 
-    String getTrackId();
+    String getItemId();
 
     String getArtistName();
 
@@ -24,7 +25,7 @@ public interface ItunesItem extends Serializable {
 
     String getReleaseDate();
 
-    String getPrimaryGenreName();
+    String getItemGenre();
 
     String getItemSummary();
 
@@ -40,5 +41,7 @@ public interface ItunesItem extends Serializable {
 
     String getPublisher();
 
-    String getKind();
+    String getContentType();
+
+    SimpleDateFormat getDateFormat();
 }

@@ -119,7 +119,6 @@ public class ItunesItemListFragment extends ListFragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        itunesItemList.clear();
                         new PopulateListViewTask().execute(response);
                     }
                 }, new Response.ErrorListener() {
@@ -182,8 +181,9 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItunesItemSelected(ItunesAppController.getCategoryAttributeList()
-                .get(categoryIndex).getItunesItems().get(position));
+        //mCallbacks.onItunesItemSelected(ItunesAppController.getCategoryAttributeList()
+        //        .get(categoryIndex).getItunesItems().get(position));
+        mCallbacks.onItunesItemSelected(itunesItemList.get(position));
     }
 
     @Override
@@ -242,6 +242,7 @@ public class ItunesItemListFragment extends ListFragment {
         }
 
         protected void onPostExecute(Void v) {
+            itunesItemList.clear();
             if(rssResponse!=null){
                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
                 catAttr.setRssResponse(rssResponse);

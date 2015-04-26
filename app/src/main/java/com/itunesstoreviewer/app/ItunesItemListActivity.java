@@ -92,7 +92,7 @@ public class ItunesItemListActivity extends FragmentActivity
         if (restoredFav != null) {
             for (String s : restoredFav) {
                 ItunesItem itunesE = gson.fromJson(s, Entry.class);
-                if(itunesE.getTrackId()==null)
+                if(itunesE.getItemId()==null)
                     itunesE = gson.fromJson(s, Result.class);
                 if (!ItunesAppController.userFavorites.contains(itunesE))
                     ItunesAppController.userFavorites.add(itunesE);
@@ -318,7 +318,7 @@ public class ItunesItemListActivity extends FragmentActivity
 
     private void launchPlayStoreSearch() {
         String formattedName = itunesItem.getTrackName();
-        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getKind());
+        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getContentType());
         startActivity(new Intent(Intent.ACTION_VIEW
                 , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
     }

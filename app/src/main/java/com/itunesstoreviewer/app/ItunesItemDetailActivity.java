@@ -6,12 +6,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 
 /**
  * An activity representing a single ItunesItem detail screen. This
@@ -83,9 +81,6 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpTo(this, new Intent(this, ItunesItemListActivity.class));
-                break;
             case R.id.play_store_button:
                 launchPlayStoreSearch();
                 break;
@@ -98,7 +93,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
 
     private void launchPlayStoreSearch() {
         String formattedName = itunesItem.getTrackName();
-        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getKind());
+        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getContentType());
         startActivity(new Intent(Intent.ACTION_VIEW
                 , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
     }

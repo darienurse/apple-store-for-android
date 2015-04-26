@@ -5,12 +5,15 @@ import com.google.gson.annotations.SerializedName;
 import com.itunesstoreviewer.app.ItunesItem;
 
 import javax.annotation.Generated;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
 public class Entry implements ItunesItem{
+
+    final private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
     @SerializedName("im:name")
     @Expose
@@ -321,12 +324,12 @@ public class Entry implements ItunesItem{
             return false;
         }
         ItunesItem entry2 = (ItunesItem) obj;
-        return this.getTrackId()
-                .equals(entry2.getTrackId());
+        return this.getItemId()
+                .equals(entry2.getItemId());
     }
 
     @Override
-    public String getTrackId() {
+    public String getItemId() {
         if(getId()!=null)
             return getId().getAttributes().getImId();
         else
@@ -369,8 +372,10 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getItemPrice() {
-        if(getImPrice() != null)
-            return getImPrice().getLabel().replaceFirst("-", "");
+        if(getImPrice() != null) {
+            String price = getImPrice().getLabel().replaceFirst("-", "");
+            return price.equals("Get")?"Free":price;
+        }
         else return null;
     }
 
@@ -385,12 +390,12 @@ public class Entry implements ItunesItem{
     @Override
     public String getReleaseDate() {
         if(getImReleaseDate() != null)
-            return getImReleaseDate().getAttributes().getLabel();
+            return getImReleaseDate().getLabel();
         else return null;
     }
 
     @Override
-    public String getPrimaryGenreName() {
+    public String getItemGenre() {
         if(getCategory() != null)
             return getCategory().getAttributes().getTerm();
         else return null;
@@ -399,7 +404,8 @@ public class Entry implements ItunesItem{
     @Override
     public String getItemSummary() {
         if(getSummary() != null)
-            return getSummary().getLabel().replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
+            //return android.text.Html.fromHtml(getSummary().getLabel()).toString();
+            return getSummary().getLabel().replaceAll("\\<[^>]*>","").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
         else return null;
     }
 
@@ -435,10 +441,15 @@ public class Entry implements ItunesItem{
     }
 
     @Override
-    public String getKind(){
+    public String getContentType(){
         if (getImContentType() != null)
             return getImContentType().getAttributes().getLabel();
         else return null;
+    }
+
+    @Override
+    public SimpleDateFormat getDateFormat() {
+        return simpleDateFormat;
     }
 
     @Override

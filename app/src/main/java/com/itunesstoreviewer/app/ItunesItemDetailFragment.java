@@ -13,7 +13,6 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
@@ -21,7 +20,10 @@ import org.w3c.tidy.Tidy;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -91,20 +93,30 @@ public class ItunesItemDetailFragment extends Fragment {
     }
 
     private String generateSummary(ItunesItem itunesItem) {
+        String itemDate = null;
+        try {
+            Date date = itunesItem.getDateFormat().parse(itunesItem.getReleaseDate());
+            SimpleDateFormat dt2 = new SimpleDateFormat("MMMM d, yyyy");
+            itemDate = dt2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         StringBuilder summary = new StringBuilder();
-        summary.append(getSummaryElement("Price",
-                (itunesItem.getItemPrice().equals("Get")) ? "Free" : itunesItem.getItemPrice()));
+        summary.append(getSummaryElement("Price", itunesItem.getItemPrice()));
         summary.append(getSummaryElement("Rental Price", itunesItem.getItemRentalPrice()));
-        summary.append(getSummaryElement("Album", itunesItem.getCollectionName()));
+        if(itunesItem.getContentType() != "podcast")
+            summary.append(getSummaryElement(itunesItem.getContentType().equals("Music") ? "Album" : "Season", itunesItem.getCollectionName()));
         summary.append(getSummaryElement("", "\n" + itunesItem.getItemSummary()));
         summary.append("\n");
-        summary.append(getSummaryElement("Genre", itunesItem.getPrimaryGenreName()));
-        summary.append(getSummaryElement("Release Date", itunesItem.getReleaseDate()));
+        summary.append(getSummaryElement("Genre", itunesItem.getItemGenre()));
+        summary.append(getSummaryElement("Release Date", itemDate));
         summary.append(getSummaryElement("", itunesItem.getCopyright()));
         summary.append(getSummaryElement("Publisher", itunesItem.getPublisher()));
         summary.append(getSummaryElement("Seller", itunesItem.getSellerName()));
         return summary.toString().trim();
     }
+
 
     private String getSummaryElement(String title, String detail) {
         if(detail!=null && !detail.trim().equals("null")) {
