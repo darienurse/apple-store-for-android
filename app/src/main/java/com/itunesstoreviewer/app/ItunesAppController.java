@@ -57,13 +57,12 @@ public class ItunesAppController extends AppController {
         categoryAttributeList.add(new CategoryAttribute("Top " + categories[7], getResources().getColor(R.color.purple)
                 , "https://itunes.apple.com/us/rss/toppodcasts/limit=" + LOAD + "/json"));
         categoryAttributeList.add(new CategoryAttribute("Favorites", Color.BLACK, "", userFavorites));
-        appleToPlayStoreMap.put("Application", "apps");
-        appleToPlayStoreMap.put("Podcast", "all");
-        appleToPlayStoreMap.put("Music", "music");
-        appleToPlayStoreMap.put("MZRssItemTypeIdentifier.Book", "books");
-        appleToPlayStoreMap.put("TV Show", "tv");
-        appleToPlayStoreMap.put("Track", "music");
-        appleToPlayStoreMap.put("Movie", "movies");
+
+        for (String entry : getResources().getStringArray(R.array.play_store_map)) {
+            String[] splitResult = entry.split("\\|");
+            appleToPlayStoreMap.put(splitResult[0], splitResult[2]);
+            appleToPlayStoreMap.put(splitResult[1], splitResult[2]);
+        }
     }
 
     public static List<CategoryAttribute> getCategoryAttributeList() {

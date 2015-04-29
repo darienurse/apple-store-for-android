@@ -64,7 +64,8 @@ public class DrawerAdapter extends BaseAdapter {
         thumbNail.setImageUrl(itunesItem.getArtworkUrl(), imageLoader);
 
         // name
-        name.setText(itunesItem.getTrackName());
+        String mName = itunesItem.getTrackName()!=null?itunesItem.getTrackName():itunesItem.getCollectionName();
+        name.setText(mName);
 
         // artist
         artist.setText(itunesItem.getArtistName());

@@ -38,7 +38,8 @@ public class ItunesItemDetailActivity extends FragmentActivity {
             itunesItem = (ItunesItem) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
             actionBar = getActionBar();
             if (actionBar != null) {
-                actionBar.setTitle(itunesItem.getTrackName());
+                String mName = itunesItem.getTrackName()!=null?itunesItem.getTrackName():itunesItem.getCollectionName();
+                actionBar.setTitle(mName);
             }
             //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
         } else {

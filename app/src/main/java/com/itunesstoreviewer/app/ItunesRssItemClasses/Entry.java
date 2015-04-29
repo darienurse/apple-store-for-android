@@ -330,16 +330,16 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getItemId() {
-        if(getId()!=null)
-            return getId().getAttributes().getImId();
+        if(id!=null)
+            return id.getAttributes().getImId();
         else
             return null;
     }
 
     @Override
     public String getArtistName() {
-        if (getImArtist() != null) {
-            return getImArtist().getLabel();
+        if (imArtist != null) {
+            return imArtist.getLabel();
         } else {
             return null;
         }
@@ -347,8 +347,8 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getTrackName() {
-        if (getImName() != null) {
-            return getImName().getLabel();
+        if (imName != null) {
+            return imName.getLabel();
         } else {
             return null;
         }
@@ -356,15 +356,15 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getTrackViewUrl() {
-        if(getLink() != null)
-            return getLink().get(0).getAttributes().getHref();
+        if(link != null)
+            return Arrays.asList(link).get(0).getAttributes().getHref();
         else return null;
     }
 
     @Override
     public String getArtworkUrl() {
-        if (getImImage() != null) {
-            return getImImage().get(2).getLabel();
+        if (!imImage.isEmpty()) {
+            return imImage.get(2).getLabel();
         } else {
             return null;
         }
@@ -372,8 +372,8 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getItemPrice() {
-        if(getImPrice() != null) {
-            String price = getImPrice().getLabel().replaceFirst("-", "");
+        if(imPrice != null) {
+            String price = imPrice.getLabel().replaceFirst("-", "");
             return price.equals("Get")?"Free":price;
         }
         else return null;
@@ -381,45 +381,45 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getItemRentalPrice() {
-        if (getImRentalPrice() != null)
-            return getImRentalPrice().getLabel();
+        if (imRentalPrice != null)
+            return imRentalPrice.getLabel();
         else
             return null;
     }
 
     @Override
     public String getReleaseDate() {
-        if(getImReleaseDate() != null)
-            return getImReleaseDate().getLabel();
+        if(imReleaseDate != null)
+            return imReleaseDate.getLabel();
         else return null;
     }
 
     @Override
     public String getItemGenre() {
-        if(getCategory() != null)
-            return getCategory().getAttributes().getTerm();
+        if(category != null)
+            return category.getAttributes().getTerm();
         else return null;
     }
 
     @Override
     public String getItemSummary() {
-        if(getSummary() != null)
+        if(summary != null)
             //return android.text.Html.fromHtml(getSummary().getLabel()).toString();
-            return getSummary().getLabel().replaceAll("\\<[^>]*>","").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
+            return summary.getLabel().replaceAll("\\<[^>]*>", "").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
         else return null;
     }
 
     @Override
     public String getCopyright() {
-        if(getRights() != null)
-            return getRights().getLabel();
+        if(rights != null)
+            return rights.getLabel();
         else return null;
     }
 
     @Override
     public String getSellerName() {
-        if(getImVendorName() != null)
-            return getImVendorName().getLabel();
+        if(imVendorName != null)
+            return imVendorName.getLabel();
         else return null;
     }
 
@@ -435,28 +435,32 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getCollectionName() {
-        if(getImCollection() != null)
-            return getImCollection().getImName().getLabel();
+        if(imCollection != null)
+            return imCollection.getImName().getLabel();
         else return null;
     }
 
     @Override
     public String getContentType(){
-        if (getImContentType() != null)
-            return getImContentType().getAttributes().getLabel();
+        if (imContentType != null) {
+            if(imContentType.getImContentType()!=null)
+                return imContentType.getImContentType().getAttributes().getLabel();
+            else
+                return imContentType.getAttributes().getLabel();
+        }
         else return null;
+    }
+
+    @Override
+    public String getPublisher(){
+        if(imPublisher != null)
+            return imPublisher.getLabel();
+        else
+            return null;
     }
 
     @Override
     public SimpleDateFormat getDateFormat() {
         return simpleDateFormat;
-    }
-
-    @Override
-    public String getPublisher(){
-        if(getImPublisher() != null)
-            return getImPublisher().getLabel();
-        else
-            return null;
     }
 }

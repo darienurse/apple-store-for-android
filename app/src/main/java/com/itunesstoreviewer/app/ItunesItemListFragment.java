@@ -36,6 +36,7 @@ public class ItunesItemListFragment extends ListFragment {
     private static final String TAG = "DEBUGZ";//ItunesItemListFragment.class.getSimpleName();
     private ProgressBar mLoadingView;
     private LinearLayout mListContainer;
+    private JsonObjectRequest jsonObjReq;
 
     public enum ListMode {RSS, SEARCH};
     private Callbacks mCallbacks;
@@ -103,7 +104,6 @@ public class ItunesItemListFragment extends ListFragment {
 
         if ((catAttr != null && itunesItemList.isEmpty()) || MODE.equals(ListMode.SEARCH)) {
             // Creating volley request obj if the savedInstanceState bundle is empty
-            JsonObjectRequest jsonObjReq;
             if(MODE.equals(ListMode.SEARCH)) {
                 jsonObjReq = getJsonObjectRequest(query);
             }
@@ -137,9 +137,15 @@ public class ItunesItemListFragment extends ListFragment {
     public void onResume() {
         if (itunesItemList.isEmpty())
             onCreate(null);
-        //setListShown(!itunesItemList.isEmpty());
         setLoadingViewVisible(itunesItemList.isEmpty());
         super.onResume();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        jsonObjReq.cancel();
+        //ItunesAppController.getInstance().cancelPendingRequests(ItunesAppController.TAG);
     }
 
     @Override
