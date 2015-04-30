@@ -50,8 +50,7 @@ public class ItunesItemListFragment extends ListFragment {
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
     private ItunesSearchResponse searchResponse;
-    private CategoryAttribute catAttr;
-    private int categoryIndex;
+    private CategoryAttribute categoryAttribute;
     private String query;
 
     public ItunesItemListFragment() {
@@ -84,10 +83,10 @@ public class ItunesItemListFragment extends ListFragment {
             switch (MODE) {
                 case RSS:
                     if (getArguments().containsKey(ARG_CAT_INDEX)) {
-                        categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
-                        catAttr = ItunesAppController.getCategoryAttributeList().get(categoryIndex);
-                        rssResponse = catAttr.getRssResponse();
-                        itunesItemList.addAll(catAttr.getItunesItems());
+                        int categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
+                        categoryAttribute = ItunesAppController.getCategoryAttributeList().get(categoryIndex);
+                        rssResponse = categoryAttribute.getRssResponse();
+                        itunesItemList.addAll(categoryAttribute.getItunesItems());
                     }
                     break;
                 case SEARCH:
@@ -104,12 +103,12 @@ public class ItunesItemListFragment extends ListFragment {
         adapter = new ItunesAdapter(getActivity(), itunesItemList);
         setListAdapter(adapter);
 
-        if ((catAttr != null && itunesItemList.isEmpty()) || MODE.equals(ListMode.SEARCH)) {
+        if ((categoryAttribute != null && itunesItemList.isEmpty()) || MODE.equals(ListMode.SEARCH)) {
             // Creating volley request obj if the savedInstanceState bundle is empty
             if (MODE.equals(ListMode.SEARCH)) {
                 jsonObjReq = getJsonObjectRequest(query);
             } else {
-                jsonObjReq = getJsonObjectRequest(catAttr.getUrl());
+                jsonObjReq = getJsonObjectRequest(categoryAttribute.getUrl());
             }
             ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
         }
@@ -271,7 +270,7 @@ public class ItunesItemListFragment extends ListFragment {
             itunesItemList.clear();
             if (rssResponse != null && rssResponse.getFeed() != null) {
                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
-                catAttr.setRssResponse(rssResponse);
+                categoryAttribute.setRssResponse(rssResponse);
             } else if (searchResponse != null) {
                 itunesItemList.addAll(searchResponse.getResults());
             }
