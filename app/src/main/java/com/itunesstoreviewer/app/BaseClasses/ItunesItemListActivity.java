@@ -20,7 +20,9 @@ import com.google.gson.Gson;
 import com.itunesstoreviewer.app.*;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
+import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -121,14 +123,15 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
 
     @Override
     protected void onStop() {
-        Set<String> favSet = new LinkedHashSet<String>();
+        List<String> favSet = new ArrayList<String>(ItunesAppController.userFavorites.size());
         for (ItunesItem e : ItunesAppController.userFavorites) {
             favSet.add(gson.toJson(e));
         }
-        System.out.println("ALL FAVS: " + favSet.size() + " ----- " + favSet);
+        JSONArray jsonArray = new JSONArray(favSet);
+        System.out.println("ALL FAVS: " + favSet.size() + " ----- " + jsonArray.toString());
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putStringSet(USER_PREFS_FAV, favSet);
+        editor.putString(USER_PREFS_FAV, jsonArray.toString());
         editor.apply();
         super.onStop();
     }

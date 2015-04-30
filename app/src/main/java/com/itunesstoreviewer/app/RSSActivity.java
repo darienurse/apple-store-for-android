@@ -19,6 +19,8 @@ import com.itunesstoreviewer.app.BaseClasses.ItunesItemListActivity;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesSearchItemClasses.Result;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.Set;
 
@@ -57,19 +59,21 @@ public class RSSActivity extends ItunesItemListActivity {
             mTitle = itunesItem.getTrackName();
         }
 
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-        Set<String> restoredFav = prefs.getStringSet(USER_PREFS_FAV, null);
-        if (restoredFav != null)
-            System.out.println("ALL FAVS: " + restoredFav.size() + " ----- " + restoredFav);
-
-        if (restoredFav != null) {
-            for (String s : restoredFav) {
-                ItunesItem itunesE = gson.fromJson(s, Entry.class);
-                if (itunesE.getItemId() == null)
-                    itunesE = gson.fromJson(s, Result.class);
-                if (!ItunesAppController.userFavorites.contains(itunesE))
-                    ItunesAppController.userFavorites.add(itunesE);
-            }
+        try {
+            SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+            JSONArray jsonArray = new JSONArray(prefs.getString(
+                    USER_PREFS_FAV, null));
+                for (int i =0; i<jsonArray.length();i++) {
+                    ItunesItem itunesE = gson.fromJson(jsonArray.getString(i), Entry.class);
+                    if (itunesE.getItemId() == null)
+                        itunesE = gson.fromJson(jsonArray.getString(i), Result.class);
+                    if (!ItunesAppController.userFavorites.contains(itunesE))
+                        ItunesAppController.userFavorites.add(itunesE);
+                }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            e.printStackTrace();
         }
         setUpNavigationDrawer();
 
