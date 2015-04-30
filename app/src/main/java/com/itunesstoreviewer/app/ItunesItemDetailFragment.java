@@ -69,7 +69,7 @@ public class ItunesItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.itunesitem_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_itunesitem_detail, container, false);
         TextView titleTextView = (TextView) rootView.findViewById(R.id.article_title);
         TextView byLineTextView = (TextView) rootView.findViewById(R.id.article_byline);
         TextView bodyTextView = (TextView) rootView.findViewById(R.id.article_body);
@@ -171,6 +171,9 @@ public class ItunesItemDetailFragment extends Fragment {
                 }
                 return srcs;
             } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            } catch (StringIndexOutOfBoundsException e){
                 e.printStackTrace();
                 return null;
             }

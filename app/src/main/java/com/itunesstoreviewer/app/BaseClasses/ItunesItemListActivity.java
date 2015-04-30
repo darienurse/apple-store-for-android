@@ -43,6 +43,47 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
     protected Drawable favorite;
     protected MenuItem mFavButton;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        actionBar = getActionBar();
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        mTwoPane = getResources().getBoolean(R.bool.has_two_panes);
+        mAppName = getResources().getString(R.string.app_name);
+        mTitle = mAppName;
+        favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
+        unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mTwoPane) {
+            getMenuInflater().inflate(R.menu.share_menu, menu);
+            getMenuInflater().inflate(R.menu.details_menu, menu);
+
+            MenuItem mItem = menu.findItem(R.id.menu_item_share);
+            mFavButton = menu.findItem(R.id.fav_button);
+
+            mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
+            if (itunesItem != null) {
+                if (ItunesAppController.userFavorites.contains(itunesItem)) {
+                    mFavButton.setIcon(favorite);
+                } else {
+                    mFavButton.setIcon(unfavorite);
+                }
+            }
+        }
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        //searchView.setQueryRefinementEnabled(true);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
     protected boolean hasNetworkConnection() {
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
@@ -55,6 +96,12 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
     public boolean onPrepareOptionsMenu(Menu menu) {
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setQuery("", false);
+        if (mTwoPane) {
+            boolean showMenuItems = hasNetworkConnection() && itunesItem != null;
+            menu.findItem(R.id.menu_item_share).setVisible(showMenuItems);
+            menu.findItem(R.id.fav_button).setVisible(showMenuItems);
+            menu.findItem(R.id.play_store_button).setVisible(showMenuItems);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -84,6 +131,22 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
         editor.putStringSet(USER_PREFS_FAV, favSet);
         editor.apply();
         super.onStop();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+            case R.id.play_store_button:
+                launchPlayStoreSearch();
+                break;
+            case R.id.fav_button:
+                handleFavorite(item);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -132,6 +195,7 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
             detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, item);
             startActivity(detailIntent);
         }
+        invalidateOptionsMenu();
     }
 
     private void toggleFavorite(ItunesItem e1, ItunesItem e2) {
@@ -149,18 +213,16 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(true);
-        //searchView.setQueryRefinementEnabled(true);
-        return super.onCreateOptionsMenu(menu);
+    protected void handleFavorite(MenuItem item) {
+        if (ItunesAppController.userFavorites.contains(itunesItem)) {
+            ItunesAppController.userFavorites.remove(itunesItem);
+            item.setIcon(unfavorite);
+        } else {
+            ItunesAppController.userFavorites.add(itunesItem);
+            item.setIcon(favorite);
+        }
     }
+
 
     static public class ErrorFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

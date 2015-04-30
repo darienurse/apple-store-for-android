@@ -56,16 +56,16 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
         handleIntent(intent);
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
-                return true;
+                return super.onOptionsItemSelected(item);
             default:
-                return true;
+                return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {

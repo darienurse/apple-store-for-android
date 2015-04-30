@@ -269,7 +269,7 @@ public class ItunesItemListFragment extends ListFragment {
 
         protected void onPostExecute(Void v) {
             itunesItemList.clear();
-            if (rssResponse != null) {
+            if (rssResponse != null && rssResponse.getFeed() != null) {
                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
                 catAttr.setRssResponse(rssResponse);
             } else if (searchResponse != null) {

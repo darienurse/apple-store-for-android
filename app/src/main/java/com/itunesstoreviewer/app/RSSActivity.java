@@ -51,13 +51,7 @@ public class RSSActivity extends ItunesItemListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itunesitem_list);
-        actionBar = getActionBar();
-        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        mTwoPane = getResources().getBoolean(R.bool.has_two_panes);
-        mAppName = getResources().getString(R.string.app_name);
-        mTitle = mAppName;
-        favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
-        unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
+
         if (savedInstanceState != null && savedInstanceState.containsKey(SAVED_ITEM)) {
             itunesItem = (ItunesItem) savedInstanceState.getSerializable(SAVED_ITEM);
             mTitle = itunesItem.getTrackName();
@@ -89,34 +83,20 @@ public class RSSActivity extends ItunesItemListActivity {
                 networkError();
             }
         }
-        Log.d("NURSE", "TwoPane enabled: " + mTwoPane);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
         if (mTwoPane) {
-            getMenuInflater().inflate(R.menu.share_menu, menu);
-            getMenuInflater().inflate(R.menu.details_menu, menu);
-
-            MenuItem mItem = menu.findItem(R.id.menu_item_share);
-            mFavButton = menu.findItem(R.id.fav_button);
-
-            mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
-            if (itunesItem != null) {
-                if (ItunesAppController.userFavorites.contains(itunesItem)) {
-                    mFavButton.setIcon(favorite);
-                } else {
-                    mFavButton.setIcon(unfavorite);
-                }
-            }
-
-            boolean showMenuItems = !mDrawerLayout.isDrawerOpen(mDrawerList) && hasNetworkConnection();
+            boolean showMenuItems = !mDrawerLayout.isDrawerOpen(mDrawerList);
             menu.findItem(R.id.menu_item_share).setVisible(showMenuItems);
             menu.findItem(R.id.fav_button).setVisible(showMenuItems);
             menu.findItem(R.id.play_store_button).setVisible(showMenuItems);
         }
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
+
 
 
     @Override
@@ -175,25 +155,11 @@ public class RSSActivity extends ItunesItemListActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-            case R.id.play_store_button:
-                launchPlayStoreSearch();
-                break;
-            case R.id.fav_button:
-                handleFavorite(item);
-                break;
-        }
         return super.onOptionsItemSelected(item);
     }
-
-    private void handleFavorite(MenuItem item) {
-        if (ItunesAppController.userFavorites.contains(itunesItem)) {
-            ItunesAppController.userFavorites.remove(itunesItem);
-            item.setIcon(unfavorite);
-        } else {
-            ItunesAppController.userFavorites.add(itunesItem);
-            item.setIcon(favorite);
-        }
+    @Override
+    protected void handleFavorite(MenuItem item) {
+        super.handleFavorite(item);
         ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
     }
 
