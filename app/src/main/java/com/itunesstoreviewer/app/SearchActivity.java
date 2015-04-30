@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import com.itunesstoreviewer.app.BaseClasses.ItunesItemListActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -54,20 +55,8 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
 
     @Override
     protected void onNewIntent(Intent intent) {
+        setIntent(intent);
         handleIntent(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(true);
-        searchView.setQueryRefinementEnabled(true);
-        return true;
     }
 
     @Override
@@ -83,6 +72,7 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            invalidateOptionsMenu();
             String query = intent.getStringExtra(SearchManager.QUERY);
             mActionBar.setTitle(getResources().getString(R.string.title_activity_searchable) + " " + query);
             try {

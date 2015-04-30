@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.ShareActionProvider;
 import com.google.gson.Gson;
+import com.itunesstoreviewer.app.BaseClasses.ItunesItemListActivity;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
 import com.itunesstoreviewer.app.ItunesSearchItemClasses.Result;
@@ -49,26 +50,13 @@ import java.util.Set;
  * {@link ItunesItemListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class ItunesItemListActivity extends FragmentActivity
-        implements ItunesItemListFragment.Callbacks {
+public class RSSActivity extends ItunesItemListActivity {
 
     private final String mDrawerTitle = "Favorites";
-    private final String USER_PREFS_FAV = "favorites";
-    private final String SAVED_ITEM = "saved_item";
-    private Drawable unfavorite;
-    private Drawable favorite;
-    private MenuItem mFavButton;
-    private ActionBar actionBar;
-    private String mAppName;
-    private String mTitle;
-    private boolean mTwoPane;
-    private ShareActionProvider mShareActionProvider;
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private ItunesItem itunesItem;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Gson gson;
-    private ConnectivityManager connectivityManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +64,6 @@ public class ItunesItemListActivity extends FragmentActivity
         setContentView(R.layout.activity_itunesitem_list);
         actionBar = getActionBar();
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        gson = LinkDeserializer.buildGson();
         mTwoPane = getResources().getBoolean(R.bool.has_two_panes);
         mAppName = getResources().getString(R.string.app_name);
         mTitle = mAppName;
@@ -116,19 +103,11 @@ public class ItunesItemListActivity extends FragmentActivity
         Log.d("NURSE", "TwoPane enabled: " + mTwoPane);
     }
 
-    private boolean hasNetworkConnection() {
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        invalidateOptionsMenu();
-        return activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (mTwoPane) {
             getMenuInflater().inflate(R.menu.share_menu, menu);
             getMenuInflater().inflate(R.menu.details_menu, menu);
-            getMenuInflater().inflate(R.menu.search_menu, menu);
 
             MenuItem mItem = menu.findItem(R.id.menu_item_share);
             mFavButton = menu.findItem(R.id.fav_button);
@@ -146,95 +125,14 @@ public class ItunesItemListActivity extends FragmentActivity
             menu.findItem(R.id.menu_item_share).setVisible(showMenuItems);
             menu.findItem(R.id.fav_button).setVisible(showMenuItems);
             menu.findItem(R.id.play_store_button).setVisible(showMenuItems);
-        } else {
-            getMenuInflater().inflate(R.menu.search_menu, menu);
         }
-
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(true);
-        searchView.setQueryRefinementEnabled(true);
-
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setQuery("", false);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    // Call to update the share intent
-    private void setShareIntent(Intent shareIntent) {
-        if (mShareActionProvider != null) {
-            mShareActionProvider.setShareIntent(shareIntent);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        switch (item.getItemId()) {
-            case R.id.play_store_button:
-                launchPlayStoreSearch();
-                break;
-            case R.id.fav_button:
-                handleFavorite(item);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
-    @Override
-    public void onItunesItemSelected(ItunesItem item) {
-        if (mTwoPane) {
-            mTitle = item.getTrackName();
-            actionBar.setTitle(mTitle);
-            if (itunesItem == null) toggleFavorite(item);
-            else toggleFavorite(itunesItem, item);
-            itunesItem = item;
-            setShareIntent(ItunesAppController.generateShareIntent(itunesItem, mAppName));
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(itunesItem))
-                    .commit();
-        } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, ItunesItemDetailActivity.class);
-            detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, item);
-            startActivity(detailIntent);
-        }
-    }
 
-    @Override
-    public void networkError() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.itunesitem_list, new ErrorFragment());
-        transaction.commit();
-    }
 
-    @Override
-    protected void onStop() {
-        Set<String> favSet = new LinkedHashSet<String>();
-        for (ItunesItem e : ItunesAppController.userFavorites) {
-            favSet.add(gson.toJson(e));
-        }
-        System.out.println("ALL FAVS: " + favSet.size() + " ----- " + favSet);
-        SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putStringSet(USER_PREFS_FAV, favSet);
-        editor.apply();
-        super.onStop();
-    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -285,6 +183,34 @@ public class ItunesItemListActivity extends FragmentActivity
         actionBar.setHomeButtonEnabled(true);
     }
 
+
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            onItunesItemSelected((ItunesItem) mDrawerList.getAdapter().getItem(position));
+            mDrawerLayout.closeDrawers();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        switch (item.getItemId()) {
+            case R.id.play_store_button:
+                launchPlayStoreSearch();
+                break;
+            case R.id.fav_button:
+                handleFavorite(item);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void handleFavorite(MenuItem item) {
         if (ItunesAppController.userFavorites.contains(itunesItem)) {
             ItunesAppController.userFavorites.remove(itunesItem);
@@ -294,62 +220,5 @@ public class ItunesItemListActivity extends FragmentActivity
             item.setIcon(favorite);
         }
         ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
-    }
-
-    private void toggleFavorite(ItunesItem e1, ItunesItem e2) {
-        List<ItunesItem> userFavorites = ItunesAppController.userFavorites;
-        if (userFavorites.contains(e1) != userFavorites.contains(e2)) {
-            toggleFavorite(e2);
-        }
-    }
-
-    private void toggleFavorite(ItunesItem e1) {
-        if (ItunesAppController.userFavorites.contains(e1)) {
-            mFavButton.setIcon(favorite);
-        } else {
-            mFavButton.setIcon(unfavorite);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (itunesItem != null) {
-            // Serialize and persist the itunes item.
-            outState.putSerializable(SAVED_ITEM, itunesItem);
-        }
-    }
-
-    private void launchPlayStoreSearch() {
-        String formattedName = itunesItem.getTrackName();
-        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getContentType());
-        startActivity(new Intent(Intent.ACTION_VIEW
-                , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
-    }
-
-    public void retryButtonClick(View v) {
-        if (hasNetworkConnection()) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            SlidingTabsColorsFragment slidingTabsColorsFragment = new SlidingTabsColorsFragment();
-            transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
-            transaction.commit();
-        } else {
-            networkError();
-        }
-    }
-
-    static public class ErrorFragment extends Fragment {
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.error_layout, container, false);
-        }
-    }
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            onItunesItemSelected((ItunesItem) mDrawerList.getAdapter().getItem(position));
-            mDrawerLayout.closeDrawers();
-        }
     }
 }

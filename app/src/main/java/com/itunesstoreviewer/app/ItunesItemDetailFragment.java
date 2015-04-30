@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * A fragment representing a single ItunesItem detail screen.
- * This fragment is either contained in a {@link ItunesItemListActivity}
+ * This fragment is either contained in a {@link RSSActivity}
  * in two-pane mode (on tablets) or a {@link ItunesItemDetailActivity}
  * on handsets.
  */

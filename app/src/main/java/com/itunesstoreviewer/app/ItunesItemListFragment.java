@@ -144,7 +144,8 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onPause() {
         super.onPause();
-        jsonObjReq.cancel();
+        if(jsonObjReq!=null)
+            jsonObjReq.cancel();
         //ItunesAppController.getInstance().cancelPendingRequests(ItunesAppController.TAG);
     }
 
