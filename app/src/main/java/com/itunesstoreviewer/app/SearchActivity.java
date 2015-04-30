@@ -5,12 +5,11 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import com.itunesstoreviewer.app.BaseClasses.ItunesItemListActivity;
+import com.itunesstoreviewer.app.BaseClasses.ItunesItemActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -18,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SearchActivity extends ItunesItemListActivity implements AdapterView.OnItemSelectedListener {
+public class SearchActivity extends ItunesItemActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner spinner;
     private Map<String, String> map;
@@ -55,17 +54,6 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
         setIntent(intent);
         handleIntent(intent);
     }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return super.onOptionsItemSelected(item);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {

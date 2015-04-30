@@ -3,26 +3,21 @@ package com.itunesstoreviewer.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
-import com.itunesstoreviewer.app.BaseClasses.ItunesItemListActivity;
+import com.itunesstoreviewer.app.BaseClasses.ItunesItemActivity;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesSearchItemClasses.Result;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.util.Set;
 
 
 /**
@@ -41,7 +36,7 @@ import java.util.Set;
  * {@link ItunesItemListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class RSSActivity extends ItunesItemListActivity {
+public class RSSActivity extends ItunesItemActivity {
 
     private final String mDrawerTitle = "Favorites";
 

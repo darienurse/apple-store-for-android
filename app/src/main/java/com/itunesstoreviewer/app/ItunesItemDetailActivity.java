@@ -1,16 +1,12 @@
 package com.itunesstoreviewer.app;
 
-import android.app.ActionBar;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
+import com.itunesstoreviewer.app.BaseClasses.ItunesItemActivity;
 
 /**
  * An activity representing a single ItunesItem detail screen. This
@@ -21,30 +17,19 @@ import android.widget.ShareActionProvider;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItunesItemDetailFragment}.
  */
-public class ItunesItemDetailActivity extends FragmentActivity {
-
-    private ShareActionProvider mShareActionProvider;
-    private ItunesItem itunesItem;
-    private Drawable favorite;
-    private Drawable unfavorite;
-    private ActionBar actionBar;
-    private CategoryAttribute categoryAttribute;
+public class ItunesItemDetailActivity extends ItunesItemActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itunesitem_detail);
-        unfavorite = getResources().getDrawable(R.drawable.ic_action_favorite);
-        favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
         if (getIntent() != null && getIntent().hasExtra(ItunesItemDetailFragment.ARG_ITEM_ID)) {
             itunesItem = (ItunesItem) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
             categoryAttribute = ItunesAppController.getCategoryAttribute(itunesItem);
-            actionBar = getActionBar();
             if (actionBar != null) {
                 actionBar.setTitle(itunesItem.getItemName());
                 actionBar.setBackgroundDrawable(new ColorDrawable(categoryAttribute.getColor()));
             }
-            //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
         } else {
             Log.e(getLocalClassName(), "You cannot launch " +
                     getLocalClassName() + " without a valid value for " +
@@ -80,45 +65,5 @@ public class ItunesItemDetailActivity extends FragmentActivity {
             mFavButton.setIcon(unfavorite);
         }
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.play_store_button:
-                launchPlayStoreSearch();
-                break;
-            case R.id.fav_button:
-                handleFavorite(item);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void launchPlayStoreSearch() {
-        String query = itunesItem.getItemName() + " " + itunesItem.getArtistName();
-        String searchCategory = categoryAttribute.getPlayStoreKey();
-        startActivity(new Intent(Intent.ACTION_VIEW
-                , Uri.parse("https://play.google.com/store/search?q=" + query + "&c=" + searchCategory)));
-    }
-
-    private void handleFavorite(MenuItem item) {
-        if (ItunesAppController.userFavorites.contains(itunesItem)) {
-            ItunesAppController.userFavorites.remove(itunesItem);
-            item.setIcon(unfavorite);
-        } else {
-            ItunesAppController.userFavorites.add(itunesItem);
-            item.setIcon(favorite);
-        }
-    }
-
-    // Call to update the share intent
-    private void setShareIntent(Intent shareIntent) {
-        if (mShareActionProvider != null) {
-            mShareActionProvider.setShareIntent(shareIntent);
-        }
     }
 }

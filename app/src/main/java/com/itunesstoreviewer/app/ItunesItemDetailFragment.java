@@ -42,6 +42,7 @@ public class ItunesItemDetailFragment extends Fragment {
     private ItunesItem itunesItem;
     private NetworkImageView networkImageView;
     private SliderLayout imageSliderView;
+    private AsyncTask<String, Void, List<String>> imageExtractorTask;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -86,7 +87,13 @@ public class ItunesItemDetailFragment extends Fragment {
             String summary = generateSummary(itunesItem);
             bodyTextView.setText(summary);
             networkImageView.setImageUrl(itunesItem.getArtworkUrl(), imageLoader);
-            new ImageExtractor().execute(itunesItem.getItemUrl());
+            if(itunesItem.getArtworkUrlHD()!= null && itunesItem.getScreenshotUrls()!=null){
+                List<String> results = itunesItem.getScreenshotUrls();
+                results.add(0, itunesItem.getArtworkUrlHD());
+                setHiResAndScreenShots(results);
+            }else {
+                imageExtractorTask = new ImageExtractor().execute(itunesItem.getItemUrl());
+            }
         }
         return rootView;
     }
@@ -133,6 +140,8 @@ public class ItunesItemDetailFragment extends Fragment {
     @Override
     public void onStop() {
         imageSliderView.stopAutoCycle();
+        if(imageExtractorTask !=null)
+            imageExtractorTask.cancel(true);
         super.onStop();
     }
 
@@ -179,23 +188,27 @@ public class ItunesItemDetailFragment extends Fragment {
         }
 
         protected void onPostExecute(List<String> results) {
-            if (results == null || results.isEmpty()) return;
-            networkImageView.setImageUrl(results.remove(0), imageLoader);
-            if (!results.isEmpty()) {
-                // initialize a SliderLayout for each image retrieved from the ImageExtractor
-                for (String name : results) {
-                    TextSliderView textSliderView = new TextSliderView(getActivity());
-                    textSliderView
-                            .image(name)
-                            .setScaleType(BaseSliderView.ScaleType.CenterInside);
-                    imageSliderView.addSlider(textSliderView);
-                }
-                imageSliderView.setPresetTransformer(SliderLayout.Transformer.Accordion);
-                imageSliderView.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-                imageSliderView.setCustomAnimation(new DescriptionAnimation());
-                imageSliderView.setDuration(4000);
-                imageSliderView.setVisibility(View.VISIBLE);
+            setHiResAndScreenShots(results);
+        }
+    }
+
+    private void setHiResAndScreenShots(List<String> results) {
+        if (results == null || results.isEmpty()) return;
+        networkImageView.setImageUrl(results.remove(0), imageLoader);
+        if (!results.isEmpty()) {
+            // initialize a SliderLayout for each image retrieved from the ImageExtractor
+            for (String name : results) {
+                TextSliderView textSliderView = new TextSliderView(getActivity());
+                textSliderView
+                        .image(name)
+                        .setScaleType(BaseSliderView.ScaleType.CenterInside);
+                imageSliderView.addSlider(textSliderView);
             }
+            imageSliderView.setPresetTransformer(SliderLayout.Transformer.Accordion);
+            imageSliderView.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            imageSliderView.setCustomAnimation(new DescriptionAnimation());
+            imageSliderView.setDuration(4000);
+            imageSliderView.setVisibility(View.VISIBLE);
         }
     }
 }
