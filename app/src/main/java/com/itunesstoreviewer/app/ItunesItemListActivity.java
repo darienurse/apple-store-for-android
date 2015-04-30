@@ -89,6 +89,9 @@ public class ItunesItemListActivity extends FragmentActivity
 
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         Set<String> restoredFav = prefs.getStringSet(USER_PREFS_FAV, null);
+        if(restoredFav!=null)
+            System.out.println("ALL FAVS: "+ restoredFav.size()+" ----- "+restoredFav);
+
         if (restoredFav != null) {
             for (String s : restoredFav) {
                 ItunesItem itunesE = gson.fromJson(s, Entry.class);
@@ -220,15 +223,17 @@ public class ItunesItemListActivity extends FragmentActivity
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
         Set<String> favSet = new LinkedHashSet<String>();
-        for (ItunesItem e : ItunesAppController.userFavorites)
+        for (ItunesItem e : ItunesAppController.userFavorites) {
             favSet.add(gson.toJson(e));
+        }
+        System.out.println("ALL FAVS: "+ favSet.size()+" ----- "+favSet);
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putStringSet(USER_PREFS_FAV, favSet);
         editor.apply();
-        super.onDestroy();
+        super.onStop();
     }
 
     @Override
@@ -274,7 +279,6 @@ public class ItunesItemListActivity extends FragmentActivity
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         actionBar.setDisplayHomeAsUpEnabled(true);

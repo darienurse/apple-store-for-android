@@ -79,7 +79,7 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
                 this.finish();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return true;
         }
     }
 
