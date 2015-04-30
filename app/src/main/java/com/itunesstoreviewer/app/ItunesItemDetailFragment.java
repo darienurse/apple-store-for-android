@@ -81,13 +81,12 @@ public class ItunesItemDetailFragment extends Fragment {
         }
 
         if (itunesItem != null) {
-            String mName = itunesItem.getTrackName() != null ? itunesItem.getTrackName() : itunesItem.getCollectionName();
-            titleTextView.setText(mName);
+            titleTextView.setText(itunesItem.getItemName());
             byLineTextView.setText(itunesItem.getArtistName());
             String summary = generateSummary(itunesItem);
             bodyTextView.setText(summary);
             networkImageView.setImageUrl(itunesItem.getArtworkUrl(), imageLoader);
-            new ImageExtractor().execute(itunesItem.getTrackViewUrl());
+            new ImageExtractor().execute(itunesItem.getItemUrl());
         }
         return rootView;
     }
@@ -107,9 +106,9 @@ public class ItunesItemDetailFragment extends Fragment {
         summary.append(getSummaryElement("Rental Price", itunesItem.getItemRentalPrice()));
         if (!itunesItem.getContentType().equals("podcast")) {
             if (itunesItem.getContentType().equals("TV Episode") || itunesItem.getContentType().equals("tv-episode"))
-                summary.append(getSummaryElement("Season", itunesItem.getCollectionName()));
+                summary.append(getSummaryElement("Season", itunesItem.getItemCollectionName()));
             else
-                summary.append(getSummaryElement("Album", itunesItem.getCollectionName()));
+                summary.append(getSummaryElement("Album", itunesItem.getItemCollectionName()));
         }
         summary.append(getSummaryElement("", "\n" + itunesItem.getItemSummary()));
         summary.append("\n");

@@ -2,6 +2,7 @@ package com.itunesstoreviewer.app;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     private Drawable favorite;
     private Drawable unfavorite;
     private ActionBar actionBar;
+    private CategoryAttribute categoryAttribute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,11 @@ public class ItunesItemDetailActivity extends FragmentActivity {
         favorite = getResources().getDrawable(R.drawable.ic_action_favorite_pink);
         if (getIntent() != null && getIntent().hasExtra(ItunesItemDetailFragment.ARG_ITEM_ID)) {
             itunesItem = (ItunesItem) getIntent().getSerializableExtra(ItunesItemDetailFragment.ARG_ITEM_ID);
+            categoryAttribute = ItunesAppController.getCategoryAttribute(itunesItem);
             actionBar = getActionBar();
             if (actionBar != null) {
-                String mName = itunesItem.getTrackName() != null ? itunesItem.getTrackName() : itunesItem.getCollectionName();
-                actionBar.setTitle(mName);
+                actionBar.setTitle(itunesItem.getItemName());
+                actionBar.setBackgroundDrawable(new ColorDrawable(categoryAttribute.getColor()));
             }
             //getActionBar().setBackgroundDrawable(ItunesAppController.globalColorController);
         } else {
@@ -96,10 +99,10 @@ public class ItunesItemDetailActivity extends FragmentActivity {
     }
 
     private void launchPlayStoreSearch() {
-        String formattedName = itunesItem.getTrackName();
-        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getContentType());
+        String query = itunesItem.getItemName() + " " + itunesItem.getArtistName();
+        String searchCategory = categoryAttribute.getPlayStoreKey();
         startActivity(new Intent(Intent.ACTION_VIEW
-                , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
+                , Uri.parse("https://play.google.com/store/search?q=" + query + "&c=" + searchCategory)));
     }
 
     private void handleFavorite(MenuItem item) {

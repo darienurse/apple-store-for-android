@@ -346,7 +346,7 @@ public class Entry implements ItunesItem {
     }
 
     @Override
-    public String getTrackName() {
+    public String getItemName() {
         if (imName != null) {
             return imName.getLabel();
         } else {
@@ -355,7 +355,7 @@ public class Entry implements ItunesItem {
     }
 
     @Override
-    public String getTrackViewUrl() {
+    public String getItemUrl() {
         if (link != null)
             return Arrays.asList(link).get(0).getAttributes().getHref();
         else return null;
@@ -433,7 +433,7 @@ public class Entry implements ItunesItem {
     }
 
     @Override
-    public String getCollectionName() {
+    public String getItemCollectionName() {
         if (imCollection != null)
             return imCollection.getImName().getLabel();
         else return null;

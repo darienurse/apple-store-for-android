@@ -68,7 +68,7 @@ public class SlidingTabsColorsFragment extends Fragment {
         for (int tabIndex = 0; tabIndex < ItunesAppController.getNumCategories(); tabIndex++) {
             CategoryAttribute catAttr = ItunesAppController.getCategoryAttributeList().get(tabIndex);
             mTabs.add(new SamplePagerItem(
-                    catAttr.getTitle(), // Title
+                    catAttr.getTitlePrefix()+" "+catAttr.getTitle(), // Title
                     tabIndex, //Index
                     catAttr.getColor(), // Indicator color
                     catAttr.getColor() // Divider color

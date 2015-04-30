@@ -54,4 +54,12 @@ public class CategoryAttribute {
     public List<? extends ItunesItem> getItunesItems() {
         return iTunesItems;
     }
+
+    public String getPlayStoreKey() {
+        return playStoreKey;
+    }
+
+    public String getTitlePrefix() {
+        return titlePrefix;
+    }
 }

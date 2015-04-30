@@ -44,6 +44,7 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
     protected Drawable unfavorite;
     protected Drawable favorite;
     protected MenuItem mFavButton;
+    private CategoryAttribute categoryAttribute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,10 +163,10 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
     }
 
     protected void launchPlayStoreSearch() {
-        String formattedName = itunesItem.getTrackName();
-        String searchCategory = ItunesAppController.getAppleToPlayStoreMap().get(itunesItem.getContentType());
+        String query = itunesItem.getItemName() + " " + itunesItem.getArtistName();
+        String searchCategory = categoryAttribute.getPlayStoreKey();
         startActivity(new Intent(Intent.ACTION_VIEW
-                , Uri.parse("https://play.google.com/store/search?q=" + formattedName + "&c=" + searchCategory)));
+                , Uri.parse("https://play.google.com/store/search?q=" + query + "&c=" + searchCategory)));
     }
 
     public void retryButtonClick(View v) {
@@ -182,11 +183,12 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
     @Override
     public void onItunesItemSelected(ItunesItem item) {
         if (mTwoPane) {
-            mTitle = item.getTrackName();
+            mTitle = item.getItemName();
             actionBar.setTitle(mTitle);
             if (itunesItem == null) toggleFavorite(item);
             else toggleFavorite(itunesItem, item);
             itunesItem = item;
+            categoryAttribute = ItunesAppController.getCategoryAttribute(itunesItem);
             setShareIntent(ItunesAppController.generateShareIntent(itunesItem, mAppName));
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(itunesItem))

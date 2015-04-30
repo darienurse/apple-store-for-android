@@ -11,7 +11,8 @@ import java.util.List;
 @Generated("org.jsonschema2pojo")
 public class Result implements ItunesItem {
 
-    final private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private final static String COLLECTION = "collection";
 
     @Expose
     private String wrapperType;
@@ -140,7 +141,7 @@ public class Result implements ItunesItem {
     @Expose
     private List<String> languageCodesISO2A = new ArrayList<String>();
     @Expose
-    private Integer fileSizeBytes;
+    private Long fileSizeBytes;
     @Expose
     private Double averageUserRatingForCurrentVersion;
     @Expose
@@ -232,6 +233,8 @@ public class Result implements ItunesItem {
         return artistName;
     }
 
+
+
     /**
      * @param artistName The artistName
      */
@@ -242,7 +245,6 @@ public class Result implements ItunesItem {
     /**
      * @return The collectionName
      */
-    @Override
     public String getCollectionName() {
         return collectionName;
     }
@@ -257,7 +259,6 @@ public class Result implements ItunesItem {
     /**
      * @return The trackName
      */
-    @Override
     public String getTrackName() {
         return trackName;
     }
@@ -342,7 +343,6 @@ public class Result implements ItunesItem {
     /**
      * @return The trackViewUrl
      */
-    @Override
     public String getTrackViewUrl() {
         return trackViewUrl;
     }
@@ -1046,14 +1046,14 @@ public class Result implements ItunesItem {
     /**
      * @return The fileSizeBytes
      */
-    public Integer getFileSizeBytes() {
+    public Long getFileSizeBytes() {
         return fileSizeBytes;
     }
 
     /**
      * @param fileSizeBytes The fileSizeBytes
      */
-    public void setFileSizeBytes(Integer fileSizeBytes) {
+    public void setFileSizeBytes(Long fileSizeBytes) {
         this.fileSizeBytes = fileSizeBytes;
     }
 
@@ -1156,13 +1156,13 @@ public class Result implements ItunesItem {
 
     @Override
     public String getArtworkUrl() {
-        return getArtworkUrl100();
+        return artworkUrl100;
     }
 
     @Override
     public String getItemPrice() {
         if (formattedPrice != null) return formattedPrice;
-        Double price = trackPrice != null ? trackPrice : collectionPrice;
+        Double price = wrapperType.equals(COLLECTION) ? collectionPrice:trackPrice;
         if (price == null) return null;
         else if (price < 0) return wrapperType.equals("track") ? "Album Only" : "Partial Album";
         else return price == 0.0 ? "Free" : "$" + Double.toString(price);
@@ -1177,7 +1177,7 @@ public class Result implements ItunesItem {
 
     @Override
     public String getArtworkUrlHD() {
-        return getArtworkUrl512();
+        return artworkUrl512;
     }
 
     @Override
@@ -1204,7 +1204,7 @@ public class Result implements ItunesItem {
 
     @Override
     public String getContentType() {
-        return getKind() != null ? getKind() : getCollectionType();
+        return wrapperType.equals(COLLECTION) ? collectionType:kind;
     }
 
     @Override
@@ -1217,5 +1217,20 @@ public class Result implements ItunesItem {
         if (primaryGenreName != null || !genres.isEmpty())
             return primaryGenreName != null ? primaryGenreName : genres.get(0);
         else return null;
+    }
+
+    @Override
+    public String getItemName() {
+        return wrapperType.equals(COLLECTION) ? collectionName:trackName ;
+    }
+
+    @Override
+    public String getItemUrl() {
+        return wrapperType.equals(COLLECTION) ? collectionViewUrl:trackViewUrl ;
+    }
+
+    @Override
+    public String getItemCollectionName() {
+        return wrapperType.equals(COLLECTION) ? null:collectionName;
     }
 }

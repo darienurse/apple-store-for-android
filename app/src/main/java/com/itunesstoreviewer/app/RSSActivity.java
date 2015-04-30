@@ -56,7 +56,7 @@ public class RSSActivity extends ItunesItemListActivity {
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SAVED_ITEM)) {
             itunesItem = (ItunesItem) savedInstanceState.getSerializable(SAVED_ITEM);
-            mTitle = itunesItem.getTrackName();
+            mTitle = itunesItem.getItemName();
         }
 
         try {

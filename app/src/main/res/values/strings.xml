@@ -48,17 +48,15 @@
         <item>ebook</item>
         <item>podcast</item>
     </string-array>
-    <!--This maps itunesItems's 'content type' or ' to a string used to search categories on the play store.-->
-    <!--Structure: RSS Item content type| Search Item content type | play store category key-->
-    <string-array name="play_store_map">
-        <item>Application|software|apps</item>
-        <item>Application|mac-software|apps</item>
-        <item>Track|song|music</item>
-        <item>Album|album|music</item>
-        <item>Movie|feature-movie|movies</item>
-        <item>TV Episode|tv-episode|tv</item>
-        <item>MZRssItemTypeIdentifier.Book|ebook|books</item>
-        <item>Podcast|podcast|all</item>
+    <string-array name="RSS_and_search_content_types">
+        <item>Application|software</item>
+        <item>Application|mac-software</item>
+        <item>Track|song</item>
+        <item>Album|Compilation</item>
+        <item>Movie|feature-movie</item>
+        <item>TV Episode|tv-episode</item>
+        <item>MZRssItemTypeIdentifier.Book|ebook</item>
+        <item>Podcast|podcast</item>
     </string-array>
     <string-array name="itunes_RSS_url">
         <item>topgrossingapplications</item>

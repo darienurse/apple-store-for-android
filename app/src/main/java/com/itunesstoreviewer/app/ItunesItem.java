@@ -13,9 +13,9 @@ public interface ItunesItem extends Serializable {
 
     String getArtistName();
 
-    String getTrackName();
+    String getItemName();
 
-    String getTrackViewUrl();
+    String getItemUrl();
 
     String getArtworkUrl();
 
@@ -37,7 +37,7 @@ public interface ItunesItem extends Serializable {
 
     String getArtworkUrlHD();
 
-    String getCollectionName();
+    String getItemCollectionName();
 
     String getPublisher();
 
