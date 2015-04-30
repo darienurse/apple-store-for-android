@@ -89,13 +89,13 @@ public class ItunesItemListActivity extends FragmentActivity
 
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         Set<String> restoredFav = prefs.getStringSet(USER_PREFS_FAV, null);
-        if(restoredFav!=null)
-            System.out.println("ALL FAVS: "+ restoredFav.size()+" ----- "+restoredFav);
+        if (restoredFav != null)
+            System.out.println("ALL FAVS: " + restoredFav.size() + " ----- " + restoredFav);
 
         if (restoredFav != null) {
             for (String s : restoredFav) {
                 ItunesItem itunesE = gson.fromJson(s, Entry.class);
-                if(itunesE.getItemId()==null)
+                if (itunesE.getItemId() == null)
                     itunesE = gson.fromJson(s, Result.class);
                 if (!ItunesAppController.userFavorites.contains(itunesE))
                     ItunesAppController.userFavorites.add(itunesE);
@@ -162,7 +162,7 @@ public class ItunesItemListActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onPrepareOptionsMenu (Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setQuery("", false);
         return super.onPrepareOptionsMenu(menu);
@@ -228,7 +228,7 @@ public class ItunesItemListActivity extends FragmentActivity
         for (ItunesItem e : ItunesAppController.userFavorites) {
             favSet.add(gson.toJson(e));
         }
-        System.out.println("ALL FAVS: "+ favSet.size()+" ----- "+favSet);
+        System.out.println("ALL FAVS: " + favSet.size() + " ----- " + favSet);
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putStringSet(USER_PREFS_FAV, favSet);
@@ -338,18 +338,18 @@ public class ItunesItemListActivity extends FragmentActivity
         }
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            onItunesItemSelected((ItunesItem)mDrawerList.getAdapter().getItem(position));
-            mDrawerLayout.closeDrawers();
-        }
-    }
-
     static public class ErrorFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             return inflater.inflate(R.layout.error_layout, container, false);
+        }
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            onItunesItemSelected((ItunesItem) mDrawerList.getAdapter().getItem(position));
+            mDrawerLayout.closeDrawers();
         }
     }
 }

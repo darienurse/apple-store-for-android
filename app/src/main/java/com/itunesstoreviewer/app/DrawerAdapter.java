@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class DrawerAdapter extends BaseAdapter {
         thumbNail.setImageUrl(itunesItem.getArtworkUrl(), imageLoader);
 
         // name
-        String mName = itunesItem.getTrackName()!=null?itunesItem.getTrackName():itunesItem.getCollectionName();
+        String mName = itunesItem.getTrackName() != null ? itunesItem.getTrackName() : itunesItem.getCollectionName();
         name.setText(mName);
 
         // artist

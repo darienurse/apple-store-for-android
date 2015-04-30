@@ -1,4 +1,3 @@
-
 package com.itunesstoreviewer.app.ItunesSearchItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -156,99 +155,77 @@ public class Result implements ItunesItem {
     private List<Integer> artistIds = new ArrayList<Integer>();
 
     /**
-     * 
-     * @return
-     *     The wrapperType
+     * @return The wrapperType
      */
     public String getWrapperType() {
         return wrapperType;
     }
 
     /**
-     * 
-     * @param wrapperType
-     *     The wrapperType
+     * @param wrapperType The wrapperType
      */
     public void setWrapperType(String wrapperType) {
         this.wrapperType = wrapperType;
     }
 
     /**
-     *
-     * @return
-     *     The collectionType
+     * @return The collectionType
      */
     public String getCollectionType() {
         return collectionType;
     }
 
     /**
-     *
-     * @param collectionType
-     *     The collectionType
+     * @param collectionType The collectionType
      */
     public void seCollectionType(String collectionType) {
         this.collectionType = collectionType;
     }
 
     /**
-     * 
-     * @return
-     *     The kind
+     * @return The kind
      */
     public String getKind() {
         return kind;
     }
 
     /**
-     * 
-     * @param kind
-     *     The kind
+     * @param kind The kind
      */
     public void setKind(String kind) {
         this.kind = kind;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionId
+     * @return The collectionId
      */
     public Integer getCollectionId() {
         return collectionId;
     }
 
     /**
-     * 
-     * @param collectionId
-     *     The collectionId
+     * @param collectionId The collectionId
      */
     public void setCollectionId(Integer collectionId) {
         this.collectionId = collectionId;
     }
 
     /**
-     * 
-     * @return
-     *     The trackId
+     * @return The trackId
      */
     public Integer getTrackId() {
         return trackId;
     }
 
     /**
-     * 
-     * @param trackId
-     *     The trackId
+     * @param trackId The trackId
      */
     public void setTrackId(Integer trackId) {
         this.trackId = trackId;
     }
 
     /**
-     * 
-     * @return
-     *     The artistName
+     * @return The artistName
      */
     @Override
     public String getArtistName() {
@@ -256,18 +233,14 @@ public class Result implements ItunesItem {
     }
 
     /**
-     * 
-     * @param artistName
-     *     The artistName
+     * @param artistName The artistName
      */
     public void setArtistName(String artistName) {
         this.artistName = artistName;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionName
+     * @return The collectionName
      */
     @Override
     public String getCollectionName() {
@@ -275,18 +248,14 @@ public class Result implements ItunesItem {
     }
 
     /**
-     * 
-     * @param collectionName
-     *     The collectionName
+     * @param collectionName The collectionName
      */
     public void setCollectionName(String collectionName) {
         this.collectionName = collectionName;
     }
 
     /**
-     * 
-     * @return
-     *     The trackName
+     * @return The trackName
      */
     @Override
     public String getTrackName() {
@@ -294,108 +263,84 @@ public class Result implements ItunesItem {
     }
 
     /**
-     * 
-     * @param trackName
-     *     The trackName
+     * @param trackName The trackName
      */
     public void setTrackName(String trackName) {
         this.trackName = trackName;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionCensoredName
+     * @return The collectionCensoredName
      */
     public String getCollectionCensoredName() {
         return collectionCensoredName;
     }
 
     /**
-     * 
-     * @param collectionCensoredName
-     *     The collectionCensoredName
+     * @param collectionCensoredName The collectionCensoredName
      */
     public void setCollectionCensoredName(String collectionCensoredName) {
         this.collectionCensoredName = collectionCensoredName;
     }
 
     /**
-     * 
-     * @return
-     *     The trackCensoredName
+     * @return The trackCensoredName
      */
     public String getTrackCensoredName() {
         return trackCensoredName;
     }
 
     /**
-     * 
-     * @param trackCensoredName
-     *     The trackCensoredName
+     * @param trackCensoredName The trackCensoredName
      */
     public void setTrackCensoredName(String trackCensoredName) {
         this.trackCensoredName = trackCensoredName;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionArtistId
+     * @return The collectionArtistId
      */
     public Integer getCollectionArtistId() {
         return collectionArtistId;
     }
 
     /**
-     * 
-     * @param collectionArtistId
-     *     The collectionArtistId
+     * @param collectionArtistId The collectionArtistId
      */
     public void setCollectionArtistId(Integer collectionArtistId) {
         this.collectionArtistId = collectionArtistId;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionArtistViewUrl
+     * @return The collectionArtistViewUrl
      */
     public String getCollectionArtistViewUrl() {
         return collectionArtistViewUrl;
     }
 
     /**
-     * 
-     * @param collectionArtistViewUrl
-     *     The collectionArtistViewUrl
+     * @param collectionArtistViewUrl The collectionArtistViewUrl
      */
     public void setCollectionArtistViewUrl(String collectionArtistViewUrl) {
         this.collectionArtistViewUrl = collectionArtistViewUrl;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionViewUrl
+     * @return The collectionViewUrl
      */
     public String getCollectionViewUrl() {
         return collectionViewUrl;
     }
 
     /**
-     * 
-     * @param collectionViewUrl
-     *     The collectionViewUrl
+     * @param collectionViewUrl The collectionViewUrl
      */
     public void setCollectionViewUrl(String collectionViewUrl) {
         this.collectionViewUrl = collectionViewUrl;
     }
 
     /**
-     * 
-     * @return
-     *     The trackViewUrl
+     * @return The trackViewUrl
      */
     @Override
     public String getTrackViewUrl() {
@@ -403,198 +348,154 @@ public class Result implements ItunesItem {
     }
 
     /**
-     * 
-     * @param trackViewUrl
-     *     The trackViewUrl
+     * @param trackViewUrl The trackViewUrl
      */
     public void setTrackViewUrl(String trackViewUrl) {
         this.trackViewUrl = trackViewUrl;
     }
 
     /**
-     * 
-     * @return
-     *     The previewUrl
+     * @return The previewUrl
      */
     public String getPreviewUrl() {
         return previewUrl;
     }
 
     /**
-     * 
-     * @param previewUrl
-     *     The previewUrl
+     * @param previewUrl The previewUrl
      */
     public void setPreviewUrl(String previewUrl) {
         this.previewUrl = previewUrl;
     }
 
     /**
-     * 
-     * @return
-     *     The artworkUrl30
+     * @return The artworkUrl30
      */
     public String getArtworkUrl30() {
         return artworkUrl30;
     }
 
     /**
-     * 
-     * @param artworkUrl30
-     *     The artworkUrl30
+     * @param artworkUrl30 The artworkUrl30
      */
     public void setArtworkUrl30(String artworkUrl30) {
         this.artworkUrl30 = artworkUrl30;
     }
 
     /**
-     * 
-     * @return
-     *     The artworkUrl60
+     * @return The artworkUrl60
      */
     public String getArtworkUrl60() {
         return artworkUrl60;
     }
 
     /**
-     * 
-     * @param artworkUrl60
-     *     The artworkUrl60
+     * @param artworkUrl60 The artworkUrl60
      */
     public void setArtworkUrl60(String artworkUrl60) {
         this.artworkUrl60 = artworkUrl60;
     }
 
     /**
-     * 
-     * @return
-     *     The artworkUrl100
+     * @return The artworkUrl100
      */
     public String getArtworkUrl100() {
         return artworkUrl100;
     }
 
     /**
-     * 
-     * @param artworkUrl100
-     *     The artworkUrl100
+     * @param artworkUrl100 The artworkUrl100
      */
     public void setArtworkUrl100(String artworkUrl100) {
         this.artworkUrl100 = artworkUrl100;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionPrice
+     * @return The collectionPrice
      */
     public Double getCollectionPrice() {
         return collectionPrice;
     }
 
     /**
-     * 
-     * @param collectionPrice
-     *     The collectionPrice
+     * @param collectionPrice The collectionPrice
      */
     public void setCollectionPrice(Double collectionPrice) {
         this.collectionPrice = collectionPrice;
     }
 
     /**
-     * 
-     * @return
-     *     The trackPrice
+     * @return The trackPrice
      */
     public Double getTrackPrice() {
         return trackPrice;
     }
 
     /**
-     * 
-     * @param trackPrice
-     *     The trackPrice
+     * @param trackPrice The trackPrice
      */
     public void setTrackPrice(Double trackPrice) {
         this.trackPrice = trackPrice;
     }
 
     /**
-     * 
-     * @return
-     *     The trackRentalPrice
+     * @return The trackRentalPrice
      */
     public Double getTrackRentalPrice() {
         return trackRentalPrice;
     }
 
     /**
-     * 
-     * @param trackRentalPrice
-     *     The trackRentalPrice
+     * @param trackRentalPrice The trackRentalPrice
      */
     public void setTrackRentalPrice(Double trackRentalPrice) {
         this.trackRentalPrice = trackRentalPrice;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionHdPrice
+     * @return The collectionHdPrice
      */
     public Double getCollectionHdPrice() {
         return collectionHdPrice;
     }
 
     /**
-     * 
-     * @param collectionHdPrice
-     *     The collectionHdPrice
+     * @param collectionHdPrice The collectionHdPrice
      */
     public void setCollectionHdPrice(Double collectionHdPrice) {
         this.collectionHdPrice = collectionHdPrice;
     }
 
     /**
-     * 
-     * @return
-     *     The trackHdPrice
+     * @return The trackHdPrice
      */
     public Double getTrackHdPrice() {
         return trackHdPrice;
     }
 
     /**
-     * 
-     * @param trackHdPrice
-     *     The trackHdPrice
+     * @param trackHdPrice The trackHdPrice
      */
     public void setTrackHdPrice(Double trackHdPrice) {
         this.trackHdPrice = trackHdPrice;
     }
 
     /**
-     * 
-     * @return
-     *     The trackHdRentalPrice
+     * @return The trackHdRentalPrice
      */
     public Double getTrackHdRentalPrice() {
         return trackHdRentalPrice;
     }
 
     /**
-     * 
-     * @param trackHdRentalPrice
-     *     The trackHdRentalPrice
+     * @param trackHdRentalPrice The trackHdRentalPrice
      */
     public void setTrackHdRentalPrice(Double trackHdRentalPrice) {
         this.trackHdRentalPrice = trackHdRentalPrice;
     }
 
     /**
-     * 
-     * @return
-     *     The releaseDate
+     * @return The releaseDate
      */
     @Override
     public String getReleaseDate() {
@@ -602,360 +503,280 @@ public class Result implements ItunesItem {
     }
 
     /**
-     * 
-     * @param releaseDate
-     *     The releaseDate
+     * @param releaseDate The releaseDate
      */
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
     /**
-     * 
-     * @return
-     *     The collectionExplicitness
+     * @return The collectionExplicitness
      */
     public String getCollectionExplicitness() {
         return collectionExplicitness;
     }
 
     /**
-     * 
-     * @param collectionExplicitness
-     *     The collectionExplicitness
+     * @param collectionExplicitness The collectionExplicitness
      */
     public void setCollectionExplicitness(String collectionExplicitness) {
         this.collectionExplicitness = collectionExplicitness;
     }
 
     /**
-     * 
-     * @return
-     *     The trackExplicitness
+     * @return The trackExplicitness
      */
     public String getTrackExplicitness() {
         return trackExplicitness;
     }
 
     /**
-     * 
-     * @param trackExplicitness
-     *     The trackExplicitness
+     * @param trackExplicitness The trackExplicitness
      */
     public void setTrackExplicitness(String trackExplicitness) {
         this.trackExplicitness = trackExplicitness;
     }
 
     /**
-     * 
-     * @return
-     *     The discCount
+     * @return The discCount
      */
     public Integer getDiscCount() {
         return discCount;
     }
 
     /**
-     * 
-     * @param discCount
-     *     The discCount
+     * @param discCount The discCount
      */
     public void setDiscCount(Integer discCount) {
         this.discCount = discCount;
     }
 
     /**
-     * 
-     * @return
-     *     The discNumber
+     * @return The discNumber
      */
     public Integer getDiscNumber() {
         return discNumber;
     }
 
     /**
-     * 
-     * @param discNumber
-     *     The discNumber
+     * @param discNumber The discNumber
      */
     public void setDiscNumber(Integer discNumber) {
         this.discNumber = discNumber;
     }
 
     /**
-     * 
-     * @return
-     *     The trackCount
+     * @return The trackCount
      */
     public Integer getTrackCount() {
         return trackCount;
     }
 
     /**
-     * 
-     * @param trackCount
-     *     The trackCount
+     * @param trackCount The trackCount
      */
     public void setTrackCount(Integer trackCount) {
         this.trackCount = trackCount;
     }
 
     /**
-     * 
-     * @return
-     *     The trackNumber
+     * @return The trackNumber
      */
     public Integer getTrackNumber() {
         return trackNumber;
     }
 
     /**
-     * 
-     * @param trackNumber
-     *     The trackNumber
+     * @param trackNumber The trackNumber
      */
     public void setTrackNumber(Integer trackNumber) {
         this.trackNumber = trackNumber;
     }
 
     /**
-     * 
-     * @return
-     *     The trackTimeMillis
+     * @return The trackTimeMillis
      */
     public Integer getTrackTimeMillis() {
         return trackTimeMillis;
     }
 
     /**
-     * 
-     * @param trackTimeMillis
-     *     The trackTimeMillis
+     * @param trackTimeMillis The trackTimeMillis
      */
     public void setTrackTimeMillis(Integer trackTimeMillis) {
         this.trackTimeMillis = trackTimeMillis;
     }
 
     /**
-     * 
-     * @return
-     *     The country
+     * @return The country
      */
     public String getCountry() {
         return country;
     }
 
     /**
-     * 
-     * @param country
-     *     The country
+     * @param country The country
      */
     public void setCountry(String country) {
         this.country = country;
     }
 
     /**
-     * 
-     * @return
-     *     The currency
+     * @return The currency
      */
     public String getCurrency() {
         return currency;
     }
 
     /**
-     * 
-     * @param currency
-     *     The currency
+     * @param currency The currency
      */
     public void setCurrency(String currency) {
         this.currency = currency;
     }
 
     /**
-     * 
-     * @return
-     *     The primaryGenreName
+     * @return The primaryGenreName
      */
     public String getPrimaryGenreName() {
         return primaryGenreName;
     }
 
     /**
-     * 
-     * @param primaryGenreName
-     *     The primaryGenreName
+     * @param primaryGenreName The primaryGenreName
      */
     public void setPrimaryGenreName(String primaryGenreName) {
         this.primaryGenreName = primaryGenreName;
     }
 
     /**
-     * 
-     * @return
-     *     The contentAdvisoryRating
+     * @return The contentAdvisoryRating
      */
     public String getContentAdvisoryRating() {
         return contentAdvisoryRating;
     }
 
     /**
-     * 
-     * @param contentAdvisoryRating
-     *     The contentAdvisoryRating
+     * @param contentAdvisoryRating The contentAdvisoryRating
      */
     public void setContentAdvisoryRating(String contentAdvisoryRating) {
         this.contentAdvisoryRating = contentAdvisoryRating;
     }
 
     /**
-     * 
-     * @return
-     *     The longDescription
+     * @return The longDescription
      */
     public String getLongDescription() {
         return longDescription;
     }
 
     /**
-     * 
-     * @param longDescription
-     *     The longDescription
+     * @param longDescription The longDescription
      */
     public void setLongDescription(String longDescription) {
         this.longDescription = longDescription;
     }
 
     /**
-     * 
-     * @return
-     *     The radioStationUrl
+     * @return The radioStationUrl
      */
     public String getRadioStationUrl() {
         return radioStationUrl;
     }
 
     /**
-     * 
-     * @param radioStationUrl
-     *     The radioStationUrl
+     * @param radioStationUrl The radioStationUrl
      */
     public void setRadioStationUrl(String radioStationUrl) {
         this.radioStationUrl = radioStationUrl;
     }
 
     /**
-     * 
-     * @return
-     *     The feedUrl
+     * @return The feedUrl
      */
     public String getFeedUrl() {
         return feedUrl;
     }
 
     /**
-     * 
-     * @param feedUrl
-     *     The feedUrl
+     * @param feedUrl The feedUrl
      */
     public void setFeedUrl(String feedUrl) {
         this.feedUrl = feedUrl;
     }
 
     /**
-     * 
-     * @return
-     *     The artworkUrl600
+     * @return The artworkUrl600
      */
     public String getArtworkUrl600() {
         return artworkUrl600;
     }
 
     /**
-     * 
-     * @param artworkUrl600
-     *     The artworkUrl600
+     * @param artworkUrl600 The artworkUrl600
      */
     public void setArtworkUrl600(String artworkUrl600) {
         this.artworkUrl600 = artworkUrl600;
     }
 
     /**
-     * 
-     * @return
-     *     The genreIds
+     * @return The genreIds
      */
     public List<String> getGenreIds() {
         return genreIds;
     }
 
     /**
-     * 
-     * @param genreIds
-     *     The genreIds
+     * @param genreIds The genreIds
      */
     public void setGenreIds(List<String> genreIds) {
         this.genreIds = genreIds;
     }
 
     /**
-     * 
-     * @return
-     *     The genres
+     * @return The genres
      */
     public List<String> getGenres() {
         return genres;
     }
 
     /**
-     * 
-     * @param genres
-     *     The genres
+     * @param genres The genres
      */
     public void setGenres(List<String> genres) {
         this.genres = genres;
     }
 
     /**
-     * 
-     * @return
-     *     The artistId
+     * @return The artistId
      */
     public Integer getArtistId() {
         return artistId;
     }
 
     /**
-     * 
-     * @param artistId
-     *     The artistId
+     * @param artistId The artistId
      */
     public void setArtistId(Integer artistId) {
         this.artistId = artistId;
     }
 
     /**
-     * 
-     * @return
-     *     The artistViewUrl
+     * @return The artistViewUrl
      */
     public String getArtistViewUrl() {
         return artistViewUrl;
     }
 
     /**
-     * 
-     * @param artistViewUrl
-     *     The artistViewUrl
+     * @param artistViewUrl The artistViewUrl
      */
     public void setArtistViewUrl(String artistViewUrl) {
         this.artistViewUrl = artistViewUrl;
     }
 
     /**
-     * 
-     * @return
-     *     The copyright
+     * @return The copyright
      */
     @Override
     public String getCopyright() {
@@ -963,216 +784,168 @@ public class Result implements ItunesItem {
     }
 
     /**
-     * 
-     * @param copyright
-     *     The copyright
+     * @param copyright The copyright
      */
     public void setCopyright(String copyright) {
         this.copyright = copyright;
     }
 
     /**
-     * 
-     * @return
-     *     The description
+     * @return The description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * 
-     * @param description
-     *     The description
+     * @param description The description
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * 
-     * @return
-     *     The shortDescription
+     * @return The shortDescription
      */
     public String getShortDescription() {
         return shortDescription;
     }
 
     /**
-     * 
-     * @param shortDescription
-     *     The shortDescription
+     * @param shortDescription The shortDescription
      */
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
     }
 
     /**
-     * 
-     * @return
-     *     The features
+     * @return The features
      */
     public List<String> getFeatures() {
         return features;
     }
 
     /**
-     * 
-     * @param features
-     *     The features
+     * @param features The features
      */
     public void setFeatures(List<String> features) {
         this.features = features;
     }
 
     /**
-     * 
-     * @return
-     *     The supportedDevices
+     * @return The supportedDevices
      */
     public List<String> getSupportedDevices() {
         return supportedDevices;
     }
 
     /**
-     * 
-     * @param supportedDevices
-     *     The supportedDevices
+     * @param supportedDevices The supportedDevices
      */
     public void setSupportedDevices(List<String> supportedDevices) {
         this.supportedDevices = supportedDevices;
     }
 
     /**
-     * 
-     * @return
-     *     The advisories
+     * @return The advisories
      */
     public List<Object> getAdvisories() {
         return advisories;
     }
 
     /**
-     * 
-     * @param advisories
-     *     The advisories
+     * @param advisories The advisories
      */
     public void setAdvisories(List<Object> advisories) {
         this.advisories = advisories;
     }
 
     /**
-     * 
-     * @return
-     *     The isGameCenterEnabled
+     * @return The isGameCenterEnabled
      */
     public Boolean getIsGameCenterEnabled() {
         return isGameCenterEnabled;
     }
 
     /**
-     * 
-     * @param isGameCenterEnabled
-     *     The isGameCenterEnabled
+     * @param isGameCenterEnabled The isGameCenterEnabled
      */
     public void setIsGameCenterEnabled(Boolean isGameCenterEnabled) {
         this.isGameCenterEnabled = isGameCenterEnabled;
     }
 
     /**
-     * 
-     * @return
-     *     The screenshotUrls
+     * @return The screenshotUrls
      */
     public List<String> getScreenshotUrls() {
         return screenshotUrls;
     }
 
     /**
-     * 
-     * @param screenshotUrls
-     *     The screenshotUrls
+     * @param screenshotUrls The screenshotUrls
      */
     public void setScreenshotUrls(List<String> screenshotUrls) {
         this.screenshotUrls = screenshotUrls;
     }
 
     /**
-     * 
-     * @return
-     *     The ipadScreenshotUrls
+     * @return The ipadScreenshotUrls
      */
     public List<Object> getIpadScreenshotUrls() {
         return ipadScreenshotUrls;
     }
 
     /**
-     * 
-     * @param ipadScreenshotUrls
-     *     The ipadScreenshotUrls
+     * @param ipadScreenshotUrls The ipadScreenshotUrls
      */
     public void setIpadScreenshotUrls(List<Object> ipadScreenshotUrls) {
         this.ipadScreenshotUrls = ipadScreenshotUrls;
     }
 
     /**
-     * 
-     * @return
-     *     The artworkUrl512
+     * @return The artworkUrl512
      */
     public String getArtworkUrl512() {
         return artworkUrl512;
     }
 
     /**
-     * 
-     * @param artworkUrl512
-     *     The artworkUrl512
+     * @param artworkUrl512 The artworkUrl512
      */
     public void setArtworkUrl512(String artworkUrl512) {
         this.artworkUrl512 = artworkUrl512;
     }
 
     /**
-     * 
-     * @return
-     *     The price
+     * @return The price
      */
     public Double getPrice() {
         return price;
     }
 
     /**
-     * 
-     * @param price
-     *     The price
+     * @param price The price
      */
     public void setPrice(Double price) {
         this.price = price;
     }
 
     /**
-     * 
-     * @return
-     *     The version
+     * @return The version
      */
     public String getVersion() {
         return version;
     }
 
     /**
-     * 
-     * @param version
-     *     The version
+     * @param version The version
      */
     public void setVersion(String version) {
         this.version = version;
     }
 
     /**
-     * 
-     * @return
-     *     The sellerName
+     * @return The sellerName
      */
     @Override
     public String getSellerName() {
@@ -1180,243 +953,189 @@ public class Result implements ItunesItem {
     }
 
     /**
-     * 
-     * @param sellerName
-     *     The sellerName
+     * @param sellerName The sellerName
      */
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
     }
 
     /**
-     * 
-     * @return
-     *     The bundleId
+     * @return The bundleId
      */
     public String getBundleId() {
         return bundleId;
     }
 
     /**
-     * 
-     * @param bundleId
-     *     The bundleId
+     * @param bundleId The bundleId
      */
     public void setBundleId(String bundleId) {
         this.bundleId = bundleId;
     }
 
     /**
-     * 
-     * @return
-     *     The primaryGenreId
+     * @return The primaryGenreId
      */
     public Integer getPrimaryGenreId() {
         return primaryGenreId;
     }
 
     /**
-     * 
-     * @param primaryGenreId
-     *     The primaryGenreId
+     * @param primaryGenreId The primaryGenreId
      */
     public void setPrimaryGenreId(Integer primaryGenreId) {
         this.primaryGenreId = primaryGenreId;
     }
 
     /**
-     * 
-     * @return
-     *     The releaseNotes
+     * @return The releaseNotes
      */
     public String getReleaseNotes() {
         return releaseNotes;
     }
 
     /**
-     * 
-     * @param releaseNotes
-     *     The releaseNotes
+     * @param releaseNotes The releaseNotes
      */
     public void setReleaseNotes(String releaseNotes) {
         this.releaseNotes = releaseNotes;
     }
 
     /**
-     * 
-     * @return
-     *     The minimumOsVersion
+     * @return The minimumOsVersion
      */
     public String getMinimumOsVersion() {
         return minimumOsVersion;
     }
 
     /**
-     * 
-     * @param minimumOsVersion
-     *     The minimumOsVersion
+     * @param minimumOsVersion The minimumOsVersion
      */
     public void setMinimumOsVersion(String minimumOsVersion) {
         this.minimumOsVersion = minimumOsVersion;
     }
 
     /**
-     * 
-     * @return
-     *     The formattedPrice
+     * @return The formattedPrice
      */
     public String getFormattedPrice() {
         return formattedPrice;
     }
 
     /**
-     * 
-     * @param formattedPrice
-     *     The formattedPrice
+     * @param formattedPrice The formattedPrice
      */
     public void setFormattedPrice(String formattedPrice) {
         this.formattedPrice = formattedPrice;
     }
 
     /**
-     * 
-     * @return
-     *     The languageCodesISO2A
+     * @return The languageCodesISO2A
      */
     public List<String> getLanguageCodesISO2A() {
         return languageCodesISO2A;
     }
 
     /**
-     * 
-     * @param languageCodesISO2A
-     *     The languageCodesISO2A
+     * @param languageCodesISO2A The languageCodesISO2A
      */
     public void setLanguageCodesISO2A(List<String> languageCodesISO2A) {
         this.languageCodesISO2A = languageCodesISO2A;
     }
 
     /**
-     * 
-     * @return
-     *     The fileSizeBytes
+     * @return The fileSizeBytes
      */
     public Integer getFileSizeBytes() {
         return fileSizeBytes;
     }
 
     /**
-     * 
-     * @param fileSizeBytes
-     *     The fileSizeBytes
+     * @param fileSizeBytes The fileSizeBytes
      */
     public void setFileSizeBytes(Integer fileSizeBytes) {
         this.fileSizeBytes = fileSizeBytes;
     }
 
     /**
-     * 
-     * @return
-     *     The averageUserRatingForCurrentVersion
+     * @return The averageUserRatingForCurrentVersion
      */
     public Double getAverageUserRatingForCurrentVersion() {
         return averageUserRatingForCurrentVersion;
     }
 
     /**
-     * 
-     * @param averageUserRatingForCurrentVersion
-     *     The averageUserRatingForCurrentVersion
+     * @param averageUserRatingForCurrentVersion The averageUserRatingForCurrentVersion
      */
     public void setAverageUserRatingForCurrentVersion(Double averageUserRatingForCurrentVersion) {
         this.averageUserRatingForCurrentVersion = averageUserRatingForCurrentVersion;
     }
 
     /**
-     * 
-     * @return
-     *     The userRatingCountForCurrentVersion
+     * @return The userRatingCountForCurrentVersion
      */
     public Integer getUserRatingCountForCurrentVersion() {
         return userRatingCountForCurrentVersion;
     }
 
     /**
-     * 
-     * @param userRatingCountForCurrentVersion
-     *     The userRatingCountForCurrentVersion
+     * @param userRatingCountForCurrentVersion The userRatingCountForCurrentVersion
      */
     public void setUserRatingCountForCurrentVersion(Integer userRatingCountForCurrentVersion) {
         this.userRatingCountForCurrentVersion = userRatingCountForCurrentVersion;
     }
 
     /**
-     * 
-     * @return
-     *     The trackContentRating
+     * @return The trackContentRating
      */
     public String getTrackContentRating() {
         return trackContentRating;
     }
 
     /**
-     * 
-     * @param trackContentRating
-     *     The trackContentRating
+     * @param trackContentRating The trackContentRating
      */
     public void setTrackContentRating(String trackContentRating) {
         this.trackContentRating = trackContentRating;
     }
 
     /**
-     * 
-     * @return
-     *     The averageUserRating
+     * @return The averageUserRating
      */
     public Double getAverageUserRating() {
         return averageUserRating;
     }
 
     /**
-     * 
-     * @param averageUserRating
-     *     The averageUserRating
+     * @param averageUserRating The averageUserRating
      */
     public void setAverageUserRating(Double averageUserRating) {
         this.averageUserRating = averageUserRating;
     }
 
     /**
-     * 
-     * @return
-     *     The userRatingCount
+     * @return The userRatingCount
      */
     public Integer getUserRatingCount() {
         return userRatingCount;
     }
 
     /**
-     * 
-     * @param userRatingCount
-     *     The userRatingCount
+     * @param userRatingCount The userRatingCount
      */
     public void setUserRatingCount(Integer userRatingCount) {
         this.userRatingCount = userRatingCount;
     }
 
     /**
-     * 
-     * @return
-     *     The artistIds
+     * @return The artistIds
      */
     public List<Integer> getArtistIds() {
         return artistIds;
     }
 
     /**
-     * 
-     * @param artistIds
-     *     The artistIds
+     * @param artistIds The artistIds
      */
     public void setArtistIds(List<Integer> artistIds) {
         this.artistIds = artistIds;
@@ -1442,22 +1161,22 @@ public class Result implements ItunesItem {
 
     @Override
     public String getItemPrice() {
-        if(formattedPrice!=null) return formattedPrice;
-        Double price = trackPrice!=null?trackPrice:collectionPrice;
-        if(price ==null) return null;
-        else if(price<0) return wrapperType.equals("track")?"Album Only":"Partial Album";
-        else return price==0.0?"Free":"$"+Double.toString(price);
+        if (formattedPrice != null) return formattedPrice;
+        Double price = trackPrice != null ? trackPrice : collectionPrice;
+        if (price == null) return null;
+        else if (price < 0) return wrapperType.equals("track") ? "Album Only" : "Partial Album";
+        else return price == 0.0 ? "Free" : "$" + Double.toString(price);
     }
 
     @Override
     public String getItemRentalPrice() {
-        if(trackRentalPrice!=null)
-            return trackRentalPrice==0.0?"Free":"$"+Double.toString(trackRentalPrice);
+        if (trackRentalPrice != null)
+            return trackRentalPrice == 0.0 ? "Free" : "$" + Double.toString(trackRentalPrice);
         else return null;
     }
 
     @Override
-    public String getArtworkUrlHD(){
+    public String getArtworkUrlHD() {
         return getArtworkUrl512();
     }
 
@@ -1468,23 +1187,24 @@ public class Result implements ItunesItem {
 
     @Override
     public String getItemSummary() {
-        if(longDescription!=null)
-            return longDescription.replaceAll("\\<[^>]*>","").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
-        else if(description!=null) return description.replaceAll("\\<[^>]*>","").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
+        if (longDescription != null)
+            return longDescription.replaceAll("\\<[^>]*>", "").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
+        else if (description != null)
+            return description.replaceAll("\\<[^>]*>", "").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
         else return null;
     }
 
     @Override
     public String getItemId() {
-        if(trackId != null)
+        if (trackId != null)
             return Integer.toString(trackId);
         else
             return Integer.toString(collectionId);
     }
 
     @Override
-    public String getContentType(){
-        return getKind()!=null?getKind():getCollectionType();
+    public String getContentType() {
+        return getKind() != null ? getKind() : getCollectionType();
     }
 
     @Override
@@ -1494,8 +1214,8 @@ public class Result implements ItunesItem {
 
     @Override
     public String getItemGenre() {
-        if(primaryGenreName!=null || !genres.isEmpty())
-            return primaryGenreName!=null?primaryGenreName:genres.get(0);
+        if (primaryGenreName != null || !genres.isEmpty())
+            return primaryGenreName != null ? primaryGenreName : genres.get(0);
         else return null;
     }
 }

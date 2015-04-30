@@ -37,8 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
         android:layout_toEndOf="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
         android:background="?android:attr/activatedBackgroundIndicator"
         android:ellipsize="end"
         android:maxLines="1"/>

@@ -1,6 +1,5 @@
 package com.itunesstoreviewer.app;
 
-import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.ItunesRSSResponse;
 
 import java.util.ArrayList;

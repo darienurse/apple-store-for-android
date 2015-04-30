@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
-public class Entry implements ItunesItem{
+public class Entry implements ItunesItem {
 
     final private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
@@ -330,7 +330,7 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getItemId() {
-        if(id!=null)
+        if (id != null)
             return id.getAttributes().getImId();
         else
             return null;
@@ -356,7 +356,7 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getTrackViewUrl() {
-        if(link != null)
+        if (link != null)
             return Arrays.asList(link).get(0).getAttributes().getHref();
         else return null;
     }
@@ -372,11 +372,10 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getItemPrice() {
-        if(imPrice != null) {
+        if (imPrice != null) {
             String price = imPrice.getLabel().replaceFirst("-", "");
-            return price.equals("Get")?"Free":price;
-        }
-        else return null;
+            return price.equals("Get") ? "Free" : price;
+        } else return null;
     }
 
     @Override
@@ -389,21 +388,21 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getReleaseDate() {
-        if(imReleaseDate != null)
+        if (imReleaseDate != null)
             return imReleaseDate.getLabel();
         else return null;
     }
 
     @Override
     public String getItemGenre() {
-        if(category != null)
+        if (category != null)
             return category.getAttributes().getTerm();
         else return null;
     }
 
     @Override
     public String getItemSummary() {
-        if(summary != null)
+        if (summary != null)
             //return android.text.Html.fromHtml(getSummary().getLabel()).toString();
             return summary.getLabel().replaceAll("\\<[^>]*>", "").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
         else return null;
@@ -411,14 +410,14 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getCopyright() {
-        if(rights != null)
+        if (rights != null)
             return rights.getLabel();
         else return null;
     }
 
     @Override
     public String getSellerName() {
-        if(imVendorName != null)
+        if (imVendorName != null)
             return imVendorName.getLabel();
         else return null;
     }
@@ -435,25 +434,24 @@ public class Entry implements ItunesItem{
 
     @Override
     public String getCollectionName() {
-        if(imCollection != null)
+        if (imCollection != null)
             return imCollection.getImName().getLabel();
         else return null;
     }
 
     @Override
-    public String getContentType(){
+    public String getContentType() {
         if (imContentType != null) {
-            if(imContentType.getImContentType()!=null)
+            if (imContentType.getImContentType() != null)
                 return imContentType.getImContentType().getAttributes().getLabel();
             else
                 return imContentType.getAttributes().getLabel();
-        }
-        else return null;
+        } else return null;
     }
 
     @Override
-    public String getPublisher(){
-        if(imPublisher != null)
+    public String getPublisher() {
+        if (imPublisher != null)
             return imPublisher.getLabel();
         else
             return null;

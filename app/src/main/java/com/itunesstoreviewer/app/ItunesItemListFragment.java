@@ -5,15 +5,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-import com.android.volley.*;
+import com.android.volley.ParseError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.ItunesRSSResponse;
@@ -31,29 +32,29 @@ public class ItunesItemListFragment extends ListFragment {
 
     public static final String ARG_CAT_INDEX = "category_index";
     public static final String ARG_QUERY = "item_query";
-    public static ListMode MODE;
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String TAG = "DEBUGZ";//ItunesItemListFragment.class.getSimpleName();
+    public static ListMode MODE;
+    private static Gson gson = LinkDeserializer.buildGson();
     private ProgressBar mLoadingView;
     private LinearLayout mListContainer;
     private JsonObjectRequest jsonObjReq;
 
-    public enum ListMode {RSS, SEARCH};
+    ;
     private Callbacks mCallbacks;
     /**
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
     private List<ItunesItem> itunesItemList = new ArrayList<ItunesItem>(LOAD);
-    private static Gson gson = LinkDeserializer.buildGson();
     private ItunesAdapter adapter;
     private ItunesRSSResponse rssResponse;
     private ItunesSearchResponse searchResponse;
     private CategoryAttribute catAttr;
     private int categoryIndex;
     private String query;
-
-    public ItunesItemListFragment() {}
+    public ItunesItemListFragment() {
+    }
 
     public static ItunesItemListFragment newInstance(int categoryIndex) {
         Bundle arguments = new Bundle();
@@ -79,9 +80,9 @@ public class ItunesItemListFragment extends ListFragment {
         if (getArguments() != null
                 && getArguments().containsKey(ListMode.class.getSimpleName())) {
             MODE = (ListMode) getArguments().getSerializable(ListMode.class.getSimpleName());
-            switch (MODE){
+            switch (MODE) {
                 case RSS:
-                    if(getArguments().containsKey(ARG_CAT_INDEX)) {
+                    if (getArguments().containsKey(ARG_CAT_INDEX)) {
                         categoryIndex = getArguments().getInt(ARG_CAT_INDEX);
                         catAttr = ItunesAppController.getCategoryAttributeList().get(categoryIndex);
                         rssResponse = catAttr.getRssResponse();
@@ -89,7 +90,7 @@ public class ItunesItemListFragment extends ListFragment {
                     }
                     break;
                 case SEARCH:
-                    if(getArguments().containsKey(ARG_QUERY)) {
+                    if (getArguments().containsKey(ARG_QUERY)) {
                         query = getArguments().getString(ARG_QUERY);
                     }
                     break;
@@ -104,10 +105,9 @@ public class ItunesItemListFragment extends ListFragment {
 
         if ((catAttr != null && itunesItemList.isEmpty()) || MODE.equals(ListMode.SEARCH)) {
             // Creating volley request obj if the savedInstanceState bundle is empty
-            if(MODE.equals(ListMode.SEARCH)) {
+            if (MODE.equals(ListMode.SEARCH)) {
                 jsonObjReq = getJsonObjectRequest(query);
-            }
-            else{
+            } else {
                 jsonObjReq = getJsonObjectRequest(catAttr.getUrl());
             }
             ItunesAppController.getInstance().addToRequestQueue(jsonObjReq);
@@ -142,7 +142,7 @@ public class ItunesItemListFragment extends ListFragment {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         jsonObjReq.cancel();
         //ItunesAppController.getInstance().cancelPendingRequests(ItunesAppController.TAG);
@@ -152,8 +152,8 @@ public class ItunesItemListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, null);
-        mLoadingView = (ProgressBar)v.findViewById(R.id.loading);
-        mListContainer = (LinearLayout)v.findViewById(R.id.listcontainer);
+        mLoadingView = (ProgressBar) v.findViewById(R.id.loading);
+        mListContainer = (LinearLayout) v.findViewById(R.id.listcontainer);
         return v;
     }
 
@@ -223,13 +223,31 @@ public class ItunesItemListFragment extends ListFragment {
         mActivatedPosition = position;
     }
 
-    private void setLoadingViewVisible(boolean visible){
-        if(null != mLoadingView && null != mListContainer){
+    private void setLoadingViewVisible(boolean visible) {
+        if (null != mLoadingView && null != mListContainer) {
             mListContainer.setVisibility(visible ? View.GONE : View.VISIBLE);
             mLoadingView.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     }
 
+    public enum ListMode {RSS, SEARCH}
+
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callbacks {
+        /**
+         * Callback for when an item has been selected.
+         *
+         * @param entry
+         */
+        public void onItunesItemSelected(ItunesItem entry);
+
+        public void networkError();
+    }
 
     private class PopulateListViewTask extends AsyncTask<JSONObject, Void, Void> {
         protected Void doInBackground(JSONObject... params) {
@@ -249,30 +267,14 @@ public class ItunesItemListFragment extends ListFragment {
 
         protected void onPostExecute(Void v) {
             itunesItemList.clear();
-            if(rssResponse!=null){
+            if (rssResponse != null) {
                 itunesItemList.addAll(rssResponse.getFeed().getEntry());
                 catAttr.setRssResponse(rssResponse);
-            }else if(searchResponse!=null){
+            } else if (searchResponse != null) {
                 itunesItemList.addAll(searchResponse.getResults());
             }
             adapter.notifyDataSetChanged();
             setLoadingViewVisible(false);
         }
-    }
-
-    /**
-     * A callback interface that all activities containing this fragment must
-     * implement. This mechanism allows activities to be notified of item
-     * selections.
-     */
-    public interface Callbacks {
-        /**
-         * Callback for when an item has been selected.
-         *
-         * @param entry
-         */
-        public void onItunesItemSelected(ItunesItem entry);
-
-        public void networkError();
     }
 }

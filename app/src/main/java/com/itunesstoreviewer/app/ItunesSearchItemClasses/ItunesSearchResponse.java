@@ -1,4 +1,3 @@
-
 package com.itunesstoreviewer.app.ItunesSearchItemClasses;
 
 import com.google.gson.annotations.Expose;
@@ -16,36 +15,28 @@ public class ItunesSearchResponse {
     private List<Result> results = new ArrayList<Result>();
 
     /**
-     * 
-     * @return
-     *     The resultCount
+     * @return The resultCount
      */
     public Integer getResultCount() {
         return resultCount;
     }
 
     /**
-     * 
-     * @param resultCount
-     *     The resultCount
+     * @param resultCount The resultCount
      */
     public void setResultCount(Integer resultCount) {
         this.resultCount = resultCount;
     }
 
     /**
-     * 
-     * @return
-     *     The results
+     * @return The results
      */
     public List<Result> getResults() {
         return results;
     }
 
     /**
-     * 
-     * @param results
-     *     The results
+     * @param results The results
      */
     public void setResults(List<Result> results) {
         this.results = results;

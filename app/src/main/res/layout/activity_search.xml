@@ -1,18 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.itunesstoreviewer.app.SearchActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.itunesstoreviewer.app.SearchActivity">
 
     <FrameLayout
+        android:id="@+id/spinner_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_frame">
+        android:layout_height="wrap_content">
 
         <Spinner
+            android:id="@+id/spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner"
             android:popupBackground="@android:color/darker_gray"/>
     </FrameLayout>
 
@@ -20,8 +20,8 @@
         android:id="@+id/itunesitem_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
         android:layout_below="@+id/spinner_frame"
+        android:layout_margin="8dp"
         />
 
 </RelativeLayout>

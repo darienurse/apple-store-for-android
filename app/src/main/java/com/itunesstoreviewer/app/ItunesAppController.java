@@ -10,9 +10,9 @@ import java.util.*;
 public class ItunesAppController extends AppController {
 
     public static final int LOAD = 199;
-    private static String[] categories;
     public static List<ItunesItem> userFavorites;
     public static ColorDrawable globalColorController;
+    private static String[] categories;
     private static List<CategoryAttribute> categoryAttributeList;
     private static Map<String, String> appleToPlayStoreMap;
     private static ItunesAppController mInstance;
@@ -29,6 +29,22 @@ public class ItunesAppController extends AppController {
                         + "\n provided by " + appName + " created by @darienurse");
         sendIntent.setType("text/plain");
         return sendIntent;
+    }
+
+    public static List<CategoryAttribute> getCategoryAttributeList() {
+        return Collections.unmodifiableList(categoryAttributeList);
+    }
+
+    public static Map<String, String> getAppleToPlayStoreMap() {
+        return Collections.unmodifiableMap(appleToPlayStoreMap);
+    }
+
+    public static synchronized ItunesAppController getInstance() {
+        return mInstance;
+    }
+
+    public static int getNumCategories() {
+        return categories.length;
     }
 
     @Override
@@ -63,21 +79,5 @@ public class ItunesAppController extends AppController {
             appleToPlayStoreMap.put(splitResult[0], splitResult[2]);
             appleToPlayStoreMap.put(splitResult[1], splitResult[2]);
         }
-    }
-
-    public static List<CategoryAttribute> getCategoryAttributeList() {
-        return Collections.unmodifiableList(categoryAttributeList);
-    }
-
-    public static Map<String, String> getAppleToPlayStoreMap() {
-        return Collections.unmodifiableMap(appleToPlayStoreMap);
-    }
-
-    public static synchronized ItunesAppController getInstance() {
-        return mInstance;
-    }
-
-    public static int getNumCategories() {
-        return categories.length;
     }
 }

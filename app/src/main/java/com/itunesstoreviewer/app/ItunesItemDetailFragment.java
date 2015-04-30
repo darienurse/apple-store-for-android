@@ -81,7 +81,7 @@ public class ItunesItemDetailFragment extends Fragment {
         }
 
         if (itunesItem != null) {
-            String mName = itunesItem.getTrackName()!=null?itunesItem.getTrackName():itunesItem.getCollectionName();
+            String mName = itunesItem.getTrackName() != null ? itunesItem.getTrackName() : itunesItem.getCollectionName();
             titleTextView.setText(mName);
             byLineTextView.setText(itunesItem.getArtistName());
             String summary = generateSummary(itunesItem);
@@ -105,8 +105,8 @@ public class ItunesItemDetailFragment extends Fragment {
         StringBuilder summary = new StringBuilder();
         summary.append(getSummaryElement("Price", itunesItem.getItemPrice()));
         summary.append(getSummaryElement("Rental Price", itunesItem.getItemRentalPrice()));
-        if(!itunesItem.getContentType().equals("podcast")) {
-            if(itunesItem.getContentType().equals("TV Episode")||itunesItem.getContentType().equals("tv-episode"))
+        if (!itunesItem.getContentType().equals("podcast")) {
+            if (itunesItem.getContentType().equals("TV Episode") || itunesItem.getContentType().equals("tv-episode"))
                 summary.append(getSummaryElement("Season", itunesItem.getCollectionName()));
             else
                 summary.append(getSummaryElement("Album", itunesItem.getCollectionName()));
@@ -123,11 +123,10 @@ public class ItunesItemDetailFragment extends Fragment {
 
 
     private String getSummaryElement(String title, String detail) {
-        if(detail!=null && !detail.trim().equals("null")) {
+        if (detail != null && !detail.trim().equals("null")) {
             if (title.equals("")) return detail + "\n";
             else return title + ": " + detail + "\n";
-        }
-        else {
+        } else {
             return "";
         }
     }

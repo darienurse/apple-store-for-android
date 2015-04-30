@@ -1,13 +1,11 @@
 package com.itunesstoreviewer.app;
 
 import android.app.ActionBar;
-import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.FragmentActivity;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +39,7 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
         map = new HashMap<String, String>();
         String[] categories = getResources().getStringArray(R.array.itunes_categories);
         String[] entities = getResources().getStringArray(R.array.itunes_entities);
-        for(int i = 0; i< categories.length; i++)
+        for (int i = 0; i < categories.length; i++)
             map.put(categories[i], entities[i]);
         spinner_frame = findViewById(R.id.spinner_frame);
         spinner_frame.setBackground(colorDrawable);
@@ -86,7 +84,7 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            mActionBar.setTitle(getResources().getString(R.string.title_activity_searchable)+ " " + query);
+            mActionBar.setTitle(getResources().getString(R.string.title_activity_searchable) + " " + query);
             try {
                 query = URLEncoder.encode(query, "UTF-8");
             } catch (UnsupportedEncodingException e) {
@@ -94,7 +92,7 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
                 finish();
             }
             String queryURL = "https://itunes.apple.com/search?term=" + query +
-                    "&entity=" + map.get(spinner.getSelectedItem().toString())+"&limit=49";
+                    "&entity=" + map.get(spinner.getSelectedItem().toString()) + "&limit=49";
             //use the query to search_menu your data somehow
             ItunesItemListFragment fragment = ItunesItemListFragment.newInstance(queryURL);
             getSupportFragmentManager().beginTransaction()
@@ -102,7 +100,6 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
                     .commit();
         }
     }
-
 
 
     @Override
@@ -115,6 +112,7 @@ public class SearchActivity extends ItunesItemListActivity implements AdapterVie
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {}
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 
 }

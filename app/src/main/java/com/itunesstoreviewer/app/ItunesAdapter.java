@@ -66,7 +66,7 @@ public class ItunesAdapter extends BaseAdapter {
         // getting app data for the row
         ItunesItem itunesItem = itunesItems.get(position);
         mUrl = itunesItem.getArtworkUrl();
-        mName = itunesItem.getTrackName()!=null?itunesItem.getTrackName():itunesItem.getCollectionName();
+        mName = itunesItem.getTrackName() != null ? itunesItem.getTrackName() : itunesItem.getCollectionName();
         mArtist = itunesItem.getArtistName();
         mCategory = itunesItem.getItemGenre();
         mPrice = itunesItem.getItemPrice();
