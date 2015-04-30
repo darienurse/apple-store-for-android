@@ -14,6 +14,16 @@
     <color name="orange">#FFFF9900</color>
     <color name="red">#FFCC0000</color>
     <color name="pink">#FFE91E63</color>
+    <array name="categoryColorArray">
+        <item>@color/green</item>
+        <item>@color/yellow</item>
+        <item>@color/pink</item>
+        <item>@color/orange</item>
+        <item>@color/indigo</item>
+        <item>@color/red</item>
+        <item>@color/light_blue</item>
+        <item>@color/purple</item>
+    </array>
 
     <color name="list_row_start_color">#ffffff</color>
     <color name="list_row_end_color">#ffffff</color>

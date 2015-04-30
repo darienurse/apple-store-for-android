@@ -28,16 +28,15 @@
         <item>Books</item>
         <item>Podcasts</item>
     </string-array>
-    <string-array name="item_categories_with_all">
-        <item>All</item>
-        <item>Apps</item>
-        <item>Mac Apps</item>
-        <item>Songs</item>
-        <item>Albums</item>
-        <item>Movies</item>
-        <item>TV Episodes</item>
-        <item>Books</item>
-        <item>Podcasts</item>
+    <string-array name="itunes_categories_prefix">
+        <item>Top Grossing</item>
+        <item>Top Grossing</item>
+        <item>Top</item>
+        <item>Top</item>
+        <item>Top</item>
+        <item>Top</item>
+        <item>Top</item>
+        <item>Top</item>
     </string-array>
     <string-array name="itunes_entities">
         <item>software</item>
@@ -60,6 +59,26 @@
         <item>TV Episode|tv-episode|tv</item>
         <item>MZRssItemTypeIdentifier.Book|ebook|books</item>
         <item>Podcast|podcast|all</item>
+    </string-array>
+    <string-array name="itunes_RSS_url">
+        <item>topgrossingapplications</item>
+        <item>topgrossingmacapps</item>
+        <item>topsongs</item>
+        <item>topalbums</item>
+        <item>topmovies</item>
+        <item>toptvepisodes</item>
+        <item>toppaidebooks</item>
+        <item>toppodcasts</item>
+    </string-array>
+    <string-array name="play_store_keys">
+        <item>apps</item>
+        <item>apps</item>
+        <item>music</item>
+        <item>music</item>
+        <item>movies</item>
+        <item>tv</item>
+        <item>books</item>
+        <item>all</item>
     </string-array>
 
 </resources>

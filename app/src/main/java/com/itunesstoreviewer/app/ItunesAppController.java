@@ -9,14 +9,11 @@ import java.util.*;
 
 public class ItunesAppController extends AppController {
 
-    public static final int LOAD = 199;
     public static List<ItunesItem> userFavorites;
     public static ColorDrawable globalColorController;
-    private static String[] categories;
     private static List<CategoryAttribute> categoryAttributeList;
     private static Map<String, String> appleToPlayStoreMap;
     private static ItunesAppController mInstance;
-
 
     public static Intent generateShareIntent(ItunesItem itunesItem, String appName) {
         Intent sendIntent = new Intent();
@@ -44,35 +41,46 @@ public class ItunesAppController extends AppController {
     }
 
     public static int getNumCategories() {
-        return categories.length;
+        return categoryAttributeList.size()-1;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        categories = getResources().getStringArray(R.array.itunes_categories);
+        String[] categories = getResources().getStringArray(R.array.itunes_categories);
+        String[] categoryPrefixes = getResources().getStringArray(R.array.itunes_categories_prefix);
+        String[] rssURLs = getResources().getStringArray(R.array.itunes_RSS_url);
+        String[] playStoreKeys = getResources().getStringArray(R.array.play_store_keys);
         categoryAttributeList = new ArrayList<CategoryAttribute>(categories.length);
         appleToPlayStoreMap = new HashMap<String, String>();
         userFavorites = new ArrayList<ItunesItem>();
         globalColorController = new ColorDrawable();
+        int[] colors = getResources().getIntArray(R.array.categoryColorArray);
         mInstance = this;
-        categoryAttributeList.add(new CategoryAttribute("Top Grossing " + categories[0], getResources().getColor(R.color.green)
-                , "https://itunes.apple.com/us/rss/topgrossingapplications/limit=" + LOAD + "/json"));
-        categoryAttributeList.add(new CategoryAttribute("Top Grossing " + categories[1], getResources().getColor(R.color.yellow)
-                , "https://itunes.apple.com/us/rss/topgrossingmacapps/limit=" + LOAD + "/json"));
-        categoryAttributeList.add(new CategoryAttribute("Top " + categories[2], getResources().getColor(R.color.pink)
-                , "https://itunes.apple.com/us/rss/topsongs/limit=" + LOAD + "/json"));
-        categoryAttributeList.add(new CategoryAttribute("Top " + categories[3], getResources().getColor(R.color.orange)
-                , "https://itunes.apple.com/us/rss/topalbums/limit=" + LOAD + "/explicit=true/json"));
-        categoryAttributeList.add(new CategoryAttribute("Top " + categories[4], getResources().getColor(R.color.indigo)
-                , "https://itunes.apple.com/us/rss/topmovies/limit=" + LOAD + "/json"));
-        categoryAttributeList.add(new CategoryAttribute("Top " + categories[5], getResources().getColor(R.color.red)
-                , "https://itunes.apple.com/us/rss/toptvepisodes/limit=" + LOAD + "/json"));
-        categoryAttributeList.add(new CategoryAttribute("Top " + categories[6], getResources().getColor(R.color.light_blue)
-                , "https://itunes.apple.com/us/rss/toppaidebooks/limit=" + LOAD + "/json"));
-        categoryAttributeList.add(new CategoryAttribute("Top " + categories[7], getResources().getColor(R.color.purple)
-                , "https://itunes.apple.com/us/rss/toppodcasts/limit=" + LOAD + "/json"));
-        categoryAttributeList.add(new CategoryAttribute("Favorites", Color.BLACK, "", userFavorites));
+
+        CategoryAttribute categoryAttribute;
+        for(int i = 0; i < categories.length; i++){
+            categoryAttribute = new CategoryAttributeBuilder()
+                    .setTitlePrefix(categoryPrefixes[i])
+                    .setTitle(categories[i])
+                    .setColor(colors[i])
+                    .setRssURL(rssURLs[i])
+                    .setPlayStoreKey(playStoreKeys[i])
+                    .setItunesItems(null)
+                    .createCategoryAttribute();
+            categoryAttributeList.add(categoryAttribute);
+        }
+
+        categoryAttribute = new CategoryAttributeBuilder()
+                .setTitlePrefix("")
+                .setTitle("Favorites")
+                .setColor(Color.BLACK)
+                .setRssURL("")
+                .setPlayStoreKey("")
+                .setItunesItems(userFavorites)
+                .createCategoryAttribute();
+        categoryAttributeList.add(categoryAttribute);
+
 
         for (String entry : getResources().getStringArray(R.array.play_store_map)) {
             String[] splitResult = entry.split("\\|");

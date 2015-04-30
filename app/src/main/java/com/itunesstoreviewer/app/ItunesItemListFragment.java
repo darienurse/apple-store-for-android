@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.itunesstoreviewer.app.ItunesAppController.LOAD;
+import static com.itunesstoreviewer.app.CategoryAttribute.LOAD;
 
 
 public class ItunesItemListFragment extends ListFragment {
