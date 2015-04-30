@@ -31,18 +31,17 @@ import java.util.Set;
 public abstract class ItunesItemListActivity extends FragmentActivity implements ItunesItemListFragment.Callbacks {
     protected final String USER_PREFS_FAV = "favorites";
     protected final String SAVED_ITEM = "saved_item";
+    protected final Gson gson = LinkDeserializer.buildGson();
     protected ActionBar actionBar;
     protected String mAppName;
     protected String mTitle;
     protected boolean mTwoPane;
     protected ShareActionProvider mShareActionProvider;
     protected ItunesItem itunesItem;
-    protected final Gson gson = LinkDeserializer.buildGson();
     protected ConnectivityManager connectivityManager;
     protected Drawable unfavorite;
     protected Drawable favorite;
     protected MenuItem mFavButton;
-
 
 
     protected boolean hasNetworkConnection() {
@@ -114,13 +113,6 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
         }
     }
 
-    static public class ErrorFragment extends Fragment {
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.error_layout, container, false);
-        }
-    }
-
     @Override
     public void onItunesItemSelected(ItunesItem item) {
         if (mTwoPane) {
@@ -141,8 +133,6 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
             startActivity(detailIntent);
         }
     }
-
-
 
     private void toggleFavorite(ItunesItem e1, ItunesItem e2) {
         List<ItunesItem> userFavorites = ItunesAppController.userFavorites;
@@ -170,6 +160,13 @@ public abstract class ItunesItemListActivity extends FragmentActivity implements
         searchView.setIconifiedByDefault(true);
         //searchView.setQueryRefinementEnabled(true);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    static public class ErrorFragment extends Fragment {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.error_layout, container, false);
+        }
     }
 
 

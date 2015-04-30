@@ -1,36 +1,25 @@
 package com.itunesstoreviewer.app;
 
-import android.app.ActionBar;
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.ShareActionProvider;
-import com.google.gson.Gson;
 import com.itunesstoreviewer.app.BaseClasses.ItunesItemListActivity;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
 import com.itunesstoreviewer.app.ItunesSearchItemClasses.Result;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
 
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -130,10 +119,6 @@ public class RSSActivity extends ItunesItemListActivity {
     }
 
 
-
-
-
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -183,16 +168,6 @@ public class RSSActivity extends ItunesItemListActivity {
         actionBar.setHomeButtonEnabled(true);
     }
 
-
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            onItunesItemSelected((ItunesItem) mDrawerList.getAdapter().getItem(position));
-            mDrawerLayout.closeDrawers();
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -220,5 +195,13 @@ public class RSSActivity extends ItunesItemListActivity {
             item.setIcon(favorite);
         }
         ((DrawerAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            onItunesItemSelected((ItunesItem) mDrawerList.getAdapter().getItem(position));
+            mDrawerLayout.closeDrawers();
+        }
     }
 }

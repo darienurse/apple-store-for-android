@@ -53,6 +53,7 @@ public class ItunesItemListFragment extends ListFragment {
     private CategoryAttribute catAttr;
     private int categoryIndex;
     private String query;
+
     public ItunesItemListFragment() {
     }
 
@@ -144,7 +145,7 @@ public class ItunesItemListFragment extends ListFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if(jsonObjReq!=null)
+        if (jsonObjReq != null)
             jsonObjReq.cancel();
         //ItunesAppController.getInstance().cancelPendingRequests(ItunesAppController.TAG);
     }
