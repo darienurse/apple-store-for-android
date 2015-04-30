@@ -1162,7 +1162,9 @@ public class Result implements ItunesItem {
     @Override
     public String getItemPrice() {
         if (formattedPrice != null) return formattedPrice;
-        Double price = wrapperType.equals(COLLECTION) ? collectionPrice:trackPrice;
+        Double price;
+        if(wrapperType==null) price = trackPrice;
+        else price = wrapperType.equals(COLLECTION) ? collectionPrice:trackPrice;
         if (price == null) return null;
         else if (price < 0) return wrapperType.equals("track") ? "Album Only" : "Partial Album";
         else return price == 0.0 ? "Free" : "$" + Double.toString(price);
@@ -1204,6 +1206,7 @@ public class Result implements ItunesItem {
 
     @Override
     public String getContentType() {
+        if(wrapperType==null) return kind;
         return wrapperType.equals(COLLECTION) ? collectionType:kind;
     }
 
@@ -1221,16 +1224,19 @@ public class Result implements ItunesItem {
 
     @Override
     public String getItemName() {
-        return wrapperType.equals(COLLECTION) ? collectionName:trackName ;
+        if(wrapperType==null) return trackName;
+        else return wrapperType.equals(COLLECTION) ? collectionName:trackName ;
     }
 
     @Override
     public String getItemUrl() {
+        if(wrapperType==null) return trackViewUrl;
         return wrapperType.equals(COLLECTION) ? collectionViewUrl:trackViewUrl ;
     }
 
     @Override
     public String getItemCollectionName() {
+        if(wrapperType==null) return collectionName;
         return wrapperType.equals(COLLECTION) ? null:collectionName;
     }
 }
