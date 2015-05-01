@@ -47,7 +47,6 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
     private MenuItem searchMenuItem;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +99,7 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         searchMenuItem = menu.findItem(R.id.menu_search);
-        if(searchMenuItem !=null) {
+        if (searchMenuItem != null) {
             SearchView searchView = (SearchView) searchMenuItem.getActionView();
             searchView.setQuery("", false);
             if (mTwoPane) {
@@ -119,9 +118,9 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
         shareIntent.setAction(Intent.ACTION_SEND);
         String name = itunesItem.getItemName();
         String artist = itunesItem.getArtistName();
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Checkout this content: " + name+"\n");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Checkout this content: " + name + "\n");
         shareIntent.putExtra(Intent.EXTRA_TEXT, name +
-                "\n"+itunesItem.getItemUrl() + " by " + artist +
+                "\n" + itunesItem.getItemUrl() + " by " + artist +
                 "\n\nprovided by " + mAppName + " created by @darienurse");
         shareIntent.setType("text/plain");
         if (mShareActionProvider != null) {
@@ -170,7 +169,7 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
         return super.onOptionsItemSelected(item);
     }
 
-    protected void refresh(){
+    protected void refresh() {
         onNewIntent(getIntent());
     }
 

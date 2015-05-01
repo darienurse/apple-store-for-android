@@ -1,9 +1,7 @@
 package com.itunesstoreviewer.app;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import com.itunesstoreviewer.app.BaseClasses.AppController;
 
 import java.util.*;
@@ -19,12 +17,12 @@ public class ItunesAppController extends AppController {
         return Collections.unmodifiableList(categoryAttributeList);
     }
 
-    public static CategoryAttribute getCategoryAttribute(ItunesItem itunesItem){
+    public static CategoryAttribute getCategoryAttribute(ItunesItem itunesItem) {
         return contentTypeMap.get(itunesItem.getContentType());
     }
 
     public static int getNumCategories() {
-        return categoryAttributeList.size()-1;
+        return categoryAttributeList.size() - 1;
     }
 
     @Override
@@ -42,7 +40,7 @@ public class ItunesAppController extends AppController {
         globalColorController = new ColorDrawable();
 
         CategoryAttribute categoryAttribute;
-        for(int i = 0; i < categories.length; i++){
+        for (int i = 0; i < categories.length; i++) {
             categoryAttribute = new CategoryAttributeBuilder()
                     .setTitlePrefix(categoryPrefixes[i])
                     .setTitle(categories[i])

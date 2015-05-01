@@ -21,7 +21,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +68,7 @@ public class SlidingTabsColorsFragment extends Fragment {
         for (int tabIndex = 0; tabIndex < ItunesAppController.getNumCategories(); tabIndex++) {
             CategoryAttribute catAttr = ItunesAppController.getCategoryAttributeList().get(tabIndex);
             mTabs.add(new SamplePagerItem(
-                    catAttr.getTitlePrefix()+" "+catAttr.getTitle(), // Title
+                    catAttr.getTitlePrefix() + " " + catAttr.getTitle(), // Title
                     tabIndex, //Index
                     catAttr.getColor(), // Indicator color
                     catAttr.getColor() // Divider color
@@ -138,6 +137,14 @@ public class SlidingTabsColorsFragment extends Fragment {
 
     // BEGIN_INCLUDE (fragment_onviewcreated)
 
+    public void refresh() {
+        String tag = "android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem();
+        ItunesItemListFragment itunesItemListFragment =
+                (ItunesItemListFragment) getChildFragmentManager().findFragmentByTag(tag);
+        itunesItemListFragment.refreshList();
+    }
+    // END_INCLUDE (fragment_onviewcreated)
+
     /**
      * This class represents a tab to be displayed by {@link ViewPager} and it's associated
      * {@link SlidingTabLayout}.
@@ -191,7 +198,6 @@ public class SlidingTabsColorsFragment extends Fragment {
             return mDividerColor;
         }
     }
-    // END_INCLUDE (fragment_onviewcreated)
 
     /**
      * The {@link FragmentPagerAdapter} used to display pages in this sample. The individual pages
@@ -237,13 +243,6 @@ public class SlidingTabsColorsFragment extends Fragment {
         }
         // END_INCLUDE (pageradapter_getpagetitle)
 
-    }
-
-    public void refresh(){
-        String tag = "android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem();
-        ItunesItemListFragment itunesItemListFragment =
-                (ItunesItemListFragment) getChildFragmentManager().findFragmentByTag(tag);
-        itunesItemListFragment.refreshList();
     }
 
 }

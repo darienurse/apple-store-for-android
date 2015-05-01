@@ -59,16 +59,16 @@ public class RSSActivity extends ItunesItemActivity {
             SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
             JSONArray jsonArray = new JSONArray(prefs.getString(
                     USER_PREFS_FAV, null));
-                for (int i =0; i<jsonArray.length();i++) {
-                    ItunesItem itunesE = gson.fromJson(jsonArray.getString(i), Entry.class);
-                    if (itunesE.getItemId() == null)
-                        itunesE = gson.fromJson(jsonArray.getString(i), Result.class);
-                    if (!ItunesAppController.userFavorites.contains(itunesE))
-                        ItunesAppController.userFavorites.add(itunesE);
-                }
+            for (int i = 0; i < jsonArray.length(); i++) {
+                ItunesItem itunesE = gson.fromJson(jsonArray.getString(i), Entry.class);
+                if (itunesE.getItemId() == null)
+                    itunesE = gson.fromJson(jsonArray.getString(i), Result.class);
+                if (!ItunesAppController.userFavorites.contains(itunesE))
+                    ItunesAppController.userFavorites.add(itunesE);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
         setUpNavigationDrawer();
@@ -96,7 +96,6 @@ public class RSSActivity extends ItunesItemActivity {
         }
         return true;
     }
-
 
 
     @Override
@@ -161,8 +160,8 @@ public class RSSActivity extends ItunesItemActivity {
     @Override
     protected void refresh() {
         SlidingTabsColorsFragment slidingTabsColorsFragment =
-                (SlidingTabsColorsFragment)getSupportFragmentManager().findFragmentByTag(SLIDING_FRAGMENT_ID);
-        if(slidingTabsColorsFragment!=null)
+                (SlidingTabsColorsFragment) getSupportFragmentManager().findFragmentByTag(SLIDING_FRAGMENT_ID);
+        if (slidingTabsColorsFragment != null)
             slidingTabsColorsFragment.refresh();
         super.refresh();
     }

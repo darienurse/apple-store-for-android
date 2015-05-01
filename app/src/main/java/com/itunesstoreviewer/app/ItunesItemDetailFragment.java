@@ -94,24 +94,23 @@ public class ItunesItemDetailFragment extends Fragment {
             byLineTextView.setText(itunesItem.getArtistName());
             String summary = generateSummary(itunesItem);
             bodyTextView.setText(summary);
-            if(category.equals("Books"))
+            if (category.equals("Books"))
                 badgeImageView.setImageDrawable(getResources().getDrawable(R.drawable.ibooks_badge));
             else
                 badgeImageView.setImageDrawable(getResources().getDrawable(R.drawable.itunes_badge));
-            badgeImageView.setOnClickListener(new View.OnClickListener()
-            {
+            badgeImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
                     startActivity(new Intent(Intent.ACTION_VIEW
                             , Uri.parse(itunesItem.getItemUrl())));
                 }
             });
             networkImageView.setImageUrl(itunesItem.getArtworkUrl(), imageLoader);
-            if(itunesItem.getArtworkUrlHD()!= null && itunesItem.getScreenshotUrls()!=null){
+            if (itunesItem.getArtworkUrlHD() != null && itunesItem.getScreenshotUrls() != null) {
                 List<String> results = itunesItem.getScreenshotUrls();
                 results.add(0, itunesItem.getArtworkUrlHD());
                 setHiResAndScreenShots(results);
-            }else {
+            } else {
                 imageExtractorTask = new ImageExtractor().execute(itunesItem.getItemUrl());
             }
         }
@@ -160,7 +159,7 @@ public class ItunesItemDetailFragment extends Fragment {
     @Override
     public void onStop() {
         imageSliderView.stopAutoCycle();
-        if(imageExtractorTask !=null)
+        if (imageExtractorTask != null)
             imageExtractorTask.cancel(true);
         super.onStop();
     }
@@ -221,11 +220,12 @@ public class ItunesItemDetailFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
-            } catch (StringIndexOutOfBoundsException e){
+            } catch (StringIndexOutOfBoundsException e) {
                 e.printStackTrace();
                 return null;
             }
         }
+
         protected void onPostExecute(List<String> results) {
             setHiResAndScreenShots(results);
         }

@@ -234,7 +234,6 @@ public class Result implements ItunesItem {
     }
 
 
-
     /**
      * @param artistName The artistName
      */
@@ -1163,8 +1162,8 @@ public class Result implements ItunesItem {
     public String getItemPrice() {
         if (formattedPrice != null) return formattedPrice;
         Double price;
-        if(wrapperType==null) price = trackPrice;
-        else price = wrapperType.equals(COLLECTION) ? collectionPrice:trackPrice;
+        if (wrapperType == null) price = trackPrice;
+        else price = wrapperType.equals(COLLECTION) ? collectionPrice : trackPrice;
         if (price == null) return null;
         else if (price < 0) return wrapperType.equals("track") ? "Album Only" : "Partial Album";
         else return price == 0.0 ? "Free" : "$" + Double.toString(price);
@@ -1206,8 +1205,8 @@ public class Result implements ItunesItem {
 
     @Override
     public String getContentType() {
-        if(wrapperType==null) return kind;
-        return wrapperType.equals(COLLECTION) ? collectionType:kind;
+        if (wrapperType == null) return kind;
+        return wrapperType.equals(COLLECTION) ? collectionType : kind;
     }
 
     @Override
@@ -1224,19 +1223,19 @@ public class Result implements ItunesItem {
 
     @Override
     public String getItemName() {
-        if(wrapperType==null) return trackName;
-        else return wrapperType.equals(COLLECTION) ? collectionName:trackName ;
+        if (wrapperType == null) return trackName;
+        else return wrapperType.equals(COLLECTION) ? collectionName : trackName;
     }
 
     @Override
     public String getItemUrl() {
-        if(wrapperType==null) return trackViewUrl;
-        return wrapperType.equals(COLLECTION) ? collectionViewUrl:trackViewUrl ;
+        if (wrapperType == null) return trackViewUrl;
+        return wrapperType.equals(COLLECTION) ? collectionViewUrl : trackViewUrl;
     }
 
     @Override
     public String getItemCollectionName() {
-        if(wrapperType==null) return collectionName;
-        return wrapperType.equals(COLLECTION) ? null:collectionName;
+        if (wrapperType == null) return collectionName;
+        return wrapperType.equals(COLLECTION) ? null : collectionName;
     }
 }

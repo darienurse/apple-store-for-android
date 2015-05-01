@@ -1,10 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:context="com.itunesstoreviewer.app.SearchActivity">
+<LinearLayout xmlns:ads="http://schemas.android.com/apk/res-auto"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.itunesstoreviewer.app.SearchActivity">
 
     <FrameLayout
         android:id="@+id/spinner_frame"
@@ -22,10 +22,11 @@
         android:id="@+id/itunesitem_list"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1"
         android:layout_below="@+id/spinner_frame"
         android:layout_margin="8dp"
+        android:layout_weight="1"
         />
+
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"

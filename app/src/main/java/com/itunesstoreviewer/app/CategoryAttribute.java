@@ -22,10 +22,10 @@ public class CategoryAttribute {
         this.titlePrefix = titlePrefix;
         this.title = title;
         this.color = color;
-        if(title.equals("Album"))
-            this.url ="https://itunes.apple.com/us/rss/"+rssURL+"/limit=" + LOAD + "/explicit=true//json";
+        if (title.equals("Album"))
+            this.url = "https://itunes.apple.com/us/rss/" + rssURL + "/limit=" + LOAD + "/explicit=true//json";
         else
-            this.url ="https://itunes.apple.com/us/rss/"+rssURL+"/limit=" + LOAD + "/json";
+            this.url = "https://itunes.apple.com/us/rss/" + rssURL + "/limit=" + LOAD + "/json";
         this.playStoreKey = playStoreKey;
         this.iTunesItems = new ArrayList<ItunesItem>();
     }
@@ -63,7 +63,7 @@ public class CategoryAttribute {
         return titlePrefix;
     }
 
-    public void clearItunesItems(){
+    public void clearItunesItems() {
         iTunesItems.clear();
     }
 }
