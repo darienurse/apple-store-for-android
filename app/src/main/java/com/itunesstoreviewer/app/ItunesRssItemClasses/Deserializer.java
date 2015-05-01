@@ -14,6 +14,23 @@ public class Deserializer {
         gsonBuilder.registerTypeAdapter(Link[].class, new LinkDeserializer());
         return gsonBuilder.create();
     }
+    public static Gson buildMacAppGson() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Link[].class, new LinkDeserializer());
+        gsonBuilder.registerTypeAdapter(Entry.class, new MacAppEntryDeserializer());
+        return gsonBuilder.create();
+    }
+    private static class MacAppEntryDeserializer implements JsonDeserializer<Entry>{
+        @Override
+        public Entry deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            if (jsonElement instanceof JsonArray) {
+                return null;
+            }
+            Entry entry = new Gson().fromJson(jsonElement, Entry.class);
+            entry.setContentTypePrefix("Mac");
+            return entry;
+        }
+    }
 
     private static class LinkDeserializer implements JsonDeserializer<Link[]>{
         @Override

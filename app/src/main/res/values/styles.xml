@@ -3,7 +3,7 @@
     <style name="Widget"/>
 
     <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/green</item>
+        <item name="android:background">@android:color/darker_gray</item>
     </style>
 
     <style name="Widget.Light"/>
@@ -18,10 +18,6 @@
 
     <style name="Widget.Light.ActionBar.Transparent">
         <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="Theme.MyDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:textColor">#FFFFFF</item>
     </style>
 
 </resources>

@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 
     <style name="AppTheme.TranslucentActionBar">
