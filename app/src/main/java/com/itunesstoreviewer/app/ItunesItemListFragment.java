@@ -17,8 +17,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Deserializer;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.ItunesRSSResponse;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
 import com.itunesstoreviewer.app.ItunesSearchItemClasses.ItunesSearchResponse;
 import org.json.JSONObject;
 
@@ -35,7 +35,7 @@ public class ItunesItemListFragment extends ListFragment {
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String TAG = "DEBUG";//ItunesItemListFragment.class.getSimpleName();
     public static ListMode MODE;
-    private static Gson gson = LinkDeserializer.buildGson();
+    private static Gson gson = Deserializer.buildGson();
     private ProgressBar mLoadingView;
     private LinearLayout mListContainer;
     private JsonObjectRequest jsonObjReq;

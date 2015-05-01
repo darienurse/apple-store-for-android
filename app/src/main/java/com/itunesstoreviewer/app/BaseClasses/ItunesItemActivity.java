@@ -18,7 +18,7 @@ import android.widget.SearchView;
 import android.widget.ShareActionProvider;
 import com.google.gson.Gson;
 import com.itunesstoreviewer.app.*;
-import com.itunesstoreviewer.app.ItunesRssItemClasses.LinkDeserializer;
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Deserializer;
 import com.itunesstoreviewer.app.SlidingTabs.SlidingTabsColorsFragment;
 import org.json.JSONArray;
 
@@ -31,7 +31,7 @@ import java.util.List;
 public abstract class ItunesItemActivity extends FragmentActivity implements ItunesItemListFragment.Callbacks {
     protected final String USER_PREFS_FAV = "favorites";
     protected final String SAVED_ITEM = "saved_item";
-    protected final Gson gson = LinkDeserializer.buildGson();
+    protected final Gson gson = Deserializer.buildGson();
     protected ActionBar actionBar;
     protected String mAppName;
     protected String mTitle;

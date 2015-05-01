@@ -14,6 +14,7 @@ import java.util.List;
 public class Entry implements ItunesItem {
 
     final private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    private String contentTypePrefix = "";
 
     @SerializedName("im:name")
     @Expose
@@ -443,9 +444,9 @@ public class Entry implements ItunesItem {
     public String getContentType() {
         if (imContentType != null) {
             if (imContentType.getImContentType() != null)
-                return imContentType.getImContentType().getAttributes().getLabel();
+                return contentTypePrefix+imContentType.getImContentType().getAttributes().getLabel();
             else
-                return imContentType.getAttributes().getLabel();
+                return contentTypePrefix+imContentType.getAttributes().getLabel();
         } else return null;
     }
 
@@ -460,5 +461,9 @@ public class Entry implements ItunesItem {
     @Override
     public SimpleDateFormat getDateFormat() {
         return simpleDateFormat;
+    }
+
+    public void setContentTypePrefix(String contentTypePrefix) {
+        this.contentTypePrefix = contentTypePrefix;
     }
 }

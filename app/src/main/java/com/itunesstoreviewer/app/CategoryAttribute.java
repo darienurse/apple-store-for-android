@@ -1,5 +1,6 @@
 package com.itunesstoreviewer.app;
 
+import com.itunesstoreviewer.app.ItunesRssItemClasses.Entry;
 import com.itunesstoreviewer.app.ItunesRssItemClasses.ItunesRSSResponse;
 
 import java.util.ArrayList;
@@ -48,6 +49,10 @@ public class CategoryAttribute {
 
     public void setRssResponse(ItunesRSSResponse rssResponse) {
         this.rssResponse = rssResponse;
+        if(title.equals("Mac Apps")){
+            for(Entry e : rssResponse.getFeed().getEntry())
+                e.setContentTypePrefix("Mac");
+        }
         iTunesItems = rssResponse.getFeed().getEntry();
     }
 

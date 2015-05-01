@@ -51,7 +51,7 @@
     </string-array>
     <string-array name="RSS_and_search_content_types">
         <item>Application|software</item>
-        <item>Application|mac-software</item>
+        <item>MacApplication|mac-software</item>
         <item>Track|song</item>
         <item>Album|Compilation</item>
         <item>Movie|feature-movie</item>
