@@ -1190,7 +1190,9 @@ public class Result implements ItunesItem {
     @Override
     public String getItemSummary() {
         if (longDescription != null)
+            return StringEscapeUtils.unescapeXml(longDescription.replaceAll("\\<[^>]*>", ""));
         else if (description != null)
+            return StringEscapeUtils.unescapeXml(description.replaceAll("\\<[^>]*>", ""));
         else return null;
     }
 
@@ -1236,9 +1238,5 @@ public class Result implements ItunesItem {
     public String getItemCollectionName() {
         if (wrapperType == null) return collectionName;
         return wrapperType.equals(COLLECTION) ? null : collectionName;
-    }
-
-    private static String unEscapeXml(String s) {
-        return s.replaceAll("&amp;", "&").replaceAll("&gt;", ">").replaceAll("&lt;", "<").replaceAll("&quot;", "\"").replaceAll("&apos;", "'").replaceAll("\\<[^>]*>", "");
     }
 }
