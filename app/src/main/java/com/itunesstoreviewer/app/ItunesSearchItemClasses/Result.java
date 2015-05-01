@@ -2,6 +2,7 @@ package com.itunesstoreviewer.app.ItunesSearchItemClasses;
 
 import com.google.gson.annotations.Expose;
 import com.itunesstoreviewer.app.ItunesItem;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import javax.annotation.Generated;
 import java.text.SimpleDateFormat;
@@ -1189,9 +1190,7 @@ public class Result implements ItunesItem {
     @Override
     public String getItemSummary() {
         if (longDescription != null)
-            return longDescription.replaceAll("\\<[^>]*>", "").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
         else if (description != null)
-            return description.replaceAll("\\<[^>]*>", "").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
         else return null;
     }
 
@@ -1237,5 +1236,9 @@ public class Result implements ItunesItem {
     public String getItemCollectionName() {
         if (wrapperType == null) return collectionName;
         return wrapperType.equals(COLLECTION) ? null : collectionName;
+    }
+
+    private static String unEscapeXml(String s) {
+        return s.replaceAll("&amp;", "&").replaceAll("&gt;", ">").replaceAll("&lt;", "<").replaceAll("&quot;", "\"").replaceAll("&apos;", "'").replaceAll("\\<[^>]*>", "");
     }
 }
