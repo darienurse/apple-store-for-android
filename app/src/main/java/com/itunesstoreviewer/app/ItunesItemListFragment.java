@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class ItunesItemListFragment extends ListFragment {
     public static final String ARG_CAT_INDEX = "category_index";
     public static final String ARG_QUERY = "item_query";
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
-    private static final String TAG = "DEBUGZ";//ItunesItemListFragment.class.getSimpleName();
+    private static final String TAG = "DEBUG";//ItunesItemListFragment.class.getSimpleName();
     public static ListMode MODE;
     private static Gson gson = LinkDeserializer.buildGson();
     private ProgressBar mLoadingView;
@@ -229,6 +230,13 @@ public class ItunesItemListFragment extends ListFragment {
             mListContainer.setVisibility(visible ? View.GONE : View.VISIBLE);
             mLoadingView.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
+    }
+
+    public void refreshList() {
+        setLoadingViewVisible(true);
+        categoryAttribute.clearItunesItems();
+        itunesItemList.clear();
+        onCreate(getArguments());
     }
 
     public enum ListMode {RSS, SEARCH}

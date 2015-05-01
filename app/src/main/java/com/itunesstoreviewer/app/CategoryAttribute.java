@@ -48,7 +48,7 @@ public class CategoryAttribute {
 
     public void setRssResponse(ItunesRSSResponse rssResponse) {
         this.rssResponse = rssResponse;
-        this.iTunesItems = rssResponse.getFeed().getEntry();
+        iTunesItems = rssResponse.getFeed().getEntry();
     }
 
     public List<? extends ItunesItem> getItunesItems() {
@@ -61,5 +61,9 @@ public class CategoryAttribute {
 
     public String getTitlePrefix() {
         return titlePrefix;
+    }
+
+    public void clearItunesItems(){
+        iTunesItems.clear();
     }
 }

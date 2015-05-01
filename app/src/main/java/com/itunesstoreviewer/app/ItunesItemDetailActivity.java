@@ -57,7 +57,7 @@ public class ItunesItemDetailActivity extends ItunesItemActivity {
         MenuItem mItem = menu.findItem(R.id.menu_item_share);
         MenuItem mFavButton = menu.findItem(R.id.fav_button);
         mShareActionProvider = (ShareActionProvider) mItem.getActionProvider();
-        setShareIntent(ItunesAppController.generateShareIntent(itunesItem, getResources().getString(R.string.app_name)));
+        setShareIntent();
 
         if (ItunesAppController.userFavorites.contains(itunesItem)) {
             mFavButton.setIcon(favorite);

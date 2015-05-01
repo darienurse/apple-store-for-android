@@ -1,11 +1,14 @@
 package com.itunesstoreviewer.app;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -43,6 +46,8 @@ public class ItunesItemDetailFragment extends Fragment {
     private NetworkImageView networkImageView;
     private SliderLayout imageSliderView;
     private AsyncTask<String, Void, List<String>> imageExtractorTask;
+    private CategoryAttribute categoryAttribute;
+    private String category;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,6 +69,8 @@ public class ItunesItemDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             itunesItem = (ItunesItem) getArguments().getSerializable(ItunesItemDetailFragment.ARG_ITEM_ID);
+            categoryAttribute = ItunesAppController.getCategoryAttribute(itunesItem);
+            category = categoryAttribute.getTitle();
         }
     }
 
@@ -74,6 +81,7 @@ public class ItunesItemDetailFragment extends Fragment {
         TextView titleTextView = (TextView) rootView.findViewById(R.id.article_title);
         TextView byLineTextView = (TextView) rootView.findViewById(R.id.article_byline);
         TextView bodyTextView = (TextView) rootView.findViewById(R.id.article_body);
+        ImageView badgeImageView = (ImageView) rootView.findViewById(R.id.badgeImageView);
         networkImageView = ((NetworkImageView) rootView.findViewById(R.id.article_photo));
         imageSliderView = (SliderLayout) rootView.findViewById(R.id.slider);
 
@@ -86,6 +94,18 @@ public class ItunesItemDetailFragment extends Fragment {
             byLineTextView.setText(itunesItem.getArtistName());
             String summary = generateSummary(itunesItem);
             bodyTextView.setText(summary);
+            if(category.equals("Books"))
+                badgeImageView.setImageDrawable(getResources().getDrawable(R.drawable.ibooks_badge));
+            else
+                badgeImageView.setImageDrawable(getResources().getDrawable(R.drawable.itunes_badge));
+            badgeImageView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v){
+                    startActivity(new Intent(Intent.ACTION_VIEW
+                            , Uri.parse(itunesItem.getItemUrl())));
+                }
+            });
             networkImageView.setImageUrl(itunesItem.getArtworkUrl(), imageLoader);
             if(itunesItem.getArtworkUrlHD()!= null && itunesItem.getScreenshotUrls()!=null){
                 List<String> results = itunesItem.getScreenshotUrls();
@@ -111,8 +131,8 @@ public class ItunesItemDetailFragment extends Fragment {
         StringBuilder summary = new StringBuilder();
         summary.append(getSummaryElement("Price", itunesItem.getItemPrice()));
         summary.append(getSummaryElement("Rental Price", itunesItem.getItemRentalPrice()));
-        if (!itunesItem.getContentType().equals("podcast")) {
-            if (itunesItem.getContentType().equals("TV Episode") || itunesItem.getContentType().equals("tv-episode"))
+        if (!category.equals("Podcasts")) {
+            if (category.equals("TV Episodes"))
                 summary.append(getSummaryElement("Season", itunesItem.getItemCollectionName()));
             else
                 summary.append(getSummaryElement("Album", itunesItem.getItemCollectionName()));
@@ -143,6 +163,26 @@ public class ItunesItemDetailFragment extends Fragment {
         if(imageExtractorTask !=null)
             imageExtractorTask.cancel(true);
         super.onStop();
+    }
+
+    private void setHiResAndScreenShots(List<String> results) {
+        if (results == null || results.isEmpty()) return;
+        networkImageView.setImageUrl(results.remove(0), imageLoader);
+        if (!results.isEmpty()) {
+            // initialize a SliderLayout for each image retrieved from the ImageExtractor
+            for (String name : results) {
+                TextSliderView textSliderView = new TextSliderView(getActivity());
+                textSliderView
+                        .image(name)
+                        .setScaleType(BaseSliderView.ScaleType.CenterInside);
+                imageSliderView.addSlider(textSliderView);
+            }
+            imageSliderView.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
+            imageSliderView.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            imageSliderView.setCustomAnimation(new DescriptionAnimation());
+            imageSliderView.setDuration(7000);
+            imageSliderView.setVisibility(View.VISIBLE);
+        }
     }
 
     public class ImageExtractor extends AsyncTask<String, Void, List<String>> {
@@ -186,29 +226,9 @@ public class ItunesItemDetailFragment extends Fragment {
                 return null;
             }
         }
-
         protected void onPostExecute(List<String> results) {
             setHiResAndScreenShots(results);
         }
-    }
 
-    private void setHiResAndScreenShots(List<String> results) {
-        if (results == null || results.isEmpty()) return;
-        networkImageView.setImageUrl(results.remove(0), imageLoader);
-        if (!results.isEmpty()) {
-            // initialize a SliderLayout for each image retrieved from the ImageExtractor
-            for (String name : results) {
-                TextSliderView textSliderView = new TextSliderView(getActivity());
-                textSliderView
-                        .image(name)
-                        .setScaleType(BaseSliderView.ScaleType.CenterInside);
-                imageSliderView.addSlider(textSliderView);
-            }
-            imageSliderView.setPresetTransformer(SliderLayout.Transformer.Accordion);
-            imageSliderView.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-            imageSliderView.setCustomAnimation(new DescriptionAnimation());
-            imageSliderView.setDuration(4000);
-            imageSliderView.setVisibility(View.VISIBLE);
-        }
     }
 }

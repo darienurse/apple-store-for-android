@@ -13,22 +13,7 @@ public class ItunesAppController extends AppController {
     public static List<ItunesItem> userFavorites;
     public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryAttributeList;
-    //private static Map<String, String> appleToPlayStoreMap;
     private static Map<String, CategoryAttribute> contentTypeMap;
-    private static ItunesAppController mInstance;
-
-    public static Intent generateShareIntent(ItunesItem itunesItem, String appName) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        String name = itunesItem.getItemName();
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Details on " + name);
-        sendIntent.putExtra(Intent.EXTRA_TEXT,
-                "Checkout this content: " + name
-                        + "(" + itunesItem.getItemUrl() + ")"
-                        + "\n provided by " + appName + " created by @darienurse");
-        sendIntent.setType("text/plain");
-        return sendIntent;
-    }
 
     public static List<CategoryAttribute> getCategoryAttributeList() {
         return Collections.unmodifiableList(categoryAttributeList);
@@ -36,10 +21,6 @@ public class ItunesAppController extends AppController {
 
     public static CategoryAttribute getCategoryAttribute(ItunesItem itunesItem){
         return contentTypeMap.get(itunesItem.getContentType());
-    }
-
-    public static synchronized ItunesAppController getInstance() {
-        return mInstance;
     }
 
     public static int getNumCategories() {
@@ -54,12 +35,11 @@ public class ItunesAppController extends AppController {
         String[] rssURLs = getResources().getStringArray(R.array.itunes_RSS_url);
         String[] playStoreKeys = getResources().getStringArray(R.array.play_store_keys);
         String[] itunesContentTypes = getResources().getStringArray(R.array.RSS_and_search_content_types);
+        int[] colors = getResources().getIntArray(R.array.categoryColorArray);
         categoryAttributeList = new ArrayList<CategoryAttribute>(categories.length);
         contentTypeMap = new HashMap<String, CategoryAttribute>();
         userFavorites = new ArrayList<ItunesItem>();
         globalColorController = new ColorDrawable();
-        int[] colors = getResources().getIntArray(R.array.categoryColorArray);
-        mInstance = this;
 
         CategoryAttribute categoryAttribute;
         for(int i = 0; i < categories.length; i++){
@@ -73,7 +53,6 @@ public class ItunesAppController extends AppController {
                     .createCategoryAttribute();
             categoryAttributeList.add(categoryAttribute);
             String[] splitResult = itunesContentTypes[i].split("\\|");
-            Log.e("YOYOYO", splitResult[0] + "     " + splitResult[1]);
             contentTypeMap.put(splitResult[0], categoryAttribute);
             contentTypeMap.put(splitResult[1], categoryAttribute);
         }

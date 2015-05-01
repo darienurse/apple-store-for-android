@@ -39,6 +39,7 @@ import org.json.JSONException;
 public class RSSActivity extends ItunesItemActivity {
 
     private final String mDrawerTitle = "Favorites";
+    private final String SLIDING_FRAGMENT_ID = "SLIDING_FRAGMENT";
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -76,7 +77,7 @@ public class RSSActivity extends ItunesItemActivity {
             if (hasNetworkConnection()) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 SlidingTabsColorsFragment slidingTabsColorsFragment = new SlidingTabsColorsFragment();
-                transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment);
+                transaction.replace(R.id.itunesitem_list, slidingTabsColorsFragment, SLIDING_FRAGMENT_ID);
                 transaction.commit();
             } else {
                 networkError();
@@ -156,6 +157,16 @@ public class RSSActivity extends ItunesItemActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void refresh() {
+        SlidingTabsColorsFragment slidingTabsColorsFragment =
+                (SlidingTabsColorsFragment)getSupportFragmentManager().findFragmentByTag(SLIDING_FRAGMENT_ID);
+        if(slidingTabsColorsFragment!=null)
+            slidingTabsColorsFragment.refresh();
+        super.refresh();
+    }
+
     @Override
     protected void handleFavorite(MenuItem item) {
         super.handleFavorite(item);

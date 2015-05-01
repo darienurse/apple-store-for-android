@@ -46,6 +46,8 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
     private SearchView searchView;
     private MenuItem searchMenuItem;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +114,16 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
     }
 
     // Call to update the share intent
-    protected void setShareIntent(Intent shareIntent) {
+    protected void setShareIntent() {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        String name = itunesItem.getItemName();
+        String artist = itunesItem.getArtistName();
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Checkout this content: " + name+"\n");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, name +
+                "\n"+itunesItem.getItemUrl() + " by " + artist +
+                "\n\nprovided by " + mAppName + " created by @darienurse");
+        shareIntent.setType("text/plain");
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(shareIntent);
         }
@@ -152,8 +163,15 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
             case R.id.fav_button:
                 handleFavorite(item);
                 break;
+            case R.id.refresh:
+                refresh();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void refresh(){
+        onNewIntent(getIntent());
     }
 
     @Override
@@ -192,7 +210,7 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
             else toggleFavorite(itunesItem, item);
             itunesItem = item;
             categoryAttribute = ItunesAppController.getCategoryAttribute(itunesItem);
-            setShareIntent(ItunesAppController.generateShareIntent(itunesItem, mAppName));
+            setShareIntent();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(itunesItem))
                     .commit();
@@ -230,7 +248,6 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
             item.setIcon(favorite);
         }
     }
-
 
     static public class ErrorFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
