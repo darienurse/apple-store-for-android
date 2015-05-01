@@ -3,6 +3,7 @@ package com.itunesstoreviewer.app.ItunesRssItemClasses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.itunesstoreviewer.app.ItunesItem;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import javax.annotation.Generated;
 import java.text.SimpleDateFormat;
@@ -404,8 +405,7 @@ public class Entry implements ItunesItem {
     @Override
     public String getItemSummary() {
         if (summary != null)
-            //return android.text.Html.fromHtml(getSummary().getLabel()).toString();
-            return summary.getLabel().replaceAll("\\<[^>]*>", "").replaceAll("&apos;", "'").replaceAll("&quot;", "\"");
+            return StringEscapeUtils.unescapeXml(summary.getLabel().replaceAll("\\<[^>]*>", ""));
         else return null;
     }
 
