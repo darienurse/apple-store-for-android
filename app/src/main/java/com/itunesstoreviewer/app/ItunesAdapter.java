@@ -20,11 +20,6 @@ public class ItunesAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<ItunesItem> itunesItems;
-    private String mName;
-    private String mUrl;
-    private String mCategory;
-    private String mPrice;
-    private String mArtist;
 
     public ItunesAdapter(Context context, List<ItunesItem> itunesItems) {
         this.context = context;
@@ -65,11 +60,11 @@ public class ItunesAdapter extends BaseAdapter {
 
         // getting app data for the row
         ItunesItem itunesItem = itunesItems.get(position);
-        mUrl = itunesItem.getArtworkUrl();
-        mName = itunesItem.getItemName();
-        mArtist = itunesItem.getArtistName();
-        mCategory = itunesItem.getItemGenre();
-        mPrice = itunesItem.getItemPrice();
+        String mUrl = itunesItem.getArtworkUrl();
+        String mName = itunesItem.getItemName();
+        String mArtist = itunesItem.getArtistName();
+        String mCategory = itunesItem.getItemGenre();
+        String mPrice = itunesItem.getItemPrice();
 
         // thumbnail image
         thumbNail.setImageUrl(mUrl, imageLoader);
