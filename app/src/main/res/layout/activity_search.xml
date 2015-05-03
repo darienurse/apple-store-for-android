@@ -21,8 +21,6 @@
     <FrameLayout
         android:id="@+id/itunesitem_list"
         android:layout_width="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_height="0px"
         android:layout_weight="1"
         />
