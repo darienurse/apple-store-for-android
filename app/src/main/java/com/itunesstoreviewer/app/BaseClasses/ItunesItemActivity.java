@@ -119,8 +119,8 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
         String name = itunesItem.getItemName();
         String artist = itunesItem.getArtistName();
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Checkout this content: " + name + "\n");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, name +
-                "\n" + itunesItem.getItemUrl() + " by " + artist +
+        shareIntent.putExtra(Intent.EXTRA_TEXT, name + " by " + artist +
+                "\n" + itunesItem.getItemUrl() +
                 "\n\nprovided by " + mAppName + " created by @darienurse");
         shareIntent.setType("text/plain");
         if (mShareActionProvider != null) {

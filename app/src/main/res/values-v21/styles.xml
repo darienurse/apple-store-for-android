@@ -3,7 +3,9 @@
 
     <style name="Widget"/>
 
-    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse"/>
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/green</item>
+    </style>
 
     <style name="Widget.Light"/>
 

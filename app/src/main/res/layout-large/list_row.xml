@@ -70,6 +70,6 @@
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/date"/>
+        android:textColor="@color/price"/>
 
 </RelativeLayout>
