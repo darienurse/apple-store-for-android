@@ -6,14 +6,14 @@
     <color name="date">#888888</color>
     <color name="list_divider">#d9d9d9</color>
 
-    <color name="light_blue">#FF33B5E5</color>
-    <color name="indigo">#FF3F51B5</color>
-    <color name="green">#FF99CC00</color>
-    <color name="purple">#FFAA66CC</color>
-    <color name="yellow">#FFFFDD00</color>
-    <color name="orange">#FFFF9900</color>
-    <color name="red">#FFCC0000</color>
-    <color name="pink">#FFE91E63</color>
+    <color name="light_blue">#33B5E5</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="green">#99CC00</color>
+    <color name="purple">#AA66CC</color>
+    <color name="yellow">#FFCC00</color>
+    <color name="orange">#FF6600</color>
+    <color name="red">#CF0000</color>
+    <color name="pink">#E65CB8</color>
     <array name="categoryColorArray">
         <item>@color/green</item>
         <item>@color/yellow</item>

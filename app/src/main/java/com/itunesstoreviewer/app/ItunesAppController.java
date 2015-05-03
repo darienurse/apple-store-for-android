@@ -9,7 +9,6 @@ import java.util.*;
 public class ItunesAppController extends AppController {
 
     public static List<ItunesItem> userFavorites;
-    public static ColorDrawable globalColorController;
     private static List<CategoryAttribute> categoryAttributeList;
     private static Map<String, CategoryAttribute> contentTypeMap;
 
@@ -37,7 +36,6 @@ public class ItunesAppController extends AppController {
         categoryAttributeList = new ArrayList<CategoryAttribute>(categories.length);
         contentTypeMap = new HashMap<String, CategoryAttribute>();
         userFavorites = new ArrayList<ItunesItem>();
-        globalColorController = new ColorDrawable();
 
         CategoryAttribute categoryAttribute;
         for (int i = 0; i < categories.length; i++) {
@@ -51,8 +49,8 @@ public class ItunesAppController extends AppController {
                     .createCategoryAttribute();
             categoryAttributeList.add(categoryAttribute);
             String[] splitResult = itunesContentTypes[i].split("\\|");
-            contentTypeMap.put(splitResult[0], categoryAttribute);
-            contentTypeMap.put(splitResult[1], categoryAttribute);
+            for(String categoryType : splitResult)
+                contentTypeMap.put(categoryType, categoryAttribute);
         }
 
         categoryAttribute = new CategoryAttributeBuilder()

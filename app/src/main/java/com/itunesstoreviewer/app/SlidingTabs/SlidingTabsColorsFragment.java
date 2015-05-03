@@ -98,7 +98,6 @@ public class SlidingTabsColorsFragment extends Fragment {
      */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        view.findViewById(R.id.sliding_tabs).setBackground(ItunesAppController.globalColorController);
         // BEGIN_INCLUDE (setup_viewpager)
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);

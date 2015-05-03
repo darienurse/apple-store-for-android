@@ -23,6 +23,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -54,7 +55,7 @@ class SlidingTabStrip extends LinearLayout {
     private int mSelectedPosition;
     private float mSelectionOffset;
     private SlidingTabLayout.TabColorizer mCustomTabColorizer;
-    private ActionBar mActionBar;
+    private ColorDrawable colorDrawable;
 
     SlidingTabStrip(Context context) {
         this(context, null);
@@ -62,8 +63,10 @@ class SlidingTabStrip extends LinearLayout {
 
     SlidingTabStrip(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mActionBar = ((Activity) context).getActionBar();
-        mActionBar.setBackgroundDrawable(ItunesAppController.globalColorController);
+        colorDrawable = new ColorDrawable();
+        ActionBar mActionBar = ((Activity) context).getActionBar();
+        assert mActionBar != null;
+        mActionBar.setBackgroundDrawable(colorDrawable);
         setWillNotDraw(false);
 
         final float density = getResources().getDisplayMetrics().density;
@@ -175,11 +178,9 @@ class SlidingTabStrip extends LinearLayout {
                 right = (int) (mSelectionOffset * nextTitle.getRight() +
                         (1.0f - mSelectionOffset) * right);
             }
-            ItunesAppController.globalColorController.setColor(color);
-            //The action bar need to be toggled (for some reason) in order to change color
-            mActionBar.setDisplayShowTitleEnabled(false);
-            mActionBar.setDisplayShowTitleEnabled(true);
-            mSelectedIndicatorPaint.setColor(getContrastColor(color));
+            colorDrawable.setColor(color);
+            setBackgroundColor(color);
+            //mSelectedIndicatorPaint.setColor(getContrastColor(color));
 
             canvas.drawRect(left, height - mSelectedIndicatorThickness, right,
                     height, mSelectedIndicatorPaint);

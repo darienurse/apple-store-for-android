@@ -53,7 +53,7 @@
         <item>Application|software</item>
         <item>MacApplication|mac-software</item>
         <item>Track|song</item>
-        <item>Album|Compilation</item>
+        <item>Album|Compilation|MaxiSingle</item>
         <item>Movie|feature-movie</item>
         <item>TV Episode|tv-episode</item>
         <item>MZRssItemTypeIdentifier.Book|ebook</item>

@@ -20,19 +20,19 @@
     <!-- App Name -->
     <TextView
         android:id="@+id/name"
-        style="?android:textAppearanceMedium"
+        style="?android:textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toEndOf="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
         android:ellipsize="end"
-        android:maxLines="2"/>
+        android:maxLines="1"/>
 
     <!-- Artist -->
     <TextView
         android:id="@+id/artist"
-        style="?android:textAppearance"
+        style="?android:textAppearanceMedium"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
@@ -45,7 +45,7 @@
     <!-- contentType -->
     <TextView
         android:id="@+id/contentType"
-        style="?android:textAppearanceSmall"
+        style="?android:textAppearance"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/artist"
