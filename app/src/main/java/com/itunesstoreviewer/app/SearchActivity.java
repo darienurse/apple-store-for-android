@@ -48,9 +48,9 @@ public class SearchActivity extends ItunesItemActivity implements AdapterView.On
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        //AdView mAdView = (AdView) findViewById(R.id.adView);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        //mAdView.loadAd(adRequest);
         handleIntent(getIntent());
     }
 

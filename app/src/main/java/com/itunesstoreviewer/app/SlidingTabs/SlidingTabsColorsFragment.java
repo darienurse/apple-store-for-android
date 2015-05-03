@@ -110,9 +110,9 @@ public class SlidingTabsColorsFragment extends Fragment {
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
 
-        AdView mAdView = (AdView) view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        //AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        //mAdView.loadAd(adRequest);
 
         // BEGIN_INCLUDE (tab_colorizer)
         // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve
