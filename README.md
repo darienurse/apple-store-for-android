@@ -11,28 +11,28 @@ iTunes Store Viewer is a mobile app the streams information from [iTunes’s RSS
 
 ###Features
 ####Sliding Nagivation Mobile
-The app’s home page displays the top 200 items in eight categories. Notice how each category is associated with a specific color.
+The app’s home page displays the top 200 items in eight categories. Notice how each category is associated with a specific color.<br/>
 ![SlidingM](http://i.imgur.com/yqYZMLt.gif)
 ####Sliding Nagivation Tablet
-For larger screens, the app displays the items list along side the item details.
+For larger screens, the app displays the items list along side the item details.<br/>
 ![SlidingT](http://i.imgur.com/GwHkKZQ.gif)
 ####Viewing Media Details
-Selecting an item delays that item’s details (i.e. price, description, release date, author, etc.). When a mobile app or mac app is selected, screenshots of the app are displayed at the bottom of the description.
+Selecting an item delays that item’s details (i.e. price, description, release date, author, etc.). When a mobile app or mac app is selected, screenshots of the app are displayed at the bottom of the description.<br/>
 ![Details](http://i.imgur.com/nOxStKu.gif)
 ####iTunes Redirect
-At the bottom of every item description, there is a “Get it on iTunes” badge (or “Get it on iBooks” badge for books). Clicking on the badge will redirect the user to iTunes where he/she can purchase the selected media.
+At the bottom of every item description, there is a “Get it on iTunes” badge (or “Get it on iBooks” badge for books). Clicking on the badge will redirect the user to iTunes where he/she can purchase the selected media.<br/>
 ![iTunesRedirect](http://i.imgur.com/l5jgo8J.gif)
 ####Search
-With help from the iTunes Search API, users can type the name of content in the search window at the top and view associated content across all categories.
+With help from the iTunes Search API, users can type the name of content in the search window at the top and view associated content across all categories.<br/>
 ![Search](http://i.imgur.com/ha9Sh99.gif)
 ####Favoriting
-Clicking the heart icon at the top of each item's description will add that item to the user’s favorites. The favorites are located in the Navigation Drawer and will remain there even after the app closes.
+Clicking the heart icon at the top of each item's description will add that item to the user’s favorites. The favorites are located in the Navigation Drawer and will remain there even after the app closes.<br/>
 ![Favoriting](http://i.imgur.com/PgpbYo3.gif)
 ####Sharing
-Clicking on the share icon at the top of the item description will allow users to share an iTunes content link to another app.
+Clicking on the share icon at the top of the item description will allow users to share an iTunes content link to another app.<br/>
 ![Sharing](http://i.imgur.com/eX1V1vw.gif)
 ####Play Store Search
-Clicking on the Play Store icon at the top of the item description will redirect the user to the Play Store. Once there, the app wo;; search for the associated content, which may or may not be in the Play Store.
+Clicking on the Play Store icon at the top of the item description will redirect the user to the Play Store. Once there, the app will search for the associated content, which may or may not be in the Play Store.<br/>
 ![Play Store](http://i.imgur.com/A5tmUff.gif)
 
 ###Version
