@@ -12,7 +12,6 @@ iTunes Store Viewer is a mobile app the streams information from [iTunes’s RSS
 ###Features
 ####Sliding Nagivation Mobile
 The app’s home page displays the top 200 items in eight categories. Notice how each category is associated with a specific color.
-
 ![SlidingM](http://i.imgur.com/yqYZMLt.gif)
 ####Sliding Nagivation Tablet
 For larger screens, the app displays the items list along side the item details.
@@ -25,16 +24,15 @@ At the bottom of every item description, there is a “Get it on iTunes” badge
 ![iTunesRedirect](http://i.imgur.com/l5jgo8J.gif)
 ####Search
 With help from the iTunes Search API, users can type the name of content in the search window at the top and view associated content across all categories.
-
 ![Search](http://i.imgur.com/ha9Sh99.gif)
 ####Favoriting
-Clicking the heart icon at the top of each item's description will add that item to the user’s favorites. The favorites list is located in the Navigation Drawer and these items will remain there even after the app closes.
+Clicking the heart icon at the top of each item's description will add that item to the user’s favorites. The favorites are located in the Navigation Drawer and will remain there even after the app closes.
 ![Favoriting](http://i.imgur.com/PgpbYo3.gif)
 ####Sharing
-Clicking on the share icon at the top of the item description will allow users to share an iTunes link to another app.
+Clicking on the share icon at the top of the item description will allow users to share an iTunes content link to another app.
 ![Sharing](http://i.imgur.com/eX1V1vw.gif)
 ####Play Store Search
-Clicking on the play store icon at the top of the item description will redirect the user to the Play Store. Once there, the app search for the associated content, which may or may not be in the Play Store.
+Clicking on the Play Store icon at the top of the item description will redirect the user to the Play Store. Once there, the app wo;; search for the associated content, which may or may not be in the Play Store.
 ![Play Store](http://i.imgur.com/A5tmUff.gif)
 
 ###Version
