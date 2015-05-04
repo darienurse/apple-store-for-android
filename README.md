@@ -52,7 +52,7 @@ Clicking on the Play Store icon at the top of the item description will redirect
 ###Developed By
 Darien Nurse – [darienurse@gmail.com]
 
-[<img src="http://i.imgur.com/uMKQoqL.png">](https://plus.google.com/+DarienNurse/posts)[<img src="http://i.imgur.com/s7KNPyo.png">](www.linkedin.com/pub/darien-nurse/26/623/a55/en)[<img src="http://i.imgur.com/meZkHZ2.png">](https://twitter.com/darienurse)
+[<img src="http://i.imgur.com/uMKQoqL.png">](https://plus.google.com/+DarienNurse/posts)[<img src="http://i.imgur.com/s7KNPyo.png">](https://www.linkedin.com/pub/darien-nurse/26/623/a55/en)[<img src="http://i.imgur.com/meZkHZ2.png">](https://twitter.com/darienurse)
 
 [Joe Littlejohn]:https://github.com/joelittlejohn
 [jsonschema2pojo]:http://www.jsonschema2pojo.org/
