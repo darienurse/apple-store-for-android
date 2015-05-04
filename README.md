@@ -38,12 +38,12 @@ Clicking on the Play Store icon at the top of the item description will redirect
 ###Version
 1.0
 ###Known Issues
--Memory leaks may occur after extend use of the app. For now, restarting the app clears memory and it can continue to be used normally.
+- Memory leaks may occur after extend use of the app. For now, restarting the app clears memory and it can continue to be used normally.
 
 ###To do
--Add better handling for network errors
--Highlight list items on press
--Organize variable and add comments
+- Add better handling for network errors
+- Highlight list items on press
+- Organize variable and add comments
 
 ###Acknowledgments
 - Thanks to Google Development teams for the [Volley] library, [GSON] library, and a comprehensive example on [SlidingTabLayouts].
