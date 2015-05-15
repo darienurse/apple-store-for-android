@@ -2,12 +2,14 @@
 <resources>
 
     <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+<!--
         <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
+-->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 
-    <style name="AppTheme.TranslucentActionBar">
+    <!--<style name="AppTheme.TranslucentActionBar">
         <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -17,6 +19,6 @@
         <item name="android:actionBarStyle">@style/Widget.Light.ActionBar.Transparent</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
-    </style>
+    </style>-->
 
 </resources>

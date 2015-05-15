@@ -153,6 +153,8 @@ public class ItunesItemListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, null);
+        //TODO make sure this change didnt break anything
+        //View v = inflater.inflate(R.layout.fragment_list, container);
         mLoadingView = (ProgressBar) v.findViewById(R.id.loading);
         mListContainer = (LinearLayout) v.findViewById(R.id.listcontainer);
         return v;

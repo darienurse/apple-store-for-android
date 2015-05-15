@@ -1,5 +1,5 @@
 <resources>
-
+<!--
     <style name="Widget"/>
 
     <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
@@ -16,6 +16,6 @@
 
     <style name="Widget.Light.ActionBar.Transparent">
         <item name="android:background">@android:color/transparent</item>
-    </style>
+    </style>-->
 
 </resources>

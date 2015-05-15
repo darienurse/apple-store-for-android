@@ -43,7 +43,6 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
     protected Drawable favorite;
     protected MenuItem mFavButton;
     protected CategoryAttribute categoryAttribute;
-    private SearchView searchView;
     private MenuItem searchMenuItem;
 
 
@@ -89,13 +88,6 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
     }
 
 
-    protected boolean hasNetworkConnection() {
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        invalidateOptionsMenu();
-        return activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-    }
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         searchMenuItem = menu.findItem(R.id.menu_search);
@@ -112,31 +104,9 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
         return super.onPrepareOptionsMenu(menu);
     }
 
-    // Call to update the share intent
-    protected void setShareIntent() {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        String name = itunesItem.getItemName();
-        String artist = itunesItem.getArtistName();
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Checkout this content: " + name + "\n");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, name + " by " + artist +
-                "\n" + itunesItem.getItemUrl() +
-                "\n\nprovided by " + mAppName + " created by @darienurse");
-        shareIntent.setType("text/plain");
-        if (mShareActionProvider != null) {
-            mShareActionProvider.setShareIntent(shareIntent);
-        }
-    }
-
-    @Override
-    public void networkError() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.itunesitem_list, new ErrorFragment());
-        transaction.commit();
-    }
-
     @Override
     protected void onStop() {
+        super.onStop();
         List<String> favSet = new ArrayList<String>(ItunesAppController.userFavorites.size());
         for (ItunesItem e : ItunesAppController.userFavorites) {
             favSet.add(gson.toJson(e));
@@ -147,7 +117,6 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(USER_PREFS_FAV, jsonArray.toString());
         editor.apply();
-        super.onStop();
     }
 
     @Override
@@ -169,17 +138,50 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
         return super.onOptionsItemSelected(item);
     }
 
-    protected void refresh() {
-        onNewIntent(getIntent());
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (itunesItem != null) {
             // Serialize and persist the itunes item.
+            //TODO Do I still need to do this?
             outState.putSerializable(SAVED_ITEM, itunesItem);
         }
+    }
+
+    @Override
+    public void onItunesItemSelected(ItunesItem item) {
+        if (mTwoPane) {
+            mTitle = item.getItemName();
+            actionBar.setTitle(mTitle);
+            //TODO Improve toggle/favoriting
+            // http://stackoverflow.com/questions/11499574/toggle-button-using-two-image-on-different-state
+            if (itunesItem == null) toggleFavorite(item);
+            else toggleFavorite(itunesItem, item);
+            itunesItem = item;
+            categoryAttribute = ItunesAppController.getCategoryAttribute(itunesItem);
+            setShareIntent();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(itunesItem))
+                    .commit();
+        } else {
+            // In single-pane mode, simply start the detail activity for the selected item.
+            Intent detailIntent = new Intent(this, ItunesItemDetailActivity.class);
+            detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, item);
+            startActivity(detailIntent);
+        }
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public void networkError() {
+        //TODO Call this from ItunesItemListFragment at some point
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.itunesitem_list, new ErrorFragment());
+        transaction.commit();
+    }
+
+    protected void refresh() {
+        onNewIntent(getIntent());
     }
 
     protected void launchPlayStoreSearch() {
@@ -190,6 +192,7 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
     }
 
     public void retryButtonClick(View v) {
+        //TODO Move this to button inline call
         if (hasNetworkConnection()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             SlidingTabsColorsFragment slidingTabsColorsFragment = new SlidingTabsColorsFragment();
@@ -200,27 +203,14 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
         }
     }
 
-    @Override
-    public void onItunesItemSelected(ItunesItem item) {
-        if (mTwoPane) {
-            mTitle = item.getItemName();
-            actionBar.setTitle(mTitle);
-            if (itunesItem == null) toggleFavorite(item);
-            else toggleFavorite(itunesItem, item);
-            itunesItem = item;
-            categoryAttribute = ItunesAppController.getCategoryAttribute(itunesItem);
-            setShareIntent();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.itunesitem_detail_container, ItunesItemDetailFragment.newInstance(itunesItem))
-                    .commit();
+    protected void handleFavorite(MenuItem item) {
+        if (ItunesAppController.userFavorites.contains(itunesItem)) {
+            ItunesAppController.userFavorites.remove(itunesItem);
+            item.setIcon(unfavorite);
         } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, ItunesItemDetailActivity.class);
-            detailIntent.putExtra(ItunesItemDetailFragment.ARG_ITEM_ID, item);
-            startActivity(detailIntent);
+            ItunesAppController.userFavorites.add(itunesItem);
+            item.setIcon(favorite);
         }
-        invalidateOptionsMenu();
     }
 
     private void toggleFavorite(ItunesItem e1, ItunesItem e2) {
@@ -238,13 +228,26 @@ public abstract class ItunesItemActivity extends FragmentActivity implements Itu
         }
     }
 
-    protected void handleFavorite(MenuItem item) {
-        if (ItunesAppController.userFavorites.contains(itunesItem)) {
-            ItunesAppController.userFavorites.remove(itunesItem);
-            item.setIcon(unfavorite);
-        } else {
-            ItunesAppController.userFavorites.add(itunesItem);
-            item.setIcon(favorite);
+    protected boolean hasNetworkConnection() {
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        invalidateOptionsMenu();
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    // Call to update the share intent
+    protected void setShareIntent() {
+        Intent shareIntent = new Intent();
+        String name = itunesItem.getItemName();
+        String artist = itunesItem.getArtistName();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Checkout this content: " + name + "\n");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, name + " by " + artist +
+                "\n" + itunesItem.getItemUrl() +
+                "\n\nprovided by " + mAppName + " created by @darienurse");
+        shareIntent.setType("text/plain");
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
         }
     }
 
