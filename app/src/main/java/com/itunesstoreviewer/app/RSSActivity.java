@@ -89,7 +89,7 @@ public class RSSActivity extends ItunesItemActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         if (mTwoPane) {
-            boolean showMenuItems = !mDrawerLayout.isDrawerOpen(mDrawerList);
+            boolean showMenuItems = !mDrawerLayout.isDrawerOpen(mDrawerList)&&itunesItem!=null;
             menu.findItem(R.id.menu_item_share).setVisible(showMenuItems);
             menu.findItem(R.id.fav_button).setVisible(showMenuItems);
             menu.findItem(R.id.play_store_button).setVisible(showMenuItems);

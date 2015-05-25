@@ -28,7 +28,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
-import com.itunesstoreviewer.app.ItunesAppController;
 
 class SlidingTabStrip extends LinearLayout {
 

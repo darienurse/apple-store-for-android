@@ -43,8 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="16dp"
-                android:layout_marginLeft="@dimen/detail_horiz_margin"
-                android:layout_marginRight="@dimen/detail_horiz_margin"
+                android:layout_marginLeft="@dimen/detail_margin_horiz"
+                android:layout_marginRight="@dimen/detail_margin_horiz"
                 android:orientation="vertical">
 
 
@@ -75,8 +75,8 @@
             style="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/detail_horiz_margin"
-            android:layout_marginRight="@dimen/detail_horiz_margin"
+            android:layout_marginLeft="@dimen/detail_margin_horiz"
+            android:layout_marginRight="@dimen/detail_margin_horiz"
             android:lineSpacingMultiplier="1.25"
             android:textColor="@android:color/primary_text_light"
             android:textColorLink="@color/secondary_android_green"
@@ -87,9 +87,9 @@
             android:id="@+id/badgeImageView"
             android:layout_width="128dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/detail_horiz_margin"
-            android:layout_marginLeft="@dimen/detail_horiz_margin"
-            android:layout_marginRight="@dimen/detail_horiz_margin"
+            android:layout_marginBottom="@dimen/detail_margin_horiz"
+            android:layout_marginLeft="@dimen/detail_margin_horiz"
+            android:layout_marginRight="@dimen/detail_margin_horiz"
             android:adjustViewBounds="true"/>
 
         <com.daimajia.slider.library.SliderLayout

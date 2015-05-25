@@ -82,5 +82,4 @@ public class ItunesAdapter extends BaseAdapter {
         price.setText(mPrice);
         return convertView;
     }
-
 }

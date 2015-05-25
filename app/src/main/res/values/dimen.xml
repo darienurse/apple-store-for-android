@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="detail_horiz_margin">16dp</dimen>
+    <dimen name="detail_margin_horiz">16dp</dimen>
     <dimen name="photo_height">400dp</dimen>
     <dimen name="thumbnail_width">80dp</dimen>
     <dimen name="thumbnail_drawer_width">48dp</dimen>
